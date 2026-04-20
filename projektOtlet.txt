@@ -1,0 +1,75 @@
+Keep Up With Yourself
+Tanulaskoveto web app.
+Felhasznalo bejelentkezhet.
+A bejelentkezett felhasznalo csak a sajat adatait latja.
+A felhasznalo letrehozhat "todo" szeru feladatokat.
+A feladatoknal a kovetkezo adatokat lehet megadni (mindegyik kotelezo):
+	- Feladat cime (sajat szoveget irhat - string tipusu valtozo)
+	- Feladat leirasa (sajat szoveget irhat - string tipusu valtozo)
+	- Hatarido (naptarbol tudja kivalasztani - date tipusu valtozo)
+	- Fontossag (megadott listabol valaszthat - string tipusu valtozo)
+	- Tipus (megadott listabol valaszhat, de irhat sajatot is(amit ir, az a listahoz adodik) - string tipusu valtozo)
+
+A felhasznalo megtekintheti a korabbi feladatait.
+A korabbi feladatokhoz tartozik 1-1 badge (a badge-nek 3 tipusa van).
+	- Folyamatban (Ha a felhasznalo letrehozza a feladatot, akkor ez az alapertelmezett badge. A badge akkor cserelodik le, ha a hatarido lejar, vagy a feladatot teljesitettek)
+	- Lejart (Ha a hatarido lejart a feladat teljesitese elott)
+	- Teljesitett (Ha a felhasznalo teljesitettnek jeloli be a feladatot)
+A badget akkor is lehet teljesitettnek jelolni, ha annak hatarideje mar lejart.
+A korabbi feladatokat lehet szurni badge es cim szerint.
+A korabbi feladatokat lehet rendezni datum szerint.
+
+A weboldalon a bejelentkezes elott csak a landing paget lehet megtekinteni es a login/register oldalt.
+A login es a register 2 kulon html fajl.
+A navigacios sav listajaban csak a landing page es annak reszeit lehet elerni.
+A navigacios sav tartalmaz tovabba 1 CTA gombot, ahol a felhasznalo betud jelentkezni/fiokot letrehozni/belepnia mar bejelentkezett fiokjaba.
+A bejelentkezett felhasznalo a bejelentkezest koveteon 3 tovabbi oldalt lat.
+Egyet ahol tud letrehozni feladatot, egyet, ahol megtekintheti korabbi feladatai, egyet ahol lathatja sajat adatait. 
+
+Az adatbazisok strukturaja a kovetkezo:
+task:
+	- userId (string)
+	- taskId (string)
+	- taskName (string)
+	- taskDesc (string)
+	- taskDeadline (timestamp)
+	- taskImportance (string)
+	- taskTypeId (string)
+	- taskStatus (string)
+	- taskCompletedAt (timestamp)
+	- taskCreatedAt (timestamp)
+	- taskUpdatedAt (timestamp)
+users:
+	- userId: (string)
+	- userEmail: (string)
+	- userName: (string)
+	- createdAt: (timestamp)
+	- verified: (bool)
+task_types:
+	- taskTypeId (string)
+	- userId: (string)
+	- taskTypeName: (string)
+	- taskType_isSyste: (bool)
+	
+
+Egy felhasznalonak csak 1 fiokja lehet.
+Ketto fele provider elfogadott. Google, Email/Password.
+Ha a felhasznalo mar regisztralt Google providerrel akkor mar nem tud se bejelentkezni, se regisztralni ugyan azon email cimmel.
+Ha a felhasznalo mar regisztralt Email/Password providerrel, akkor mar nem engedi regisztralni ugyan azzal a providerrel, de Google-el igen (igy 2 provider lesz csatolva 1 fiokhoz).
+Ha a felhasznalo meg nem regisztralt, akkor barmivel regisztralhat.
+Ha a felhasznalo meg nem regisztralt, akkor a bejelentkezesnel a Google providerre kattintva egybol regisztral egy fiokot.
+Ha a felhasznalo Email/Password providerrel regisztral, akkor kotelezo megadnia nevet a regisztracio soran.
+Ha a felhasznalo Google providerrel regisztral, akkor a nev automatikusan a Google fiokjanak a neve lesz.
+Ha a felhasznalo Email/Password providerrel regisztral, akkor kap egy visszaigazolo emailt, ha igazolja email cimet, akkor lesz verified az adatbazisban.
+Ha a felhasznalo Google providerrel regisztral, akkor a verified automatikusan true lesz.
+Ha a felhasznalo az adatbazisban verified, akkor lephet csak be.
+Ha a felhasznalo letezik, de nem verified es megprobal regisztralni, akkor a regisztracios folyamat ujrakezdodik (elozo felhasznalo torlodik, ujat hoz letre) (mindket providerrel)
+Ha a felhasznalo letelzik, de nem verified es megprobal bejelentkezni, akkor hibauzenetet kap, hogy nincs visszaigazolva a fiokja es nezze meg az emailjet (uj emailt kuldd)
+A visszaigazolo emailt korlatozzuk felhasznalonkent (percenkent 1)
+Az auth fiokhoz adott UUID-t mentjuk el az adatbazisban a userID-nak.
+
+Az automatizalt szoftverteszteles vitestel fog tortenni, mellette manualisan tesztelunk.
+A weboldalt hostoljuk firebasen keresztul.
+Az egesz forraskod publikus githubon.
+3-an keszitjuk a projektet. Rasztovits Levente (etnevelpriv), Kover Marcell (M4rc1xd), Borbara Kristof (k3i2t0r)
+Tervezett felhasznalt technologiak: TypeScript, HTML, CSS, Firebase Auth, Firestore, Firebase Host, Node.js, vite, vitest
