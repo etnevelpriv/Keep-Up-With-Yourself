@@ -162,17 +162,17 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 
 # Fejlesztesi folyamat
 
-## 0. Inicializalas, elokeszules (0 / 9)
+## 0. Inicializalas, elokeszules (5 / 9)
 
-- projektOtlet.txt megirasa [Levente] (folyamatban)  
+- projektOtlet.txt megirasa [Levente] (kesz)  
 - GitHub repo init [Levente] (kesz)  
 - Csoporttagok bevetele a repoba, mint contributor [Kozos] (nincs kesz)  
-- README megirasa, projektOtlet.txt atirasa README.md fajla [Levente] (nincs kesz)  
-- Vite projekt inicializalasa TypeScript nyelven keretrendszer nelkul [Levente] (nincs kesz)  
-- Mappastruktura felalliatsa, fajlok letrehozasa [Levente] (nincs kesz)  
+- README megirasa, projektOtlet.txt atirasa README.md fajla [Levente] (kesz)  
+- Vite projekt inicializalasa TypeScript nyelven keretrendszer nelkul [Levente] (kesz)  
+- Mappastruktura felalliatsa, fajlok letrehozasa [Levente] (kesz)  
 - Firebase projekt inicializalasa [Levente] (nincs kesz)  
 - Csoporttagok bevetele a firebase projektbe, mint contributor [Kozos] (nincs kesz)  
-- .venv-ben elmenteni a biztonsagi kulcsokat, firebase adatokat  
+- .venv-ben elmenteni a biztonsagi kulcsokat, firebase adatokat  [Levente] (nincs kesz)
 
 ---
 
