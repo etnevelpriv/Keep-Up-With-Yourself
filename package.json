@@ -1,7 +1,10 @@
 {
   "name": "keep-up-with-yourself",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Tanulaskoveto webapp automatizalt tesztekkel vite fejlesztoi kornyezetben, typescript nyelven, firebase alapokkal",
+  "author": "etnevelpriv, M4rc1xd, k3i2t0r",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "vite",
