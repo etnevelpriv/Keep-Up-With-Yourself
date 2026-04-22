@@ -73,20 +73,19 @@ export class User implements UserInterface {
     };
     sendVerificationLink(user: any) {
         console.log("sendVerificationLink metodus elindult")
-        // const actionCodeSettings = {
-        //     url: 'https://www.keep-up-with-yourself.web.app/create',
-        //     handleCodeInApp: true,
-        //     iOS: {
-        //         bundleId: 'com.example.ios'
-        //     },
-        //     android: {
-        //         packageName: 'com.example.android',
-        //         installApp: true,
-        //         minimumVersion: '12'
-        //     },
-        //     linkDomain: 'keep-up-with-yourself.web.app'
-        // };
-        sendEmailVerification(user)
+        const actionCodeSettings = {
+            url: 'https://keep-up-with-yourself.web.app/create',
+            handleCodeInApp: true,
+            iOS: {
+                bundleId: 'com.example.ios'
+            },
+            android: {
+                packageName: 'com.example.android',
+                installApp: true,
+                minimumVersion: '12'
+            }
+        };
+        sendEmailVerification(user, actionCodeSettings)
             .then(() => {
                 console.log(`Email verifikacio elkuldve`)
             }).catch((err: any) => {
