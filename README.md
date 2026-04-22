@@ -90,8 +90,8 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - userId: (string)  
 - userEmail: (string)  
 - userName: (string)  
-- createdAt: (timestamp)  
-- verified: (bool)  
+- userCreatedAt: (timestamp)  
+- userVerified: (bool)  
 
 ### task_types:
 
@@ -162,25 +162,25 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 
 # Fejlesztesi folyamat
 
-## 0. Inicializalas, elokeszules (5 / 9)
+## 0. Inicializalas, elokeszules (9 / 9)
 
 - projektOtlet.txt megirasa [Levente] (kesz)  
 - GitHub repo init [Levente] (kesz)  
-- Csoporttagok bevetele a repoba, mint contributor [Kozos] (nincs kesz)  
+- Csoporttagok bevetele a repoba, mint contributor [Kozos] (kesz)  
 - README megirasa, projektOtlet.txt atirasa README.md fajla [Levente] (kesz)  
 - Vite projekt inicializalasa TypeScript nyelven keretrendszer nelkul [Levente] (kesz)  
 - Mappastruktura felalliatsa, fajlok letrehozasa [Levente] (kesz)  
 - Firebase projekt inicializalasa [Levente] (kesz)  
-- Csoporttagok bevetele a firebase projektbe, mint contributor [Kozos] (nincs kesz)  
-- .venv-ben elmenteni a biztonsagi kulcsokat, firebase adatokat  [Levente] (nincs kesz)
+- Csoporttagok bevetele a firebase projektbe, mint editor [Kozos] (kesz)  
+- .venv-ben elmenteni a biztonsagi kulcsokat, firebase adatokat  [Levente] (kesz)
 
 ---
 
-## 1. Auth letrehozasa (0 / 19)
+## 1. Auth letrehozasa (1 / 19)
 
-- Firebase projektben felallitani az authenticationt mindket providerhez [Levente] (nincs kesz)  
-- Elkesziteni az alap regisztracios oldalt [Levente] (nincs kesz)  
-- Elkesziteni a szukseges interfacet es a szukseges class-t megfelelo hibakezelessel [Levente] (nincs kesz)  
+- Firebase projektben felallitani az authenticationt mindket providerhez [Levente] (kesz)  
+- Elkesziteni az alap regisztracios oldalt [Levente] (kesz)  
+- Elkesziteni a szukseges interfacet es a szukseges class-t megfelelo hibakezelessel [Levente] (kesz)  
 - Implementalni az email/password provideres regisztraciot [Levente] (nincs kesz)  
 - Authentication fiok mentodjon el az adatbazisba is [Levente] (nincs kesz)  
 - Regisztracios folyamat soran a nev megadasa is legyen kesz, mentodjon el az adatbazisba [Levente] (nincs kesz)  
