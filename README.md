@@ -186,7 +186,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - Regisztracios folyamat soran a nev megadasa is legyen kesz, mentodjon el az adatbazisba [Levente] (kesz)  
 - Implementalni a google provideres regisztraciot [Levente] (kesz)  
 - Google provider eseten a google fiok neve legyen a felhasznalo neve az adatbazisban [Levente] (nincs kesz)  
-- Visszaigazolo email kuldes email/passdword provideres regisztracio eseten [Levente] (nincs kesz)  
+- Visszaigazolo email kuldes email/passdword provideres regisztracio eseten [Levente] (kesz)  
 - Visszaigazolo email tenylegesen funkcionaljon es az adatbazisban tegye a felhasznalot verifiedra [Levente] (nincs kesz)  
 - Elkesziteni a login oldalt [Levente] (nincs kesz)  
 - A login oldal ellenorizze, hogy a felhasznalo letezik es verified [Levente] (nincs kesz)  
