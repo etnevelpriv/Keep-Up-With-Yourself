@@ -24,7 +24,7 @@ const init = function () {
                 const name = user.displayName;
                 const email = user.email;
                 const userObj = new User(name, undefined, email, new Date(), true);
-                userObj.saveUserInfoToDb(user.uid);
+                userObj.saveUserInfoToDb(user.uid, undefined);
             }).catch((error) => {
                 throw new Error(`Hiba uzener: ${error.code}, Hiba kod: ${error.errorMessage}, Email: ${error.costumData.email}, Hitelesito adat: ${GoogleAuthProvider.credentialFromError(error)}`);
             });

@@ -1,6 +1,6 @@
 import type { UserInterface } from "./UserInterface.ts";
 import { collection, addDoc } from "firebase/firestore";
-import { getAuth, createUserWithEmailAndPassword} from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { db } from "../firebase.ts"
 
 export class User implements UserInterface {
@@ -42,18 +42,19 @@ export class User implements UserInterface {
 
     createUserWithEmailProvider() {
         const auth = getAuth();
+
         createUserWithEmailAndPassword(auth, this.email, this.password)
             .then((userCredential) => {
                 const user = userCredential.user;
                 console.log(user);
-                this.saveUserInfoToDb(userCredential.user.uid);
+                this.saveUserInfoToDb(userCredential.user.uid, user)
             })
             .catch((error) => {
                 throw new Error(`Hiba uzenet: ${error.message}, Hiba kod: ${error.code}`);
             });
     };
 
-    async saveUserInfoToDb(uid: string) {
+    async saveUserInfoToDb(uid: string, user: any) {
         try {
             const docRef = await addDoc(collection(db, "users"), {
                 userID: uid,
@@ -62,9 +63,34 @@ export class User implements UserInterface {
                 userCreatedAt: this.createdAt,
                 userVerified: this.verified
             });
-            console.log("Document written with ID: ", docRef.id);
-        } catch (e) {
-            console.error("Error adding document: ", e);
-        }
+            console.log("Uj doksi letrehozva az adatbazisban: ", docRef.id);
+            if (!this.verified) {
+                this.sendVerificationLink(user);
+            };
+        } catch (e: any) {
+            throw new Error(e)
+        };
+    };
+    sendVerificationLink(user: any) {
+        console.log("sendVerificationLink metodus elindult")
+        // const actionCodeSettings = {
+        //     url: 'https://www.keep-up-with-yourself.web.app/create',
+        //     handleCodeInApp: true,
+        //     iOS: {
+        //         bundleId: 'com.example.ios'
+        //     },
+        //     android: {
+        //         packageName: 'com.example.android',
+        //         installApp: true,
+        //         minimumVersion: '12'
+        //     },
+        //     linkDomain: 'keep-up-with-yourself.web.app'
+        // };
+        sendEmailVerification(user)
+            .then(() => {
+                console.log(`Email verifikacio elkuldve`)
+            }).catch((err: any) => {
+                throw new Error(err);
+            });
     };
 };
