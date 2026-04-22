@@ -1,4 +1,7 @@
 import type { UserInterface } from "./UserInterface.ts";
+import { collection, addDoc } from "firebase/firestore";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { db } from "../firebase.ts"
 
 export class User implements UserInterface {
     name: string;
@@ -28,7 +31,40 @@ export class User implements UserInterface {
         this.createdAt = createdAt;
         this.verified = verified;
     };
+
     toString() {
         return (`Nev: ${this.name}, Jelszo:${this.password}, Email:${this.email}, Datum:${this.createdAt}, Verified:${this.verified}`);
+    };
+
+    validateFormValues() {
+        console.log("validateFormValues meg nincs implementalva")
+    };
+
+    createUserWithEmailProvider() {
+        const auth = getAuth();
+        createUserWithEmailAndPassword(auth, this.email, this.password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                console.log(user);
+                this.saveUserInfoToDb(userCredential.user.uid);
+            })
+            .catch((error) => {
+                throw new Error(`Error message: ${error.message}, Error code: ${error.code}`);
+            });
+    };
+
+    async saveUserInfoToDb(uid: string) {
+        try {
+            const docRef = await addDoc(collection(db, "users"), {
+                userID: uid,
+                userEmail: this.email,
+                userName: this.name,
+                userCreatedAt: this.createdAt,
+                userVerified: this.verified
+            });
+            console.log("Document written with ID: ", docRef.id);
+        } catch (e) {
+            console.error("Error adding document: ", e);
+        }
     };
 };
