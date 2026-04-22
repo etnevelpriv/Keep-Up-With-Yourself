@@ -14,13 +14,17 @@ const init = function () {
         provider.addScope('https://www.googleapis.com/auth/userinfo.profile');
         const auth = getAuth();
         auth.useDeviceLanguage;
-        
+
         signInWithPopup(auth, provider)
             .then((result) => {
                 const credential = GoogleAuthProvider.credentialFromResult(result);
                 const token = credential.accessToken;
                 const user = result.user;
-                console.log(credential, result)
+                console.log(credential, result);
+                const name = user.displayName;
+                const email = user.email;
+                const userObj = new User(name, undefined, email, new Date(), true);
+                userObj.saveUserInfoToDb(user.uid);
             }).catch((error) => {
                 throw new Error(`Hiba uzener: ${error.code}, Hiba kod: ${error.errorMessage}, Email: ${error.costumData.email}, Hitelesito adat: ${GoogleAuthProvider.credentialFromError(error)}`);
             });

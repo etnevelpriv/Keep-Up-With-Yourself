@@ -176,7 +176,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 
 ---
 
-## 1. Auth letrehozasa (6 / 19)
+## 1. Auth letrehozasa (7 / 19)
 
 - Firebase projektben felallitani az authenticationt mindket providerhez [Levente] (kesz)  
 - Elkesziteni az alap regisztracios oldalt [Levente] (kesz)  
@@ -184,7 +184,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - Implementalni az email/password provideres regisztraciot [Levente] (kesz)  
 - Authentication fiok mentodjon el az adatbazisba is [Levente] (kesz)  
 - Regisztracios folyamat soran a nev megadasa is legyen kesz, mentodjon el az adatbazisba [Levente] (kesz)  
-- Implementalni a google provideres regisztraciot [Levente] (nincs kesz)  
+- Implementalni a google provideres regisztraciot [Levente] (kesz)  
 - Google provider eseten a google fiok neve legyen a felhasznalo neve az adatbazisban [Levente] (nincs kesz)  
 - Visszaigazolo email kuldes email/passdword provideres regisztracio eseten [Levente] (nincs kesz)  
 - Visszaigazolo email tenylegesen funkcionaljon es az adatbazisban tegye a felhasznalot verifiedra [Levente] (nincs kesz)  

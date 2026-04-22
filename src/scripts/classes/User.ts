@@ -5,17 +5,17 @@ import { db } from "../firebase.ts"
 
 export class User implements UserInterface {
     name: string;
-    password: string;
+    password: string | undefined;
     email: string;
     createdAt: Date;
     verified: boolean;
-    constructor(name: string, password: string, email: string, createdAt: Date, verified: boolean) {
+    constructor(name: string, password: string | undefined, email: string, createdAt: Date, verified: boolean) {
         if (typeof name != "string" || name == "" || name == null || name == undefined) {
             throw new Error(`A nev valtozo nincs megfeleloen megadva: ${name}`);
         };
-        if (typeof password != "string" || password == "" || password == null || password == undefined) {
-            throw new Error(`A jelszo valtozo nincs megfeleloen megadva: ${password}`);
-        };
+        // if (typeof password != "string" || password == "" || password == null || password == undefined) {
+        //     throw new Error(`A jelszo valtozo nincs megfeleloen megadva: ${password}`);
+        // };
         if (typeof email != "string" || email == "" || email == null || email == undefined || !email.includes("@")) {
             throw new Error(`Az email valtozo nincs megfeleloen megadva: ${email}`);
         };
