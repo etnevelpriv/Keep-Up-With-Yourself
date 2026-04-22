@@ -1,6 +1,6 @@
 import type { UserInterface } from "./UserInterface.ts";
 import { collection, addDoc } from "firebase/firestore";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword} from "firebase/auth";
 import { db } from "../firebase.ts"
 
 export class User implements UserInterface {
@@ -49,7 +49,7 @@ export class User implements UserInterface {
                 this.saveUserInfoToDb(userCredential.user.uid);
             })
             .catch((error) => {
-                throw new Error(`Error message: ${error.message}, Error code: ${error.code}`);
+                throw new Error(`Hiba uzenet: ${error.message}, Hiba kod: ${error.code}`);
             });
     };
 
