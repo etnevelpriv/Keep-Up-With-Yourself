@@ -176,7 +176,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 
 ---
 
-## 1. Auth letrehozasa (1 / 19)
+## 1. Auth letrehozasa (3 / 19)
 
 - Firebase projektben felallitani az authenticationt mindket providerhez [Levente] (kesz)  
 - Elkesziteni az alap regisztracios oldalt [Levente] (kesz)  

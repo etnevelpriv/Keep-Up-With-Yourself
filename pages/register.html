@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <form action="">
+    <form action="submit" id="registerForm">
         <input type="text" placeholder="Auth Istvan" name="name" id="nameInput">
         <input type="email" placeholder="pelda@keepupwithyourself.hu" name="password" id="emailInput">
         <input type="password" placeholder="PeldaJelszo123." name="email" id="passwordInput">
@@ -19,10 +19,11 @@
             <li class="form-password-requirement">Min. 1 szam karakter (0-9)</li>
             <li class="form-password-requirement">Min. 1 kulonleges karakter (.!-)</li>
         </ul>
-        <input type="button" value="Regisztralas" name="button" id="buttonInput">
+        <button id="registerButton" type="submit">asd</button>
+        <!-- <input type="button" value="Regisztralas" name="button" id="buttonInput"> -->
     </form>
 </body>
 
-<script src="../src/scripts/auth.ts"></script>
-<script src="../src/scripts/register.ts"></script>
+<script type="module" src="../src/scripts/auth.ts"></script>
+<script type="module" src="../src/scripts/register.ts"></script>
 </html>
