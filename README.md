@@ -170,7 +170,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - README megirasa, projektOtlet.txt atirasa README.md fajla [Levente] (kesz)  
 - Vite projekt inicializalasa TypeScript nyelven keretrendszer nelkul [Levente] (kesz)  
 - Mappastruktura felalliatsa, fajlok letrehozasa [Levente] (kesz)  
-- Firebase projekt inicializalasa [Levente] (nincs kesz)  
+- Firebase projekt inicializalasa [Levente] (kesz)  
 - Csoporttagok bevetele a firebase projektbe, mint contributor [Kozos] (nincs kesz)  
 - .venv-ben elmenteni a biztonsagi kulcsokat, firebase adatokat  [Levente] (nincs kesz)
 
@@ -274,3 +274,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - GA suti hozzaadasa [Levente] (nincs kesz)  
 
 ---
+Repo klonozasa: git clone https://github.com/etnevelpriv/Keep-Up-With-Yourself.git
+Dependencyk letoltese: npm i
+Frontend inditasa: npm run dev
+Frontend buildelese: npm run build
