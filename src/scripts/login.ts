@@ -1,0 +1,51 @@
+import "../styles/auth.css";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
+
+const init = function () {
+    console.log("Betoltodott a register.ts")
+    const form: HTMLElement = document.getElementById("loginForm") as HTMLElement;
+    form.addEventListener("submit", sendLoginForm);
+
+    document.getElementById("googleButton")?.addEventListener("click", () => {
+        console.log("Google gombra kattintva")
+        const provider = new GoogleAuthProvider();
+        provider.addScope('https://www.googleapis.com/auth/userinfo.email');
+        provider.addScope('https://www.googleapis.com/auth/userinfo.profile');
+        const auth = getAuth();
+        auth.useDeviceLanguage;
+
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                const credential = GoogleAuthProvider.credentialFromResult(result);
+                const token = credential.accessToken;
+                const user = result.user;
+                console.log(credential, result);
+                const name = user.displayName;
+                const email = user.email;
+                const userObj = new User(name, undefined, email, new Date(), true);
+                userObj.saveUserInfoToDb(user.uid, undefined);
+            }).catch((error) => {
+                throw new Error(`Hiba uzener: ${error.code}, Hiba kod: ${error.errorMessage}, Email: ${error.costumData.email}, Hitelesito adat: ${GoogleAuthProvider.credentialFromError(error)}`);
+            });
+    });
+};
+
+const sendLoginForm = function (e: Event) {
+    e.preventDefault();
+    console.log("Bejelentkezes gombra kattintva")
+    const email = document.getElementById("emailInput") as HTMLFormElement;
+    const password = document.getElementById("passwordInput") as HTMLFormElement;
+
+
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, email.value, password.value)
+        .then((userCredential) => {
+            const user = userCredential.user;
+            console.log(`Sikeres bejelentkezes, ${user}`)
+        })
+        .catch((error) => {
+            throw new Error(`Hiba uzener: ${error.code}, Hiba kod: ${error.errorMessage}`);
+        });
+};
+
+document.addEventListener("DOMContentLoaded", init);

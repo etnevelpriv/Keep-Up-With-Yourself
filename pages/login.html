@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bejelentkezes</title>
+</head>
+
+<body>
+    <form action="submit" id="loginForm">
+        <input type="email" placeholder="pelda@keepupwithyourself.hu" name="password" id="emailInput">
+        <input type="password" placeholder="PeldaJelszo123." name="email" id="passwordInput">
+        <button id="loginButton" type="submit">Bejelentkezes</button>
+    </form>
+    <button class="google-button" id="googleButton">google</button>
+</body>
+
+<script type="module" src="../src/scripts/firebase.ts"></script>
+<script type="module" src="../src/scripts/auth.ts"></script>
+<script type="module" src="../src/scripts/login.ts"></script>
+</html>
