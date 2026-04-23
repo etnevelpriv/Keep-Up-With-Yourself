@@ -9,8 +9,6 @@ const init = function () {
     document.getElementById("googleButton")?.addEventListener("click", () => {
         console.log("Google gombra kattintva")
         const provider = new GoogleAuthProvider();
-        provider.addScope('https://www.googleapis.com/auth/userinfo.email');
-        provider.addScope('https://www.googleapis.com/auth/userinfo.profile');
         const auth = getAuth();
         auth.useDeviceLanguage;
 
@@ -20,12 +18,8 @@ const init = function () {
                 const token = credential.accessToken;
                 const user = result.user;
                 console.log(credential, result);
-                const name = user.displayName;
-                const email = user.email;
-                const userObj = new User(name, undefined, email, new Date(), true);
-                userObj.saveUserInfoToDb(user.uid, undefined);
             }).catch((error) => {
-                throw new Error(`Hiba uzener: ${error.code}, Hiba kod: ${error.errorMessage}, Email: ${error.costumData.email}, Hitelesito adat: ${GoogleAuthProvider.credentialFromError(error)}`);
+                throw new Error(`Hiba uzener: ${error.code}, Hiba kod: ${error.errorMessage}, Hitelesito adat: ${GoogleAuthProvider.credentialFromError(error)}`);
             });
     });
 };
