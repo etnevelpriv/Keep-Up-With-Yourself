@@ -1,5 +1,5 @@
 import type { UserInterface } from "./UserInterface.ts";
-import { collection, addDoc } from "firebase/firestore";
+import { setDoc, doc } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { db } from "../firebase.ts"
 
@@ -56,14 +56,14 @@ export class User implements UserInterface {
 
     async saveUserInfoToDb(uid: string, user: any) {
         try {
-            const docRef = await addDoc(collection(db, "users"), {
+            const docRef = await setDoc(doc(db, "users", uid), {
                 userID: uid,
                 userEmail: this.email,
                 userName: this.name,
                 userCreatedAt: this.createdAt,
                 userVerified: this.verified
             });
-            console.log("Uj doksi letrehozva az adatbazisban: ", docRef.id);
+            console.log("Uj doksi letrehozva az adatbazisban");
             if (!this.verified) {
                 this.sendVerificationLink(user);
             };
