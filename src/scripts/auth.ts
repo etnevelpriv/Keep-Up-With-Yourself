@@ -1,4 +1,4 @@
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase.ts"
 
@@ -25,7 +25,7 @@ onAuthStateChanged(auth, async (user) => {
 
                 if (isLoginPage || isRegisterPage) {
                     window.location.href = "/pages/create.html";
-                }
+                };
 
             } else {
                 console.log("A felhasznalo meg nem hitelesitette az email cimet", docSnap.data().userVerified);
@@ -37,5 +37,22 @@ onAuthStateChanged(auth, async (user) => {
 
     } else {
         console.log("Nincs bejelentkezett felhasznalo")
+        const currentPath = window.location.pathname.toLowerCase();
+        const isCreatePage = currentPath.includes("create");
+        const isProfilePage = currentPath.includes("profile");
+        const isTasksPage = currentPath.includes("tasks");
+
+        if (isCreatePage || isProfilePage || isTasksPage) {
+            window.location.href = "/pages/login.html";
+        };
     };
+});
+
+document.getElementById("signOutButton")?.addEventListener("click", () => {
+    signOut(auth).then(() => {
+        console.log("Sikeresen kijelentkezett a felhasznalo.")
+    }).catch((error) => {
+        throw new Error(`Hiba uzener: ${error.code}, Hiba kod: ${error.errorMessage}`);
+    });
+
 });
