@@ -9,14 +9,21 @@
 
 <body>
     <form action="submit" id="loginForm">
-        <input type="email" placeholder="pelda@keepupwithyourself.hu" name="password" id="emailInput">
-        <input type="password" placeholder="PeldaJelszo123." name="email" id="passwordInput">
+        <input type="email" placeholder="pelda@keepupwithyourself.hu" name="email" id="emailInput">
+        <input type="password" placeholder="PeldaJelszo123." name="password" id="passwordInput">
         <button id="loginButton" type="submit">Bejelentkezes</button>
     </form>
     <button class="google-button" id="googleButton">google</button>
+    <button class="forgot-pass-button" id="forgotPassButton">Elfelejtett jelszo</button>
+    <div class="forgot-pass-modal hide" id="forgotPassModal">
+        <h2>Kerjuk add meg az email cimed annak erdekeben, hogy eltudjuk kuldeni a jelszo visszaallitasi emailt</h2>
+        <input type="email" placeholder="pelda@keepupwithyourself.hu" name="email" id="forgotPassEmailInput">
+        <button id="forgotPassSendButton">Email kuldese</button>
+    </div>
 </body>
 
 <script type="module" src="../src/scripts/firebase.ts"></script>
 <script type="module" src="../src/scripts/auth.ts"></script>
 <script type="module" src="../src/scripts/login.ts"></script>
+
 </html>

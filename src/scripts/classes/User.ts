@@ -76,14 +76,6 @@ export class User implements UserInterface {
         const actionCodeSettings = {
             url: 'https://keep-up-with-yourself.web.app/create',
             handleCodeInApp: true,
-            iOS: {
-                bundleId: 'com.example.ios'
-            },
-            android: {
-                packageName: 'com.example.android',
-                installApp: true,
-                minimumVersion: '12'
-            }
         };
         sendEmailVerification(user, actionCodeSettings)
             .then(() => {

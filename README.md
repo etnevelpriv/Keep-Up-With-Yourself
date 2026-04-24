@@ -98,7 +98,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - taskTypeId (string)  
 - userId: (string)  
 - taskTypeName: (string)  
-- taskType_isSyste: (bool)  
+- taskType_isSystem: (bool)  
 
 ---
 
@@ -176,7 +176,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 
 ---
 
-## 1. Auth letrehozasa (8 / 20)
+## 1. Auth letrehozasa (13 / 19)
 
 - Firebase projektben felallitani az authenticationt mindket providerhez [Levente] (kesz)  
 - Elkesziteni az alap regisztracios oldalt [Levente] (kesz)  
@@ -185,15 +185,15 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - Authentication fiok mentodjon el az adatbazisba is [Levente] (kesz)  
 - Regisztracios folyamat soran a nev megadasa is legyen kesz, mentodjon el az adatbazisba [Levente] (kesz)  
 - Implementalni a google provideres regisztraciot [Levente] (kesz)  
-- Google provider eseten a google fiok neve legyen a felhasznalo neve az adatbazisban [Levente] (nincs kesz)  
+- Google provider eseten a google fiok neve legyen a felhasznalo neve az adatbazisban [Levente] (kesz)  
 - Visszaigazolo email kuldes email/passdword provideres regisztracio eseten [Levente] (kesz)  
 - Visszaigazolo email tenylegesen funkcionaljon es az adatbazisban tegye a felhasznalot verifiedra [Levente] (kesz)  
 - Elkesziteni a login oldalt [Levente] (kesz)  
 - A login oldal ellenorizze, hogy a felhasznalo letezik es verified [Levente] (kesz)  
-- Reset password gomb keszites es funkcionalissa tetele [Levente] (nincs kesz)
-- Ha a felhsznalo nem verified, akkor kuldjon visszaigazolo emailt a program [Levente] (nincs kesz)  
-- Az emailek (verifikacios es reset password) szama legyen korlatozva [Levente] (nincs kesz)
+- Reset password gomb keszites es funkcionalissa tetele [Levente] (kesz)
+- Az emailek (verifikacios es reset password) szama legyen korlatozva [Levente] (kesz)
 - Hiba megjelenitese, tajekoztato informaciok megjelenitese a felhasznalonak magyarul minden esetben login es register eseteben is, pl: Az email cim meg nincs hitelesitve, az email cim mar hasznalatban van, a hitelesito email elkuldve, stb... [Marci] (nincs kesz)
+- login.html es register.html teljes dizajnolasa, felugro modalok, uzenetek jol jelenjenek meg, teljes auth.css elkeszitese, UI optimalizalasa [Kristof] (nincs kesz)
 - Regisztracio kezi tesztelese es minden teszt eset dokumentalasa word fajlban [Kristof] (nincs kesz)  
 - Bejelentkezes kezi tesztelese es minden teszt eset dokumentalasa word fajlban [Kristof] (nincs kesz)  
 - Reset password kezi tesztelese es minden teszt eset dokumentalasa word fajlban [Kristof] (nincs kesz)  
@@ -201,10 +201,8 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 
 ---
 
-## 2. Firestore db felallitasa es szabalyok megirasa (0 / 4)
+## 2. Firestore db felallitasa es szabalyok megirasa (0 / 2)
 
-- Task collection letrehozasa, nehany tesztadat letrehozasa [Levente] (nincs kesz)  
-- Users collectionbe nehany tesztadat letrehozasa [Levente] (nincs kesz)  
 - TaskType collection letrehozasa, nehany tesztadat letrehozasa [Levente] (nincs kesz)  
 - Database rules megirasa [Levente] (nincs kesz)  
 

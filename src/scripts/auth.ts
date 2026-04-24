@@ -18,6 +18,15 @@ onAuthStateChanged(auth, async (user) => {
                     });
                     console.log("A felhasznalo adatbazisban szereplo dokumentumaban is verified mostmar")
                 };
+
+                const currentPath = window.location.pathname.toLowerCase();
+                const isLoginPage = currentPath.includes("login");
+                const isRegisterPage = currentPath.includes("register");
+
+                if (isLoginPage || isRegisterPage) {
+                    window.location.href = "/pages/create.html";
+                }
+
             } else {
                 console.log("A felhasznalo meg nem hitelesitette az email cimet", docSnap.data().userVerified);
             };

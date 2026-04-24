@@ -1,0 +1,6 @@
+https://firebase.google.com/docs/firestore/manage-data/add-data
+https://firebase.google.com/docs/firestore/manage-data/add-data
+https://firebase.google.com/docs/auth/web/password-auth
+https://firebase.google.com/docs/auth/web/manage-users
+https://firebase.google.com/docs/auth/web/password-auth
+https://firebase.google.com/docs/auth/web/google-signin

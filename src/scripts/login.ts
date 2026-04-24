@@ -1,5 +1,5 @@
 import "../styles/auth.css";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import { User } from "./classes/User";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "./firebase";
@@ -8,23 +8,6 @@ const init = function () {
     console.log("Betoltodott a register.ts")
     const form: HTMLElement = document.getElementById("loginForm") as HTMLElement;
     form.addEventListener("submit", sendLoginForm);
-
-    // document.getElementById("googleButton")?.addEventListener("click", () => {
-    //     console.log("Google gombra kattintva")
-    //     const provider = new GoogleAuthProvider();
-    //     const auth = getAuth();
-    //     auth.useDeviceLanguage;
-
-    //     signInWithPopup(auth, provider)
-    //         .then((result) => {
-    //             const credential = GoogleAuthProvider.credentialFromResult(result);
-    //             const token = credential.accessToken;
-    //             const user = result.user;
-    //             console.log(credential, result);
-    //         }).catch((error) => {
-    //             throw new Error(`Hiba uzener: ${error.code}, Hiba kod: ${error.errorMessage}, Hitelesito adat: ${GoogleAuthProvider.credentialFromError(error)}`);
-    //         });
-    // });
 
     document.getElementById("googleButton")?.addEventListener("click", () => {
         console.log("Google gombra kattintva")
@@ -53,6 +36,24 @@ const init = function () {
                 throw new Error(`Hiba uzener: ${error.code}, Hiba kod: ${error.errorMessage}, Email: ${error.costumData.email}, Hitelesito adat: ${GoogleAuthProvider.credentialFromError(error)}`);
             });
     });
+    
+    document.getElementById("forgotPassButton")?.addEventListener("click", () => {
+        const modal = document.getElementById("forgotPassModal");
+        modal?.classList.toggle("hide");
+
+    });
+
+    document.getElementById("forgotPassSendButton")?.addEventListener("click", () => {
+        const email = document.getElementById("forgotPassEmailInput").value;
+        const auth = getAuth();
+        sendPasswordResetEmail(auth, email)
+            .then(() => {
+                console.log("forgotPassSendButton megnyomva, ha az email letezik a felhasznalok koztt, kikuldjuk az emailt")
+            })
+            .catch((error) => {
+                throw new Error(`Hiba uzener: ${error.code}, Hiba kod: ${error.errorMessage}`);
+            });
+    });
 };
 
 const sendLoginForm = function (e: Event) {
@@ -60,7 +61,6 @@ const sendLoginForm = function (e: Event) {
     console.log("Bejelentkezes gombra kattintva")
     const email = document.getElementById("emailInput") as HTMLFormElement;
     const password = document.getElementById("passwordInput") as HTMLFormElement;
-
 
     const auth = getAuth();
     signInWithEmailAndPassword(auth, email.value, password.value)
