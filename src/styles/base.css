@@ -38,3 +38,123 @@
 
     --font-family: "Space Grotesk", sans-serif;
 }
+
+/* Itt egy csomo mindenre megkertem a codexet, mert nem feltetlenul tudom, hogy mi micsoda. Mindennek utannaneztem, amit nem tudtam es mostmar ertem. A kodexnek megadtam a tervezett stilust, amiben szeretnem csinalni az oldalt (neoabszolutista) */
+/* https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/box-sizing */
+/* https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Cascade/Specificity */
+/* https://www.w3schools.com/cssref/css3_pr_box-sizing.php */
+/* https://www.w3schools.com/cssref/sel_before.php */
+/* https://www.w3schools.com/CSSref/sel_after.php */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* https://www.w3schools.com/cssref/pr_scroll-behavior.php */
+html {
+    scroll-behavior: smooth;
+}
+
+/* https://www.w3schools.com/cssref/css_pr_scroll-margin-top.php */
+section {
+    scroll-margin-top: 7px;
+}
+
+/* https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/text-rendering */
+body {
+    margin: 0;
+    background-color: var(--background-color);
+    color: var(--black);
+    font-family: var(--font-family);
+    font-size: var(--gap4);
+    font-weight: 700;
+    line-height: 1.5;
+    text-rendering: geometricPrecision;
+}
+
+/* Ezt teljesen az ai irta, tetszik, szoval benne hagyom */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background-image:
+        linear-gradient(to right, rgba(0, 0, 0, 0.09) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.09) 1px, transparent 1px);
+    background-size: 42px 42px;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+/* https://www.w3schools.com/cssref/css_inherit.php */
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+/*  https://www.w3schools.com/csSref/sel_selection.php*/
+::selection {
+    background-color: var(--secondary-color);
+    color: var(--black);
+}
+
+/* https://www.w3schools.com/cssref/sel_focus-visible.php */
+/* https://www.w3schools.com/css/css_outline_offset.asp */
+:focus-visible {
+    outline: 4px solid var(--black);
+    outline-offset: 4px;
+}
+
+h1,
+h2,
+h3,
+p {
+    margin: 0;
+}
+
+/* https://www.w3schools.com/cssref/func_clamp.php */
+h1,
+h2,
+h3 {
+    font-weight: 900;
+    line-height: 0.95;
+}
+
+/* https://www.w3schools.com/cssref/func_clamp.php */
+/* https://www.w3schools.com/cssref/css_units.php */
+h1 {
+    font-size: clamp(3.4rem, 9vw, 7.4rem);
+}
+
+h2 {
+    font-size: clamp(2.4rem, 6vw, 5.4rem);
+}
+
+h3 {
+    font-size: clamp(1.4rem, 3vw, 2rem);
+}
+
+p {
+    max-width: 70ch;
+}
+
+ul, ol {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
