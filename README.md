@@ -73,13 +73,13 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 
 ### task:
 
-- userId (string)  
-- taskId (string)  
+- userID (string)  
+- taskID (string)  
 - taskName (string)  
 - taskDesc (string)  
 - taskDeadline (timestamp)  
 - taskImportance (string)  
-- taskTypeId (string)  
+- taskTypeID (string)  
 - taskStatus (string)  
 - taskCompletedAt (timestamp)  
 - taskCreatedAt (timestamp)  
@@ -87,7 +87,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 
 ### users:
 
-- userId: (string)  
+- userID: (string)  
 - userEmail: (string)  
 - userName: (string)  
 - userCreatedAt: (timestamp)  
@@ -95,8 +95,8 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 
 ### task_types:
 
-- taskTypeId (string)  
-- userId: (string)  
+- taskTypeID (string)  
+- userID: (string)  
 - taskTypeName: (string)  
 - taskType_isSystem: (bool)  
 
@@ -201,9 +201,9 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 
 ---
 
-## 2. Firestore db felallitasa es szabalyok megirasa (0 / 2)
+## 2. Firestore db felallitasa es szabalyok megirasa (1 / 2)
 
-- TaskType collection letrehozasa, nehany tesztadat letrehozasa [Levente] (nincs kesz)  
+- TaskType collection letrehozasa, nehany tesztadat letrehozasa [Levente] (kesz)  
 - Database rules megirasa [Levente] (nincs kesz)  
 
 ---
