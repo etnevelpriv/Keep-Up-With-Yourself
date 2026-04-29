@@ -1,25 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hu">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Keep Up With Yourself</title>
 </head>
 
 <body>
 
-    <nav class="navbar">
-        <img src="" alt="Logo">
-        <ul>
-            <li><a href="\hero">Kezdolap</a></li>
-            <li><a href="\problem">Problema</a></li>
-            <li><a href="\solution">Megoldas</a></li>
-            <li><a href="\workflow">Folyamat</a></li>
-            <li><a href="\statistics">Kepessegek</a></li>
-        </ul>
-        <button id="navButton">Bejelentkezes</button>
-    </nav>
+    <header>
+        <nav class="navbar">
+            <a class="navbar-logo" href="#hero">
+                <img src="" alt="Logo">
+            </a>
+            
+            <button class="nav-toggle" id="navToggle">Hamb</button>
+
+            <ul>
+                <li><a href="#problem">Problema</a></li>
+                <li><a href="#solution">Megoldas</a></li>
+                <li><a href="#workflow">Folyamat</a></li>
+                <li><a href="#statistics">Kepessegek</a></li>
+            </ul>
+            <a class="btn btn-primary nav-cta" id="navButton" href="./pages/login.html">Bejelentkezes</a>
+        </nav>
+    </header>
 
     <section class="hero-section" id="hero">
         <!-- focim, alcim, lead, vizualis elem, fo cta gomb, masodlagos cta gomb -->

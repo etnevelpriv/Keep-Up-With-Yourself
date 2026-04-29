@@ -1,3 +1,2 @@
-import { testAPI } from "./firebase";
-console.log("landing.ts betoltodott");
-console.log(testAPI)
+import "../styles/base.css";
+import "../styles/landing.css";
