@@ -160,9 +160,26 @@ li {
 }
 
 .btn {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     min-width: var(--gap9);
     min-height: var(--gap9);
     padding: var(--gap3) var(--gap5);
+    min-height: var(--gap9);
+    min-width: var(--gap9);
+    padding: var(--gap4) var(--gap5);
+    border: var(--border-normal);
+    background: var(--white);
+    box-shadow: var(--shadow-small-dark);
+    font-size: var(--gap3);
+    font-weight: 900;
+    line-height: 1;
+    text-transform: uppercase;
+    transition: all 120ms linear;
+}
+
+.btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-medium-dark);
 }
