@@ -3,7 +3,9 @@
 :root {
     --background-color: #fffefc;
     --primary-color: #f26363;
+    --primary-color-light: #ff8686;
     --secondary-color: #e6c02a;
+    --secondary-color-light: #f1da7a;
     --black: #000000;
     --white: #ffffff;
     --grey: #aa9dde;
@@ -72,6 +74,7 @@ body {
     font-weight: 700;
     line-height: 1.5;
     text-rendering: geometricPrecision;
+    overflow-x: hidden;
 }
 
 /* Ezt teljesen az ai irta, tetszik, szoval benne hagyom */
@@ -150,7 +153,8 @@ p {
     max-width: 70ch;
 }
 
-ul, ol {
+ul,
+ol {
     margin: 0;
     padding: 0;
 }
@@ -182,4 +186,41 @@ li {
 .btn:hover {
     transform: translate(-2px, -2px);
     box-shadow: var(--shadow-medium-dark);
+}
+
+.btn:active {
+    transform: translate(4px, 4px);
+    box-shadow: none;
+}
+
+.btn-large {
+    min-height: var(--gap10);
+    padding-inline: var(--gap5);
+    font-size: clamp(var(--gap4), 2vw, var(--gap5));
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-color-light);
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--secondary-color-light);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto;
+        transform: none;
+        transition: none
+    };
 }
