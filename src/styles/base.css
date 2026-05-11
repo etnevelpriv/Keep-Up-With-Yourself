@@ -38,6 +38,7 @@
     --shadow-large-light: 12px 12px 0 0 var(--white);
     --shadow-xlarge-light: 16px 16px 0 0 var(--white);
 
+    --container: 1180px;
     --font-family: "Space Grotesk", sans-serif;
 }
 

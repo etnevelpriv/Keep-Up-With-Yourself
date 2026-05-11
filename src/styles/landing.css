@@ -104,6 +104,39 @@ header {
     }
 }
 
+/* hero */
+.hero-section {
+    position: relative;
+    padding-block: clamp(var(--gap9), 8vw, var(--gap12));
+}
+
+/* Itt ai-t hasznaltam otleteleshez, o irta a right es leftet */
+.hero-section::before,
+.hero-section::after {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    border: var(--border-normal);
+    box-shadow: var(--shadow-medium-dark);
+}
+
+.hero-section::before {
+    top: calc(var(--gap9)*2);
+    left: max(-3rem, calc((100vw - var(--container)) / 2 - 5rem));
+    width: var(--gap11);
+    height: var(--gap11);
+    transform: rotate(-12deg);
+    background: var(--primary-color);
+}
+
+.hero-section::after {
+    right: max(-2rem, calc((100vw - var(--container)) / 2 - 4rem));
+    bottom: var(--gap9);
+    width: var(--gap12);
+    height: var(--gap12);
+    border-radius: 50px;
+    background: var(--secondary-color);
+}
 
 /* reszponziv media */
 @media (max-width: 860px) {
