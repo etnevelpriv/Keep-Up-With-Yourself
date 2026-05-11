@@ -1,0 +1,17 @@
+/* Itt is fogok minimalis ai-t hasznalni, ahol hasznalok ott leirom es melle csatolom, hogy mi az, ami uj info volt */
+
+/* navbar */
+header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    background-color: var(--background-color);
+}
+
+/* ai */
+/* https://www.w3schools.com/cssref/pr_grid-template-columns.php */
+nav {
+    display: grid;
+    grid-template-columns:auto 1fr auto;
+}
