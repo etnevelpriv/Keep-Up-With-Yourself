@@ -44,7 +44,6 @@ header {
                     padding: var(--gap3) var(--gap4);
                     border: 2px solid transparent;
                     font-size: var(--gap3);
-                    font-weight: 900;
                     line-height: 1;
                     text-transform: uppercase;
                     transition: all 120ms linear;
@@ -108,8 +107,77 @@ header {
 .hero-section {
     position: relative;
     padding-block: clamp(var(--gap9), 8vw, var(--gap12));
-}
 
+    /* Itt a w3school nem volt nagy segitsegemre, ez erthetoen elmagyarazza */
+    /* https://css-tricks.com/almanac/functions/m/minmax/ */
+    .hero-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.02fr) minmax(320px, 0.98fr);
+        gap: clamp(var(--gap8), 6vw, var(--gap11));
+        align-items: center;
+    }
+
+    .hero-textContent {
+        display: grid;
+        gap: var(--gap6);
+
+        .subtitle {
+            background-color: var(--primary-color);
+        }
+        h1 {
+            max-width: var(--gap10);
+            text-transform: uppercase;
+            z-index: 1;
+            span {
+                display: inline-block;
+                margin: var(--gap2);
+                padding: 0.1em;
+                border: var(--border-normal);
+                background: var(--secondary-color);
+                box-shadow: var(--shadow-medium-dark);
+                transform: rotate(-3deg);
+            }
+        }
+
+        .hero-lead {
+            font-size: clamp(var(--gap4), 2vw, var(--gap5));
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--gap4);
+        }
+
+        .hero-advantages {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--gap3);
+
+            p {
+                display: inline-flex;
+                min-height: var(--gap8);
+                align-items: center;
+                padding: var(--gap3);
+                border: var(--border-normal);
+                border-radius: 50px;
+                background-color: var(--white);
+                box-shadow: var(--shadow-small-dark);
+                font-size: var(--gap4);
+                text-transform: uppercase;
+            }
+
+            p:nth-child(2) {
+                background-color: var(--green);
+            }
+
+            p:nth-child(3) {
+                background-color: var(--grey);
+            }
+        }
+    }
+}
 /* Itt ai-t hasznaltam otleteleshez, o irta a right es leftet */
 .hero-section::before,
 .hero-section::after {
