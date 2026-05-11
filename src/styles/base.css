@@ -26,8 +26,8 @@
     --gap12: 6rem;
 
     --border-thin: 2px solid var(--black);
-    --border-normal: 4px solid var(var(--black));
-    --border-heavy: 8px solid var(var(--black));
+    --border-normal: 4px solid var(--black);
+    --border-heavy: 8px solid var(--black);
 
     --shadow-small-dark: 4px 4px 0 0 var(--black);
     --shadow-medium-dark: 8px 8px 0 0 var(--black);

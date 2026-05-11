@@ -208,10 +208,10 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 
 ---
 
-## 3. Landing page elkeszitese (0 / 4)
+## 3. Landing page elkeszitese (2 / 4)
 
-- Teljes HTML struktrura felallitasa az index.html-hez [Levente] (nincs kesz)  
-- Global base css struktura felallitasa, valtozok megadasa, gyakran hasznald classok megirasa [Levente] (nincs kesz)  
+- Teljes HTML struktrura felallitasa az index.html-hez [Levente] (kesz)  
+- Global base css struktura felallitasa, valtozok megadasa [Levente] (kesz)  
 - Teljes css megirasa a landing pagehez [Levente] (nincs kesz)  
 - Animaciokhoz szukseges minimalis ts kod megirasa [Levente] (nincs kesz)  
 

@@ -1,17 +1,168 @@
 /* Itt is fogok minimalis ai-t hasznalni, ahol hasznalok ott leirom es melle csatolom, hogy mi az, ami uj info volt */
+/* Most latom, hogy tulsagosan komplex az ai munkaja, lebutitom majd kicsit. Teljesen magamtol nem tudnek ilyet irni, nem vagyok eleg kreativ es nincs is meg a kello tudasom, de legalabb igy tobbet tanulok :) */
 
 /* navbar */
+/* ai */
+/* https://www.w3schools.com/cssref/pr_grid-template-columns.php */
+/* https://www.w3schools.com/cssref/func_min.php */
+/* https://www.w3schools.com/cssref/css_pr_padding-block.php */
+
 header {
     position: sticky;
     top: 0;
     left: 0;
     z-index: 999;
     background-color: var(--background-color);
+
+    nav {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: var(--gap6);
+        align-items: center;
+        width: min(100% - 28px, 1280px);
+        margin-inline: auto;
+        padding-block: var(--gap4);
+
+        .navbar-logo {
+            display: inline-flex;
+            align-items: center;
+            width: var(--gap12);
+            height: var(--gap12);
+        }
+
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--gap2);
+
+            li {
+                a {
+                    display: inline-flex;
+                    align-items: center;
+                    min-height: var(--gap8);
+                    padding: var(--gap3) var(--gap4);
+                    border: 2px solid transparent;
+                    font-size: var(--gap3);
+                    font-weight: 900;
+                    line-height: 1;
+                    text-transform: uppercase;
+                    transition: all 120ms linear;
+                }
+
+                a:hover,
+                a:active {
+                    border-color: var(--black);
+                    background-color: var(--grey);
+                    box-shadow: var(--shadow-small-dark);
+                    transform: rotate(-3deg);
+                }
+            }
+        }
+
+        /* https://www.sliderrevolution.com/resources/css-hamburger-menu/ */
+        .nav-toggle {
+            display: none;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            transition: transform 400ms;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+
+            .top {
+                stroke-dasharray: 40 139;
+            }
+
+            .bottom {
+                stroke-dasharray: 40 180;
+            }
+
+            .line {
+                fill: none;
+                transition: stroke-dasharray 400ms, stroke-dashoffset 400ms;
+                stroke: #000;
+                stroke-width: 5.5;
+                stroke-linecap: round;
+            }
+        }
+
+        .nav-toggle.active {
+            transform: rotate(45deg);
+
+            .top {
+                stroke-dashoffset: -98px;
+            }
+
+            .bottom {
+                stroke-dashoffset: -138px;
+            }
+        }
+    }
 }
 
-/* ai */
-/* https://www.w3schools.com/cssref/pr_grid-template-columns.php */
-nav {
-    display: grid;
-    grid-template-columns:auto 1fr auto;
+
+/* reszponziv media */
+@media (max-width: 860px) {
+    .navbar {
+        grid-template-columns: 1fr auto;
+        gap: var(--gap4);
+        height: 12vh;
+
+        .navbar-logo {
+            height: 10vh;
+            width: 10vh;
+        }
+
+        .nav-toggle {
+            display: grid !important;
+        }
+
+        .nav-cta {
+            display: none;
+        }
+
+        /* https://www.w3schools.com/cssref/css_pr_inset.php */
+        ul {
+            position: fixed;
+            inset: 100% 1rem auto 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: var(--gap3);
+            padding-block: var(--gap6);
+            border: var(--border-heavy);
+            background: var(--secondary-color);
+            box-shadow: var(--shadow-large-dark);
+            transition: all 180ms ease-out;
+
+            li {
+                display: inline-flex;
+                justify-content: center;
+
+                a {
+                    min-height: 3.25rem;
+                    width: 30vw;
+                    text-align: center;
+                    justify-content: center;
+                    border: var(--border-thin) !important;
+                    background: var(--white);
+                    box-shadow: var(--shadow-small-dark);
+                }
+            }
+
+        }
+
+        ul.is-open {
+            transform: translateY(0);
+        }
+    }
+}
+
+@media (max-width: 680px) {
+    .navbar {
+        width: min(100% - 20px, 1280px);
+    }
 }
