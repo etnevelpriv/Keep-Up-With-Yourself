@@ -108,6 +108,7 @@ header {
 /* reszponziv media */
 @media (max-width: 860px) {
     .navbar {
+        position: relative;
         grid-template-columns: 1fr auto;
         gap: var(--gap4);
         height: 12vh;
@@ -127,8 +128,8 @@ header {
 
         /* https://www.w3schools.com/cssref/css_pr_inset.php */
         ul {
-            position: fixed;
-            inset: 100% 1rem auto 1rem;
+            position: absolute;
+            inset: 100% var(--gap4) auto var(--gap4);
             display: flex;
             flex-direction: column;
             gap: var(--gap3);
@@ -137,13 +138,14 @@ header {
             background: var(--secondary-color);
             box-shadow: var(--shadow-large-dark);
             transition: all 180ms ease-out;
+            transform: translateY(-180%);
 
             li {
                 display: inline-flex;
                 justify-content: center;
 
                 a {
-                    min-height: 3.25rem;
+                    min-height: var(--gap9);
                     width: 30vw;
                     text-align: center;
                     justify-content: center;
