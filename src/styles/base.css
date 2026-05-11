@@ -158,3 +158,11 @@ ul, ol {
 li {
     list-style: none;
 }
+
+.btn {
+    align-items: center;
+    justify-content: center;
+    min-width: var(--gap9);
+    min-height: var(--gap9);
+    padding: var(--gap3) var(--gap5);
+}
