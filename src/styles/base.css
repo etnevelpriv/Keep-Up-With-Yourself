@@ -67,17 +67,17 @@ section {
 
 /* https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/text-rendering */
 body {
-    margin: 0;
+    margin: 0 auto;
     background-color: var(--background-color);
     color: var(--black);
     font-family: var(--font-family);
     font-size: var(--gap4);
-    font-weight: 700;
     line-height: 1.5;
     text-rendering: geometricPrecision;
     overflow-x: hidden;
+    max-width: 90%;
+    font-weight: 700;
 }
-
 /* Ezt teljesen az ai irta, tetszik, szoval benne hagyom */
 body::before {
     content: "";
