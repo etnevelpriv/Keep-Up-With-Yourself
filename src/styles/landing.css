@@ -124,10 +124,12 @@ header {
         .subtitle {
             background-color: var(--primary-color);
         }
+
         h1 {
             max-width: var(--gap10);
             text-transform: uppercase;
             z-index: 1;
+
             span {
                 display: inline-block;
                 margin: var(--gap2);
@@ -176,8 +178,11 @@ header {
                 background-color: var(--grey);
             }
         }
+        .hero-visualContent {
+        }
     }
 }
+
 /* Itt ai-t hasznaltam otleteleshez, o irta a right es leftet */
 .hero-section::before,
 .hero-section::after {
@@ -262,6 +267,13 @@ header {
             transform: translateY(0);
         }
     }
+
+    .hero-section {
+        .hero-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
 }
 
 @media (max-width: 680px) {
