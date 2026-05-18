@@ -36,7 +36,7 @@ const init = function () {
                 throw new Error(`Hiba uzener: ${error.code}, Hiba kod: ${error.errorMessage}, Email: ${error.costumData.email}, Hitelesito adat: ${GoogleAuthProvider.credentialFromError(error)}`);
             });
     });
-    
+
     document.getElementById("forgotPassButton")?.addEventListener("click", () => {
         const modal = document.getElementById("forgotPassModal");
         modal?.classList.toggle("hide");
@@ -69,7 +69,19 @@ const sendLoginForm = function (e: Event) {
             console.log(`Sikeres bejelentkezes, ${user}`)
         })
         .catch((error) => {
+            const errorCodes = {
+                "auth/invalid-credential": "Nem megfelelő felhasználói adatok.",
+                "auth/missing-password": "Nincs jelszó megadva."
+            };
+
+            const errorMessageDiv = document.getElementById("errorMessage");
+            if (errorCodes[error.code]) {
+                errorMessageDiv?.textContent = errorCodes[error.code];
+            } else {
+                errorMessageDiv?.textContent = "Ismeretlen hiba történt."
+            };
             throw new Error(`Hiba uzener: ${error.code}, Hiba kod: ${error.errorMessage}`);
+
         });
 };
 
