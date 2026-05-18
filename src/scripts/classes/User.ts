@@ -80,6 +80,18 @@ export class User implements UserInterface {
                 this.saveUserInfoToDb(userCredential.user.uid, user)
             })
             .catch((error) => {
+                const errorCodes = {
+                    "auth/email-already-in-use": "Ezzel az emaillel már létezik egy felhasználói fiók.",
+                };
+
+                const errorMessageDiv = document.getElementById("errorMessage");
+                if (errorMessageDiv) {
+                    if (errorCodes[error.code]) {
+                        errorMessageDiv.textContent = errorCodes[error.code];
+                    } else {
+                        errorMessageDiv.textContent = "Ismeretlen hiba történt.";
+                    }
+                }
                 throw new Error(`Hiba uzenet: ${error.message}, Hiba kod: ${error.code}`);
             });
     };
@@ -98,6 +110,10 @@ export class User implements UserInterface {
                 this.sendVerificationLink(user);
             };
         } catch (e: any) {
+            const errorMessageDiv = document.getElementById("errorMessage");
+            if (errorMessageDiv) {
+                errorMessageDiv.textContent = 'Hiba történt az adatbázisba való mentés folyamán.';
+            }
             throw new Error(e)
         };
     };
@@ -111,6 +127,10 @@ export class User implements UserInterface {
             .then(() => {
                 console.log(`Email verifikacio elkuldve`)
             }).catch((err: any) => {
+                const errorMessageDiv = document.getElementById("errorMessage");
+                if (errorMessageDiv) {
+                    errorMessageDiv.textContent = 'Hiba történt a visszaigazoló email küldése során.';
+                }
                 throw new Error(err);
             });
     };

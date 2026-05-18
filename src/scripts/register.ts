@@ -25,6 +25,10 @@ const init = function () {
                 const email = user.email;
                 const userObj = new User(name, undefined, email, new Date(), true);
                 userObj.saveUserInfoToDb(user.uid, undefined);
+                const infoMessageDiv = document.getElementById("infoMessage");
+                if (infoMessageDiv) {
+                    infoMessageDiv.textContent = "Sikeres bejelentkezés, töltsd újra az oldalt a fiókod megtekintéséhez.";
+                };
             }).catch((error) => {
                 throw new Error(`Hiba uzener: ${error.code}, Hiba kod: ${error.errorMessage}, Email: ${error.costumData.email}, Hitelesito adat: ${GoogleAuthProvider.credentialFromError(error)}`);
             });

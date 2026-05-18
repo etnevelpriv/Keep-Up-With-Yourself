@@ -29,6 +29,10 @@ onAuthStateChanged(auth, async (user) => {
 
             } else {
                 console.log("A felhasznalo meg nem hitelesitette az email cimet", docSnap.data().userVerified);
+                const errorMessageDiv = document.getElementById("errorMessage");
+                if (errorMessageDiv) {
+                    errorMessageDiv.textContent = "A bejelentkezés sikeres, de nincs hitelesítve a felhasználói fiók, nézd meg az emailjeidet, vagy állíts be egy új jelszót az 'Elfejeltett jelszó' gombra kattintva a Bejelentkezés felületen. .";
+                }
             };
         } else {
             console.log("A felhasznalo letezik, de az adatbazisban nincs hozza dokumentum.");
