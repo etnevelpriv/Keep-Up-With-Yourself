@@ -16,13 +16,6 @@ header {
     box-shadow: 0 4px 0 0 var(--black);
 }
 
-header.is-scrolled {
-    background:
-        radial-gradient(var(--black) 1px, transparent 1.5px),
-        var(--background-color);
-    background-size: 18px 18px;
-}
-
 .navbar {
     display: grid;
     grid-template-columns: auto 1fr auto;
@@ -39,16 +32,8 @@ header.is-scrolled {
     justify-content: center;
     width: var(--gap12);
     height: var(--gap12);
-    border: var(--border-normal);
-    background-color: var(--secondary-color);
-    box-shadow: var(--shadow-small-dark);
-    transition: all 120ms linear;
 }
 
-.navbar-logo:hover {
-    transform: translate(-2px, -2px) rotate(-2deg);
-    box-shadow: var(--shadow-medium-dark);
-}
 
 .navbar-logo img {
     width: 100%;
@@ -92,13 +77,11 @@ footer nav a:active {
     display: none;
     width: var(--gap12);
     height: var(--gap12);
-    border: var(--border-normal);
-    background: var(--white);
-    box-shadow: var(--shadow-small-dark);
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
     transition: all 180ms linear;
     user-select: none;
+    background-color: transparent !important;
 }
 
 .nav-toggle:hover {

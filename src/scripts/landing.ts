@@ -25,13 +25,6 @@ document.addEventListener("keydown", (event) => {
     }
 });
 
-const setHeaderState = function () {
-    header?.classList.toggle("is-scrolled", window.scrollY > 12);
-};
-
-setHeaderState();
-window.addEventListener("scroll", setHeaderState, { passive: true });
-
 const revealElements = document.querySelectorAll(
     ".hero-textContent, .task-board, .feature-card, .section-head, .problem-card, .solution-card, .workflow-item, .statistics-card, .security-visual, .cta-card"
 );
