@@ -13,7 +13,7 @@ const init = function () {
         provider.addScope('https://www.googleapis.com/auth/userinfo.email');
         provider.addScope('https://www.googleapis.com/auth/userinfo.profile');
         const auth = getAuth();
-        auth.useDeviceLanguage;
+        auth.useDeviceLanguage();
 
         signInWithPopup(auth, provider)
             .then((result) => {

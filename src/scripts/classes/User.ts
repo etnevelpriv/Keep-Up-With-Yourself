@@ -31,24 +31,25 @@ export class User implements UserInterface {
             if (errorMessageDiv) errorMessageDiv.textContent = message;
             throw new Error(message);
         }
+        if (password !== undefined) {
+            if (typeof password !== "string" || password.trim() === "") {
+                const message = `A jelszó nincs megfelelően megadva: ${password}`;
+                if (errorMessageDiv) errorMessageDiv.textContent = message;
+                throw new Error(message);
+            }
+            // Ezt a reszt ai-al irattam meg. Mondjuk a szerver oldal amugy is visszadobja, de nembaj, legyen meg itt is.
+            const pwd = password;
+            const lengthOk = pwd.length >= 8 && pwd.length <= 16;
+            const lowerOk = /[a-z]/.test(pwd);
+            const upperOk = /[A-Z]/.test(pwd);
+            const digitOk = /[0-9]/.test(pwd);
+            const specialOk = /[\.\!\-]/.test(pwd);
 
-        if (typeof password !== "string" || password.trim() === "") {
-            const message = `A jelszó nincs megfelelően megadva: ${password}`;
-            if (errorMessageDiv) errorMessageDiv.textContent = message;
-            throw new Error(message);
-        }
-        // Ezt a reszt ai-al irattam meg. Mondjuk a szerver oldal amugy is visszadobja, de nembaj, legyen meg itt is.
-        const pwd = password;
-        const lengthOk = pwd.length >= 8 && pwd.length <= 16;
-        const lowerOk = /[a-z]/.test(pwd);
-        const upperOk = /[A-Z]/.test(pwd);
-        const digitOk = /[0-9]/.test(pwd);
-        const specialOk = /[\.\!\-]/.test(pwd);
-
-        if (!lengthOk || !lowerOk || !upperOk || !digitOk || !specialOk) {
-            const message = `A jelszó nem felel meg a követelményeknek.`;
-            if (errorMessageDiv) errorMessageDiv.textContent = message;
-            throw new Error(message);
+            if (!lengthOk || !lowerOk || !upperOk || !digitOk || !specialOk) {
+                const message = `A jelszó nem felel meg a követelményeknek.`;
+                if (errorMessageDiv) errorMessageDiv.textContent = message;
+                throw new Error(message);
+            }
         }
 
         if (typeof email !== "string" || email.trim() === "" || !email.includes("@")) {
@@ -112,8 +113,8 @@ export class User implements UserInterface {
                     taskType_isSystem: true
                 },
             ];
-            const emptyArr:[] = [];
-            
+            const emptyArr: [] = [];
+
             await setDoc(doc(db, "users", uid), {
                 userID: uid,
                 userEmail: this.email,
