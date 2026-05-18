@@ -162,18 +162,6 @@ body>a:active {
     background: var(--secondary-color);
 }
 
-#googleButton::before {
-    content: "G";
-    display: inline-grid;
-    place-items: center;
-    width: var(--gap7);
-    height: var(--gap7);
-    border: var(--border-thin);
-    border-radius: 999px;
-    background: var(--white);
-    font-weight: 900;
-}
-
 .forgot-pass-button {
     background: var(--grey);
 }
@@ -219,8 +207,8 @@ body>a {
     padding: clamp(var(--gap5), 5vw, var(--gap8));
     border: var(--border-heavy);
     background:
-        radial-gradient(var(--black) 1.5px, transparent 1.5px),
-        var(--white);
+        radial-gradient(var(--white) 1.5px, transparent 1.5px),
+        var(--grey);
     background-size: 22px 22px;
     box-shadow: var(--shadow-xlarge-dark);
     transform: translate(-50%, -50%) rotate(-1deg);
@@ -231,6 +219,7 @@ body>a {
     padding-right: var(--gap8);
     font-size: clamp(1.5rem, 5vw, 2.7rem);
     text-transform: uppercase;
+    color: var(--black);
 }
 
 .forgot-pass-modal button:not(.modal-close-button) {
@@ -297,6 +286,43 @@ body>a {
 .auth-message-info {
     bottom: var(--gap5);
     background: var(--green);
+}
+
+header {
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: var(--gap4);
+    border-bottom: var(--border-normal);
+    z-index: 2;
+}
+
+.header-back-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--gap2) var(--gap4);
+    border: var(--border-normal);
+    background: var(--secondary-color);
+    color: var(--black);
+    box-shadow: var(--shadow-small-dark);
+    cursor: pointer;
+    font-size: var(--gap5);
+    transition: all 120ms linear;
+}
+
+.header-back-button:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-medium-dark);
+}
+
+.header-back-button:active {
+    transform: translate(4px, 4px);
+    box-shadow: none;
+}
+
+body {
+    padding-top: calc(var(--gap10) + var(--gap8));
 }
 
 .auth-message p {
