@@ -71,34 +71,27 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 
 ## Adatbazis struktura
 
-### task:
 
-- userID (string)  
-- taskID (string)  
-- taskName (string)  
-- taskDesc (string)  
-- taskDeadline (timestamp)  
-- taskImportance (string)  
-- taskTypeID (string)  
-- taskStatus (string)  
-- taskCompletedAt (timestamp)  
-- taskCreatedAt (timestamp)  
-- taskUpdatedAt (timestamp)  
 
 ### users:
-
 - userID: (string)  
 - userEmail: (string)  
 - userName: (string)  
 - userCreatedAt: (timestamp)  
 - userVerified: (bool)  
-
-### task_types:
-
-- taskTypeID (string)  
-- userID: (string)  
-- taskTypeName: (string)  
-- taskType_isSystem: (bool)  
+- tasks (collection):
+  - taskName (string)  
+  - taskDesc (string)  
+  - taskDeadline (timestamp)  
+  - taskImportance (string)  
+  - taskTypeName (string)  
+  - taskStatus (string)  
+  - taskCompletedAt (timestamp)  
+  - taskCreatedAt (timestamp)  
+  - taskUpdatedAt (timestamp)
+- task_types (collection):
+  - taskTypeName: (string)  
+  - taskType_isSystem: (bool)  
 
 ---
 

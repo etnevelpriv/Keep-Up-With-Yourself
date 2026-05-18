@@ -98,12 +98,30 @@ export class User implements UserInterface {
 
     async saveUserInfoToDb(uid: string, user: any) {
         try {
-            const docRef = await setDoc(doc(db, "users", uid), {
+            const defaultTaskTypes = [
+                {
+                    taskTypeName: "Tanulás",
+                    taskType_isSystem: true
+                },
+                {
+                    taskTypeName: "Munka",
+                    taskType_isSystem: true
+                },
+                {
+                    taskTypeName: "Takarítás",
+                    taskType_isSystem: true
+                },
+            ];
+            const emptyArr:[] = [];
+            
+            await setDoc(doc(db, "users", uid), {
                 userID: uid,
                 userEmail: this.email,
                 userName: this.name,
                 userCreatedAt: this.createdAt,
-                userVerified: this.verified
+                userVerified: this.verified,
+                taskTypes: defaultTaskTypes,
+                tasks: emptyArr
             });
             console.log("Uj doksi letrehozva az adatbazisban");
             if (!this.verified) {
