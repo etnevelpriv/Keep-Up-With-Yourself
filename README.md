@@ -192,7 +192,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - A login oldal ellenorizze, hogy a felhasznalo letezik es verified [Levente] (kesz)  
 - Reset password gomb keszites es funkcionalissa tetele [Levente] (kesz)
 - Az emailek (verifikacios es reset password) szama legyen korlatozva [Levente] (kesz)
-- Hiba megjelenitese, tajekoztato informaciok megjelenitese a felhasznalonak magyarul minden esetben login es register eseteben is, pl: Az email cim meg nincs hitelesitve, az email cim mar hasznalatban van, a hitelesito email elkuldve, stb... [Marci] (nincs kesz)
+- Hiba megjelenitese, tajekoztato informaciok megjelenitese a felhasznalonak magyarul minden esetben login es register eseteben is, pl: Az email cim meg nincs hitelesitve, az email cim mar hasznalatban van, a hitelesito email elkuldve, stb... [Levente] (kesz)
 - login.html es register.html teljes dizajnolasa, felugro modalok, uzenetek jol jelenjenek meg, teljes auth.css elkeszitese, UI optimalizalasa [Kristof] (nincs kesz)
 - Regisztracio kezi tesztelese es minden teszt eset dokumentalasa word fajlban [Kristof] (nincs kesz)  
 - Bejelentkezes kezi tesztelese es minden teszt eset dokumentalasa word fajlban [Kristof] (nincs kesz)  
