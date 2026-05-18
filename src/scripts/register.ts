@@ -44,7 +44,6 @@ const sendRegisterForm = function (e: Event) {
     const form = document.getElementById("registerForm") as HTMLFormElement
     form.reset()
 
-    userObj.validateFormValues();
     userObj.createUserWithEmailProvider();
 };
 

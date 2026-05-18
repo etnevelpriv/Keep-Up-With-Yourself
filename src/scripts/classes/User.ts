@@ -3,28 +3,17 @@ import { setDoc, doc } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { db } from "../firebase.ts"
 
+const errorMessageDiv = document.getElementById("errorMessage");
+
 export class User implements UserInterface {
     name: string;
     password: string | undefined;
     email: string;
     createdAt: Date;
     verified: boolean;
+
     constructor(name: string, password: string | undefined, email: string, createdAt: Date, verified: boolean) {
-        if (typeof name != "string" || name == "" || name == null || name == undefined) {
-            throw new Error(`A nev valtozo nincs megfeleloen megadva: ${name}`);
-        };
-        // if (typeof password != "string" || password == "" || password == null || password == undefined) {
-        //     throw new Error(`A jelszo valtozo nincs megfeleloen megadva: ${password}`);
-        // };
-        if (typeof email != "string" || email == "" || email == null || email == undefined || !email.includes("@")) {
-            throw new Error(`Az email valtozo nincs megfeleloen megadva: ${email}`);
-        };
-        if (typeof createdAt != "object" || !(createdAt instanceof Date) || createdAt.getTime() > (new Date()).getTime() || createdAt == null || createdAt == undefined || isNaN(createdAt.getTime())) {
-            throw new Error(`A createdAt valtozo nincs megfeleloen megadva: ${createdAt}`);
-        };
-        if (typeof verified != "boolean" || verified == null || verified == undefined) {
-            throw new Error(`A verified valtozo nincs megfeleloen megadva: ${verified}`);
-        };
+        this.validateFormValues(name, password, email, createdAt, verified);
         this.name = name;
         this.password = password;
         this.email = email;
@@ -36,8 +25,36 @@ export class User implements UserInterface {
         return (`Nev: ${this.name}, Jelszo:${this.password}, Email:${this.email}, Datum:${this.createdAt}, Verified:${this.verified}`);
     };
 
-    validateFormValues() {
-        console.log("validateFormValues meg nincs implementalva")
+    validateFormValues(name: string, password: string | undefined, email: string, createdAt: Date, verified: boolean) {
+        if (typeof name !== "string" || name.trim() === "") {
+            const message = `A nev valtozo nincs megfeleloen megadva: ${name}`;
+            if (errorMessageDiv) errorMessageDiv.textContent = message;
+            throw new Error(message);
+        }
+
+        if (typeof password !== "string" || password.trim() === "") {
+            const message = `A jelszo valtozo nincs megfeleloen megadva: ${password}`;
+            if (errorMessageDiv) errorMessageDiv.textContent = message;
+            throw new Error(message);
+        }
+
+        if (typeof email !== "string" || email.trim() === "" || !email.includes("@")) {
+            const message = `Az email valtozo nincs megfeleloen megadva: ${email}`;
+            if (errorMessageDiv) errorMessageDiv.textContent = message;
+            throw new Error(message);
+        }
+
+        if (!(createdAt instanceof Date) || isNaN(createdAt.getTime()) || createdAt.getTime() > new Date().getTime()) {
+            const message = `A createdAt valtozo nincs megfeleloen megadva: ${createdAt}`;
+            if (errorMessageDiv) errorMessageDiv.textContent = message;
+            throw new Error(message);
+        }
+
+        if (typeof verified !== "boolean") {
+            const message = `A verified valtozo nincs megfeleloen megadva: ${verified}`;
+            if (errorMessageDiv) errorMessageDiv.textContent = message;
+            throw new Error(message);
+        }
     };
 
     createUserWithEmailProvider() {
