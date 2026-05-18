@@ -37,6 +37,19 @@ export class User implements UserInterface {
             if (errorMessageDiv) errorMessageDiv.textContent = message;
             throw new Error(message);
         }
+        // Ezt a reszt ai-al irattam meg. Mondjuk a szerver oldal amugy is visszadobja, de nembaj, legyen meg itt is.
+        const pwd = password;
+        const lengthOk = pwd.length >= 8 && pwd.length <= 16;
+        const lowerOk = /[a-z]/.test(pwd);
+        const upperOk = /[A-Z]/.test(pwd);
+        const digitOk = /[0-9]/.test(pwd);
+        const specialOk = /[\.\!\-]/.test(pwd);
+
+        if (!lengthOk || !lowerOk || !upperOk || !digitOk || !specialOk) {
+            const message = `A jelszo nem felel meg a kovetelmenyeknek.`;
+            if (errorMessageDiv) errorMessageDiv.textContent = message;
+            throw new Error(message);
+        }
 
         if (typeof email !== "string" || email.trim() === "" || !email.includes("@")) {
             const message = `Az email valtozo nincs megfeleloen megadva: ${email}`;
