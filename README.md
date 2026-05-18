@@ -193,7 +193,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - Reset password gomb keszites es funkcionalissa tetele [Levente] (kesz)
 - Az emailek (verifikacios es reset password) szama legyen korlatozva [Levente] (kesz)
 - Hiba megjelenitese, tajekoztato informaciok megjelenitese a felhasznalonak magyarul minden esetben login es register eseteben is, pl: Az email cim meg nincs hitelesitve, az email cim mar hasznalatban van, a hitelesito email elkuldve, stb... [Levente] (kesz)
-- login.html es register.html teljes dizajnolasa, felugro modalok, uzenetek jol jelenjenek meg, teljes auth.css elkeszitese, UI optimalizalasa [Kristof] (nincs kesz)
+- login.html es register.html teljes dizajnolasa, felugro modalok, uzenetek jol jelenjenek meg, teljes auth.css elkeszitese, UI optimalizalasa [AI] (kesz)
 - Regisztracio kezi tesztelese es minden teszt eset dokumentalasa word fajlban [Kristof] (nincs kesz)  
 - Bejelentkezes kezi tesztelese es minden teszt eset dokumentalasa word fajlban [Kristof] (nincs kesz)  
 - Reset password kezi tesztelese es minden teszt eset dokumentalasa word fajlban [Kristof] (nincs kesz)  
@@ -208,12 +208,12 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 
 ---
 
-## 3. Landing page elkeszitese (2 / 4)
+## 3. Landing page elkeszitese (4 / 4)
 
 - Teljes HTML struktrura felallitasa az index.html-hez [Levente] (kesz)  
 - Global base css struktura felallitasa, valtozok megadasa [Levente] (kesz)  
-- Teljes css megirasa a landing pagehez [Levente] (nincs kesz)  
-- Animaciokhoz szukseges minimalis ts kod megirasa [Levente] (nincs kesz)  
+- Teljes css megirasa a landing pagehez [Levente es AI] (kesz)  
+- Animaciokhoz szukseges minimalis ts kod megirasa [AI] (kesz)  
 
 ---
 

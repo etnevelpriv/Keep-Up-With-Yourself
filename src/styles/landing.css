@@ -169,13 +169,13 @@ footer {
 .hero-grid {
     display: grid;
     grid-template-columns: minmax(0, 1.02fr) minmax(320px, 0.98fr);
-    gap: clamp(var(--gap8), 6vw, var(--gap11));
+    gap: var(--gap11);
     align-items: center;
 }
 
 .hero-textContent {
     display: grid;
-    gap: var(--gap6);
+    gap: var(--gap8);
 }
 
 .hero-textContent .subtitle {
@@ -183,7 +183,7 @@ footer {
 }
 
 .hero-textContent h1 {
-    max-width: 10ch;
+    max-width: 7ch;
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: 0;
@@ -459,11 +459,11 @@ footer {
     border: var(--border-normal);
     background: var(--white);
     box-shadow: var(--shadow-medium-dark);
+    transition: all 180ms ease-out !important;
 }
 
 .feature-card {
     padding: var(--gap5);
-    transition: all 180ms ease-out;
 }
 
 .feature-card:nth-child(1) {
@@ -751,7 +751,7 @@ footer {
         radial-gradient(var(--black) 1.5px, transparent 1.5px),
         var(--primary-color);
     background-size: 22px 22px;
-    box-shadow: var(--shadow-xlarge-light);
+    box-shadow: var(--shadow-medium-light);
     color: var(--black);
     transform: rotate(-1deg);
 }
@@ -788,17 +788,6 @@ footer {
     border: var(--border-normal);
     background: var(--secondary-color);
     box-shadow: var(--shadow-small-dark);
-}
-
-.footer-logo img[src=""] {
-    display: none;
-}
-
-.footer-logo::before {
-    content: "KU";
-    font-size: var(--gap6);
-    font-weight: 900;
-    line-height: 1;
 }
 
 footer nav {
@@ -928,6 +917,7 @@ footer nav {
 }
 
 @media (max-width: 680px) {
+
     .navbar,
     section,
     .feature-cards,
@@ -972,7 +962,26 @@ footer nav {
         transform: none;
     }
 
-    .task-card,
+    .task-card {
+        grid-template-columns: auto 1fr;
+        gap: var(--gap2);
+        align-items: start;
+        padding: var(--gap3);
+    }
+
+    .task-num {
+        min-width: var(--gap7);
+        min-height: var(--gap7);
+    }
+
+    .task-status {
+        min-width: var(--gap7);
+        min-height: var(--gap7);
+        grid-column: 2;
+        justify-self: end;
+        margin-top: var(--gap1);
+    }
+
     .solution-card,
     .statistics-card {
         grid-template-columns: 1fr;
@@ -1007,11 +1016,11 @@ footer nav {
     .statistics-section,
     .security-section,
     .cta-section {
-        padding-block: var(--gap9);
+        padding-block: var(--gap11);
     }
 
     .cta-card {
-        box-shadow: var(--shadow-medium-light);
+        box-shadow: var(--shadow-small-light);
         transform: none;
     }
 }
