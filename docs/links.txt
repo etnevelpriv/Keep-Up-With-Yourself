@@ -4,3 +4,4 @@ https://firebase.google.com/docs/auth/web/password-auth
 https://firebase.google.com/docs/auth/web/manage-users
 https://firebase.google.com/docs/auth/web/password-auth
 https://firebase.google.com/docs/auth/web/google-signin
+https://www.youtube.com/watch?v=PcRAmrn8NPo&t=1s

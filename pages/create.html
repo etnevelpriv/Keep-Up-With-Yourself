@@ -7,9 +7,18 @@
 </head>
 <body>
     <button id="signOutButton">Kijelentkezes</button>
-    <script type="module">
-    
-    </script>
     <script type="module" src="../src/scripts/auth.ts"></script>
+
+    <script type="module">
+        import {db} from "../src/scripts/firebase.ts"
+        import { doc, getDoc, updateDoc } from "firebase/firestore";
+
+        async function readUser() {
+            const userRef = doc(db, 'users', "huNtHln5hCZlBT4PjLLigB22Uc82")
+            const user = await getDoc(userRef)
+            console.log(`useeeeeeeeeeetesssssssssszt: ${JSON.stringify(user.data())}`)
+        }
+        readUser();
+    </script>
 </body>
 </html>
