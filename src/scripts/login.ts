@@ -32,6 +32,10 @@ const init = function () {
                     const userObj = new User(name, undefined, email, new Date(), true);
                     userObj.saveUserInfoToDb(user.uid, undefined);
                 };
+                const infoMessageDiv = document.getElementById("infoMessage");
+                if (infoMessageDiv) {
+                    infoMessageDiv.textContent = "Sikeres bejelentkezés, töltsd újra az oldalt a fiókod megtekintéséhez.";
+                };
             }).catch((error) => {
                 throw new Error(`Hiba uzener: ${error.code}, Hiba kod: ${error.errorMessage}, Email: ${error.costumData.email}, Hitelesito adat: ${GoogleAuthProvider.credentialFromError(error)}`);
             });
@@ -48,9 +52,27 @@ const init = function () {
         const auth = getAuth();
         sendPasswordResetEmail(auth, email)
             .then(() => {
+                const infoMessageDiv = document.getElementById("infoMessage");
+                if (infoMessageDiv) {
+                    infoMessageDiv.textContent = "Ha az email létezik a regisztrált felhasználók között, akkor az emailt kiküldtük.";
+                };
                 console.log("forgotPassSendButton megnyomva, ha az email letezik a felhasznalok koztt, kikuldjuk az emailt")
             })
             .catch((error) => {
+                const errorCodes = {
+                    "auth/missing-email": "Nincs email megadva.",
+                    "auth/missing-password": "Nem megfelelően van megadva az email.",
+                    "auth/invalid-email": "Hibás email cím."
+                };
+
+                const errorMessageDiv = document.getElementById("errorMessage");
+                if (errorMessageDiv) {
+                    if (errorCodes[error.code]) {
+                        errorMessageDiv.textContent = errorCodes[error.code];
+                    } else {
+                        errorMessageDiv.textContent = "Ismeretlen hiba történt.";
+                    }
+                }
                 throw new Error(`Hiba uzener: ${error.code}, Hiba kod: ${error.errorMessage}`);
             });
     });
@@ -67,19 +89,26 @@ const sendLoginForm = function (e: Event) {
         .then((userCredential) => {
             const user = userCredential.user;
             console.log(`Sikeres bejelentkezes, ${user}`)
+            const infoMessageDiv = document.getElementById("infoMessage");
+            if (infoMessageDiv) {
+                infoMessageDiv.textContent = "Sikeres bejelentkezés, töltsd újra az oldalt a fiókod megtekintéséhez.";
+            };
         })
         .catch((error) => {
             const errorCodes = {
                 "auth/invalid-credential": "Nem megfelelő felhasználói adatok.",
-                "auth/missing-password": "Nincs jelszó megadva."
+                "auth/missing-password": "Nincs jelszó megadva.",
+                "auth/invalid-email": "Hibás email cím."
             };
 
             const errorMessageDiv = document.getElementById("errorMessage");
-            if (errorCodes[error.code]) {
-                errorMessageDiv?.textContent = errorCodes[error.code];
-            } else {
-                errorMessageDiv?.textContent = "Ismeretlen hiba történt."
-            };
+            if (errorMessageDiv) {
+                if (errorCodes[error.code]) {
+                    errorMessageDiv.textContent = errorCodes[error.code];
+                } else {
+                    errorMessageDiv.textContent = "Ismeretlen hiba történt.";
+                }
+            }
             throw new Error(`Hiba uzener: ${error.code}, Hiba kod: ${error.errorMessage}`);
 
         });
