@@ -183,7 +183,6 @@ footer {
 }
 
 .hero-textContent h1 {
-    max-width: 7ch;
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: 0;
@@ -493,7 +492,7 @@ footer {
 .statistics-card strong {
     display: block;
     margin-bottom: var(--gap2);
-    font-size: clamp(var(--gap5), 3vw, var(--gap7));
+    font-size: clamp(var(--gap5), 3vw, var(--gap6));
     font-weight: 900;
     line-height: 0.95;
     text-transform: uppercase;

@@ -4,28 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bejelentkezes</title>
+    <title>Bejelentkezés</title>
 </head>
 
 <body>
     <form action="submit" id="loginForm">
         <input type="email" placeholder="pelda@keepupwithyourself.hu" name="email" id="emailInput">
-        <input type="password" placeholder="PeldaJelszo123." name="password" id="passwordInput">
-        <button id="loginButton" type="submit">Bejelentkezes</button>
+        <input type="password" placeholder="PéldaJelszó123." name="password" id="passwordInput">
+        <button id="loginButton" type="submit">Bejelentkezés</button>
     </form>
-    <button class="google-button" id="googleButton">google</button>
-    <button class="forgot-pass-button" id="forgotPassButton">Elfelejtett jelszo</button>
-    <a href="./register.html">Meg nincs fiokom</a>
+    <button class="google-button" id="googleButton">Bejelentkezés Google-lel</button>
+    <button class="forgot-pass-button" id="forgotPassButton">Elfelejtett jelszó</button>
+    <a href="./register.html">Még nincs fiókom</a>
     <div class="forgot-pass-modal hide" id="forgotPassModal">
-        <h2>Kerjuk add meg az email cimed annak erdekeben, hogy eltudjuk kuldeni a jelszo visszaallitasi emailt</h2>
+        <h2>Kérjük, add meg az e-mail-címedet, hogy elküldhessük a jelszó-visszaállítási levelet.</h2>
         <input type="email" placeholder="pelda@keepupwithyourself.hu" name="email" id="forgotPassEmailInput">
-        <button id="forgotPassSendButton">Email kuldese</button>
+        <button id="forgotPassSendButton">E-mail küldése</button>
     </div>
     <div>
-        <p class="error-message" id="errorMessage">teszt</p>
+        <p class="error-message" id="errorMessage"></p>
     </div>
     <div>
-        <p class="info-message" id="infoMessage">teszt</p>
+        <p class="info-message" id="infoMessage"></p>
     </div>
 
 </body>

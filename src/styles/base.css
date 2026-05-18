@@ -137,7 +137,7 @@ h3 {
 /* https://www.w3schools.com/cssref/func_clamp.php */
 /* https://www.w3schools.com/cssref/css_units.php */
 h1 {
-    font-size: clamp(3.4rem, 9vw, 7.4rem);
+    font-size: clamp(3.4rem, 6vw, 7rem);
 }
 
 h2 {

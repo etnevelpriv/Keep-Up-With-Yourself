@@ -60,9 +60,9 @@ const init = function () {
             })
             .catch((error) => {
                 const errorCodes = {
-                    "auth/missing-email": "Nincs email megadva.",
-                    "auth/missing-password": "Nem megfelelően van megadva az email.",
-                    "auth/invalid-email": "Hibás email cím."
+                    "auth/missing-email": "Nem adtál meg e-mail címet.",
+                    "auth/missing-password": "Nincs megfelelően megadva a jelszó.",
+                    "auth/invalid-email": "Hibás e-mail cím."
                 };
 
                 const errorMessageDiv = document.getElementById("errorMessage");
@@ -96,9 +96,9 @@ const sendLoginForm = function (e: Event) {
         })
         .catch((error) => {
             const errorCodes = {
-                "auth/invalid-credential": "Nem megfelelő felhasználói adatok.",
-                "auth/missing-password": "Nincs jelszó megadva.",
-                "auth/invalid-email": "Hibás email cím."
+                "auth/invalid-credential": "Helytelen felhasználói adatok.",
+                "auth/missing-password": "Nem adtál meg jelszót.",
+                "auth/invalid-email": "Hibás e-mail cím."
             };
 
             const errorMessageDiv = document.getElementById("errorMessage");

@@ -27,13 +27,13 @@ export class User implements UserInterface {
 
     validateFormValues(name: string, password: string | undefined, email: string, createdAt: Date, verified: boolean) {
         if (typeof name !== "string" || name.trim() === "") {
-            const message = `A nev valtozo nincs megfeleloen megadva: ${name}`;
+            const message = `A név nincs megfelelően megadva: ${name}`;
             if (errorMessageDiv) errorMessageDiv.textContent = message;
             throw new Error(message);
         }
 
         if (typeof password !== "string" || password.trim() === "") {
-            const message = `A jelszo valtozo nincs megfeleloen megadva: ${password}`;
+            const message = `A jelszó nincs megfelelően megadva: ${password}`;
             if (errorMessageDiv) errorMessageDiv.textContent = message;
             throw new Error(message);
         }
@@ -46,25 +46,25 @@ export class User implements UserInterface {
         const specialOk = /[\.\!\-]/.test(pwd);
 
         if (!lengthOk || !lowerOk || !upperOk || !digitOk || !specialOk) {
-            const message = `A jelszo nem felel meg a kovetelmenyeknek.`;
+            const message = `A jelszó nem felel meg a követelményeknek.`;
             if (errorMessageDiv) errorMessageDiv.textContent = message;
             throw new Error(message);
         }
 
         if (typeof email !== "string" || email.trim() === "" || !email.includes("@")) {
-            const message = `Az email valtozo nincs megfeleloen megadva: ${email}`;
+            const message = `Az e-mail cím nincs megfelelően megadva: ${email}`;
             if (errorMessageDiv) errorMessageDiv.textContent = message;
             throw new Error(message);
         }
 
         if (!(createdAt instanceof Date) || isNaN(createdAt.getTime()) || createdAt.getTime() > new Date().getTime()) {
-            const message = `A createdAt valtozo nincs megfeleloen megadva: ${createdAt}`;
+            const message = `A létrehozás dátuma nincs megfelelően megadva: ${createdAt}`;
             if (errorMessageDiv) errorMessageDiv.textContent = message;
             throw new Error(message);
         }
 
         if (typeof verified !== "boolean") {
-            const message = `A verified valtozo nincs megfeleloen megadva: ${verified}`;
+            const message = `Az ellenőrzöttség nincs megfelelően megadva: ${verified}`;
             if (errorMessageDiv) errorMessageDiv.textContent = message;
             throw new Error(message);
         }
@@ -81,7 +81,7 @@ export class User implements UserInterface {
             })
             .catch((error) => {
                 const errorCodes = {
-                    "auth/email-already-in-use": "Ezzel az emaillel már létezik egy felhasználói fiók.",
+                    "auth/email-already-in-use": "Ezzel az e-mail címmel már létezik felhasználói fiók.",
                 };
 
                 const errorMessageDiv = document.getElementById("errorMessage");
@@ -129,7 +129,7 @@ export class User implements UserInterface {
             }).catch((err: any) => {
                 const errorMessageDiv = document.getElementById("errorMessage");
                 if (errorMessageDiv) {
-                    errorMessageDiv.textContent = 'Hiba történt a visszaigazoló email küldése során.';
+                    errorMessageDiv.textContent = 'Hiba történt a visszaigazoló e-mail küldése során.';
                 }
                 throw new Error(err);
             });
