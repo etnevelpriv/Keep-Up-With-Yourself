@@ -1,8 +1,30 @@
-rules_version='2'
+rules_version = '2';
+
 service cloud.firestore {
   match /databases/{database}/documents {
+
     match /users/{userID} {
-        allow read, write: if request.auth != null && request.auth.uid == userID;
+
+      allow create: if request.auth != null
+        && request.auth.uid == userID
+        && request.resource.data.userID == request.auth.uid
+        && request.resource.data.userEmail == request.auth.token.email
+        && request.resource.data.userName is string
+        && request.resource.data.userName.size() > 0
+        && request.resource.data.userCreatedAt is timestamp
+        && request.resource.data.userVerified is bool
+        && request.resource.data.taskTypes is list
+        && request.resource.data.tasks is list;
+
+      allow read: if request.auth != null
+        && request.auth.uid == userID;
+
+      allow update: if request.auth != null
+        && request.auth.uid == userID
+        && request.resource.data.userID == resource.data.userID
+        && request.resource.data.userEmail == resource.data.userEmail;
+
+      allow delete: if false;
     }
   }
 }
