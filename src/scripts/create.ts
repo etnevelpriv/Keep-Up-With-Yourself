@@ -16,8 +16,14 @@ const init = async function () {
         console.log(formElements);
     });
     document.getElementById('taskNewTypeInput')?.addEventListener("change", () => {
-        document.getElementById('newType')?.classList.toggle("hide");
-        document.getElementById('oldType')?.classList.toggle("hide");
+        const newType = document.getElementById('newType');
+        const oldType = document.getElementById('oldType');
+        if (newType && oldType) {
+            newType.classList.toggle("hide");
+            oldType.classList.toggle("hide");
+            document.getElementById('taskTypeNameInput')?.toggleAttribute("required");
+            document.getElementById('taskTypeNameSelect')?.toggleAttribute("required");
+        };
     });
 };
 
