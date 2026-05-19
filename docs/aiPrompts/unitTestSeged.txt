@@ -1,0 +1,46 @@
+User: Irj egy segedfuggveny, hogy mindig csak overrideolni kelljen a teszteseknel ugyan annak az objektumnak az egyes elemeit, es ne kelljen mindig uj taskot letrehozni
+
+GitHub Copilot: I'll create a small TODO plan, inspect the `Task` class to match fields, then add a test helper and update `Task.test.ts` example.
+
+Created 2 todos
+
+Now I'll open Task.ts to see its constructor and properties.
+
+Read [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/scripts/classes/Task.ts)
+
+Read [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/scripts/classes/TaskInterface.ts)
+
+Read [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/tests/Task.test.ts)
+
+Now I'll add `src/tests/testUtils.ts` and update Task.test.ts to use the helper in the first test.
+
+Apply Patch
+
+Updating repo files: adding `testUtils.ts` and modifying Task.test.ts to use the helper.
+
+Generating patch (41 lines) in [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/tests/testUtils.ts)
+
+
+```
+
+```
+
+
+Generating patch (25 lines) in [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/tests/Task.test.ts)
+
+
+```
+
+```
+Marking the plan steps complete.
+
+Completed: *Add test helper `createTestTask()`* (1/2)
+
+Kész — hozzáadtam egy teszthez használható segédfüggvényt és egy példa-hívást a tesztekhez.
+
+- **`createTestTask()`**: létrehoz egy érvényes alap `Task`-ot és elfogad mezőfelülírásokat: `createTestTask({ taskDeadline: new Date(...), taskName: '...' })`
+- Fájlok: testUtils.ts, Task.test.ts
+
+Szeretnéd, hogy lecseréljem a többi tesztben is a `new Task(...)` hívásokat erre a helperre?
+
+Made changes.

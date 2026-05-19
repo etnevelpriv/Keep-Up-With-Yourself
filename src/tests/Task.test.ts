@@ -1,19 +1,15 @@
 import { expect, test, describe } from 'vitest'
 import { Task } from '../scripts/classes/Task';
+import { createTestTask } from './testUtils';
 
 describe("VALID Task class tesztelese", () => {
     test("Valid adatokkal letrehozni a taskot. Mindent ellenorizni", () => {
-        const testTask = new Task(
-            "TESZT_NEV",
-            "TESZT_DESCRIPTION_Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur accusantium pariatur minus tenetur, quos velit illo officiis magnam autem cupiditate temporibus sed ex provident, voluptates quaerat doloribus. Sapiente, sunt repellendus.",
-            new Date("2026-09-09"),
-            3,
-            "TESZT_TASKTYPENAME",
-            "Folyamatban",
-            null,
-            new Date("2026-01-02"),
-            new Date("2026-02-03")
-        );
+        const testTask = createTestTask({
+            taskDesc: "TESZT_DESCRIPTION_Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur accusantium pariatur minus tenetur, quos velit illo officiis magnam autem cupiditate temporibus sed ex provident, voluptates quaerat doloribus. Sapiente, sunt repellendus.",
+            taskDeadline: new Date("2026-09-09"),
+            TaskCreatedAt: new Date("2026-01-02"),
+            taskUpdatedAt: new Date("2026-02-03"),
+        });
         expect(testTask.taskName).toBe('TESZT_NEV');
         expect(testTask.taskDesc).toBe('TESZT_DESCRIPTION_Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur accusantium pariatur minus tenetur, quos velit illo officiis magnam autem cupiditate temporibus sed ex provident, voluptates quaerat doloribus. Sapiente, sunt repellendus.');
         expect(testTask.taskDeadline.getTime()).toBe(new Date("2026-09-09").getTime());
