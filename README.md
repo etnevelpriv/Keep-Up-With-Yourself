@@ -15,7 +15,7 @@
 - Feladat cime (sajat szoveget irhat - string tipusu valtozo)  
 - Feladat leirasa (sajat szoveget irhat - string tipusu valtozo)  
 - Hatarido (naptarbol tudja kivalasztani - date tipusu valtozo)  
-- Fontossag (megadott listabol valaszthat - string tipusu valtozo)  
+- Fontossag (megadott listabol valaszthat - num tipusu valtozo)  
 - Tipus (megadott listabol valaszhat, de irhat sajatot is(amit ir, az a listahoz adodik) - string tipusu valtozo)  
 
 ---
