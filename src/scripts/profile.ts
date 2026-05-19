@@ -1,7 +1,7 @@
 import "../styles/base.css";
 import "../styles/profile.css";
 import "./header.ts";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut, sendPasswordResetEmail } from "firebase/auth";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase.ts"
 import { User } from "./classes/User.ts";
@@ -10,15 +10,29 @@ const init = async function () {
     const auth = getAuth();
     const userPayload = await getUser(auth);
     console.log(userPayload)
-    const user = new User(userPayload.userName, undefined, userPayload.userEmail, new Date(userPayload.userCreatedAt.seconds *1000), userPayload.userVerified)
+    const user: User = new User(userPayload.userName, undefined, userPayload.userEmail, new Date(userPayload.userCreatedAt.seconds * 1000), userPayload.userVerified)
     console.log(user.toString());
-    
+    showUserDataInDOM(user);
+
+    document.getElementById("changePasswordButton")?.addEventListener("click", () => {
+        const auth = getAuth();
+        sendPasswordResetEmail(auth, user.email)
+            .then(() => {
+                console.log("forgotPassSendButton megnyomva, ha az email letezik a felhasznalok koztt, kikuldjuk az emailt")
+            })
+            .catch((error) => {
+                throw new Error(`Hiba uzener: ${error.code}, Hiba kod: ${error.errorMessage}`);
+            });
+
+    });
     document.getElementById("signOutButton")?.addEventListener("click", () => {
         signOut(auth).then(() => {
             console.log("Sikeresen kijelentkezett a felhasznalo.")
         }).catch((error) => {
             throw new Error(`Hiba uzener: ${error.code}, Hiba kod: ${error.errorMessage}`);
         });
+    });
+    document.getElementById("deleteProfileButton")?.addEventListener("click", () => {
 
     });
 };
@@ -42,6 +56,21 @@ const getUser = async function (auth: any) {
             throw new Error(err);
         }
     })
+};
+
+const showUserDataInDOM = function (user: User) {
+    const userNameElement = document.getElementById("userName");
+    if (userNameElement) {
+        userNameElement.textContent = user.name;
+    }
+    const userEmailElement = document.getElementById("userEmail");
+    if (userEmailElement) {
+        userEmailElement.textContent = user.email;
+    }
+    const createdAtlElement = document.getElementById("createdAt");
+    if (createdAtlElement) {
+        createdAtlElement.textContent = `${user.createdAt.getFullYear()}. ${user.createdAt.getMonth() + 1}. ${user.createdAt.getDate()}. ${user.createdAt.getHours()}:${user.createdAt.getMinutes()}`;
+    }
 };
 
 document.addEventListener("DOMContentLoaded", init);
