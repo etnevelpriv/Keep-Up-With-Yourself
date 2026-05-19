@@ -19,7 +19,7 @@ export class Task implements TaskInterface {
         taskStatus: "Folyamatban" | "Lejárt" | "Teljesített",
         taskCompletedAt: Date | undefined,
         TaskCreatedAt: Date,
-        taskUpdatedAt: Date | undefined,
+        taskUpdatedAt: Date
     ) {
         this.taskName = taskName;
         this.taskDesc = taskDesc;

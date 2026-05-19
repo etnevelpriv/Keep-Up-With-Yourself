@@ -4,6 +4,7 @@ import "./header.ts";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase.ts"
+import { Task } from "./classes/Task.ts";
 
 const init = async function () {
     const auth = getAuth();
@@ -14,6 +15,8 @@ const init = async function () {
         e.preventDefault();
         const formElements = getFormElements();
         console.log(formElements);
+        const newTask = new Task(formElements[0], formElements[1], formElements[2], formElements[3], formElements[4], "Folyamatban", undefined, new Date(), new Date())
+        console.log(newTask)
     });
     document.getElementById('taskNewTypeInput')?.addEventListener("change", () => {
         const newType = document.getElementById('newType');
@@ -29,7 +32,7 @@ const init = async function () {
 
 const getFormElements = function () {
     const taskName = (document.getElementById('taskNameInput') as HTMLFormElement).value;
-    const taskDesc = (document.getElementById('taskNameInput') as HTMLFormElement).value;
+    const taskDesc = (document.getElementById('taskDescTextarea') as HTMLFormElement).value;
     const taskDeadline = (document.getElementById('taskDeadlineInput') as HTMLFormElement).value;
     const taskImportance = (document.getElementById('taskImportanceInput') as HTMLFormElement).value;
     const taskNewType = (document.getElementById('taskNewTypeInput') as HTMLFormElement).checked;
