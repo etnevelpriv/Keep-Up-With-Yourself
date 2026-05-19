@@ -1,10 +1,23 @@
 import "../styles/base.css";
 import "../styles/profile.css";
 import "./header.ts";
+import "../styles/loggedInUserNav.css";
+
 import { getAuth, onAuthStateChanged, signOut, sendPasswordResetEmail, deleteUser } from "firebase/auth";
+import type { Auth } from "firebase/auth";
 import { doc, getDoc, deleteDoc } from "firebase/firestore";
 import { db } from "./firebase.ts"
 import { User } from "./classes/User.ts";
+
+type UserPayload = {
+    userID: string;
+    userName: string;
+    userEmail: string;
+    userCreatedAt: {
+        seconds: number;
+    };
+    userVerified: boolean;
+};
 
 const init = async function () {
     const auth = getAuth();
@@ -18,33 +31,43 @@ const init = async function () {
         const auth = getAuth();
         sendPasswordResetEmail(auth, user.email)
             .then(() => {
+                showProfileMessage("infoMessage", "Elküldtük a jelszó-visszaállítási e-mailt, ha a fiókhoz tartozik ez az e-mail cím.");
                 console.log("forgotPassSendButton megnyomva, ha az email letezik a felhasznalok koztt, kikuldjuk az emailt")
             })
             .catch((error) => {
-                throw new Error(`Hiba uzener: ${error.code}, Hiba kod: ${error.errorMessage}`);
+                showProfileMessage("errorMessage", getProfileErrorMessage(error));
+                console.error(`Hiba uzenet: ${error.code}, Hiba kod: ${error.errorMessage}`);
             });
 
     });
     document.getElementById("signOutButton")?.addEventListener("click", () => {
         signOut(auth).then(() => {
+            showProfileMessage("infoMessage", "Sikeresen kijelentkeztél.");
             console.log("Sikeresen kijelentkezett a felhasznalo.")
         }).catch((error) => {
-            throw new Error(`Hiba uzener: ${error.code}, Hiba kod: ${error.errorMessage}`);
+            showProfileMessage("errorMessage", getProfileErrorMessage(error));
+            console.error(`Hiba uzenet: ${error.code}, Hiba kod: ${error.errorMessage}`);
         });
     });
     document.getElementById("deleteProfileButton")?.addEventListener("click", async () => {
 
         try {
             const currentUser = auth.currentUser;
+            if (!currentUser) {
+                showProfileMessage("errorMessage", "A fiók törléséhez előbb jelentkezz be újra.");
+                return;
+            };
             await deleteDoc(doc(db, "users", userPayload.userID));
             await deleteUser(currentUser)
+            showProfileMessage("infoMessage", "A fiókodat sikeresen töröltük.");
         } catch (err) {
-            throw new Error(err)
+            showProfileMessage("errorMessage", getProfileErrorMessage(err));
+            console.error(err);
         }
     });
 };
 
-const getUser = async function (auth: any) {
+const getUser = async function (auth: Auth): Promise<UserPayload> {
     return new Promise((resolve, reject) => {
         try {
             onAuthStateChanged(auth, async (user) => {
@@ -53,7 +76,7 @@ const getUser = async function (auth: any) {
                     const docSnap = await getDoc(docRef);
                     if (docSnap.exists()) {
                         if (user.emailVerified) {
-                            resolve(docSnap.data());
+                            resolve(docSnap.data() as UserPayload);
                         };
                     };
                 };
@@ -63,6 +86,36 @@ const getUser = async function (auth: any) {
             throw new Error(err);
         }
     })
+};
+
+const showProfileMessage = function (messageId: "errorMessage" | "infoMessage", message: string) {
+    const messageElement = document.getElementById(messageId);
+    const otherMessageId = messageId === "errorMessage" ? "infoMessage" : "errorMessage";
+    const otherMessageElement = document.getElementById(otherMessageId);
+
+    if (otherMessageElement) {
+        otherMessageElement.textContent = "";
+    };
+
+    if (messageElement) {
+        messageElement.textContent = message;
+    };
+};
+
+const getProfileErrorMessage = function (error: unknown): string {
+    const errorCode = typeof error === "object" && error !== null && "code" in error
+        ? String((error as { code: unknown }).code)
+        : "";
+
+    const errorCodes: Record<string, string> = {
+        "auth/missing-email": "Nem található e-mail cím a művelethez.",
+        "auth/invalid-email": "Hibás e-mail cím.",
+        "auth/requires-recent-login": "Biztonsági okokból jelentkezz be újra, majd próbáld meg ismét.",
+        "auth/network-request-failed": "Hálózati hiba történt. Ellenőrizd az internetkapcsolatot.",
+        "permission-denied": "Nincs jogosultságod ehhez a művelethez.",
+    };
+
+    return errorCodes[errorCode] ?? "Ismeretlen hiba történt. Próbáld meg újra később.";
 };
 
 const showUserDataInDOM = function (user: User) {
@@ -80,4 +133,9 @@ const showUserDataInDOM = function (user: User) {
     }
 };
 
-document.addEventListener("DOMContentLoaded", init);
+document.addEventListener("DOMContentLoaded", () => {
+    init().catch((error) => {
+        showProfileMessage("errorMessage", getProfileErrorMessage(error));
+        console.error(error);
+    });
+});

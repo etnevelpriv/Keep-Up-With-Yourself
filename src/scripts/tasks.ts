@@ -1,6 +1,7 @@
 import "../styles/base.css";
 import "../styles/tasks.css";
 import "./header.ts";
+import "../styles/loggedInUserNav.css";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase.ts"

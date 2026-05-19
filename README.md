@@ -187,10 +187,10 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - Az emailek (verifikacios es reset password) szama legyen korlatozva [Levente] (kesz)
 - Hiba megjelenitese, tajekoztato informaciok megjelenitese a felhasznalonak magyarul minden esetben login es register eseteben is, pl: Az email cim meg nincs hitelesitve, az email cim mar hasznalatban van, a hitelesito email elkuldve, stb... [Levente] (kesz)
 - login.html es register.html teljes dizajnolasa, felugro modalok, uzenetek jol jelenjenek meg, teljes auth.css elkeszitese, UI optimalizalasa [AI] (kesz)
-- Regisztracio kezi tesztelese es minden teszt eset dokumentalasa word fajlban [Kristof] (nincs kesz)  
-- Bejelentkezes kezi tesztelese es minden teszt eset dokumentalasa word fajlban [Kristof] (nincs kesz)  
-- Reset password kezi tesztelese es minden teszt eset dokumentalasa word fajlban [Kristof] (nincs kesz)  
-- Verifikacio kezi tesztelese es minden teszt eset dokumentalasa word fajlban [Kristof] (nincs kesz)  
+- Regisztracio kezi tesztelese es minden teszt eset dokumentalasa word fajlban [Levente] (nincs kesz)  
+- Bejelentkezes kezi tesztelese es minden teszt eset dokumentalasa word fajlban [Levente] (nincs kesz)  
+- Reset password kezi tesztelese es minden teszt eset dokumentalasa word fajlban [Levente] (nincs kesz)  
+- Verifikacio kezi tesztelese es minden teszt eset dokumentalasa word fajlban [Levente] (nincs kesz)  
 
 ---
 
@@ -244,12 +244,11 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 
 ---
 
-## 7. Profil oldal elkeszitese (1 / 4)
+## 7. Profil oldal elkeszitese (3 / 3)
 
 - Teljes HTML struktrura felallitasa a profile.html-hez [Levente] (kesz)  
-- Korabbi interface es class segitsegevel megjeleniteni a felhasznalo adatait [Kristof] (nincs kesz)  
-- "Nev modositasa"/valami hasonlo gomb elkeszitese, a gomb legyen mukodokepes, a gomb lenyomasara egy modal ugorjon fel, ahol meglehet adni az uj nevet a kliensoldalrol frissitse az adatbazisban a felhasznalo nevet [Kristof] (nincs kesz)  
-- "Jelszo modositasa"/valami hasonlo gomb elkeszitese, a gomb tenylegesen kuldje ki az emailt, a korabbi authentication resznel hasznalt function ujra fel lehet itt is hasznalni, nem kell ujat irni [Kristof] (nincs kesz)  
+- Korabbi interface es class segitsegevel megjeleniteni a felhasznalo adatait [Levente] (kesz)  
+- "Jelszo modositasa"/valami hasonlo gomb elkeszitese, a gomb tenylegesen kuldje ki az emailt, a korabbi authentication resznel hasznalt function ujra fel lehet itt is hasznalni, nem kell ujat irni [Levente] (kesz)
 
 ---
 
@@ -262,7 +261,9 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - Domain berlese [Levente] (kesz)  
 - DNS konfiguralasa [Levente] (kesz)  
 - Megkerni a Google bacsit, hogy indexelje az oldalt [Levente] (nincs kesz)  
-- GA suti hozzaadasa [Levente] (nincs kesz)  
+- GA suti hozzaadasa [Levente] (nincs kesz)
+- Megfelelo readme megirasa, hogy cv-be illo legyen [Levente] (nincs kesz)
+- email templatek megirasa [Levente] (nincs kesz)
 
 ---
 Repo klonozasa: git clone https://github.com/etnevelpriv/Keep-Up-With-Yourself.git

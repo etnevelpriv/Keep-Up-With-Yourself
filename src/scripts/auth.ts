@@ -1,4 +1,4 @@
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase.ts"
 
@@ -26,7 +26,7 @@ const setupAuthMessages = function () {
             closeButton.type = "button";
             closeButton.className = "message-close-button";
             closeButton.textContent = "x";
-            closeButton.setAttribute("aria-label", "Uzenet bezarasa");
+            closeButton.setAttribute("aria-label", "Üzenet bezárása");
             closeButton.addEventListener("click", () => {
                 messageElement.textContent = "";
             });
@@ -70,7 +70,7 @@ const setupForgotPasswordModal = function () {
         closeButton.type = "button";
         closeButton.className = "modal-close-button";
         closeButton.textContent = "x";
-        closeButton.setAttribute("aria-label", "Modal bezarasa");
+        closeButton.setAttribute("aria-label", "Modal bezárása");
         closeButton.addEventListener("click", () => {
             modal.classList.add("hide");
         });
