@@ -110,9 +110,9 @@ const createTaskCardsInDOM = function (tasks: Task[]) {
         status.textContent = task.taskStatus;
 
         if (task.taskCompletedAt != null) {
-            deadline_CompletedAt.textContent = `${task.taskCompletedAt.getFullYear().toString()}. ${(task.taskCompletedAt.getMonth() + 1).toString()}. ${task.taskCompletedAt.getDate().toString()}`;
+            deadline_CompletedAt.textContent = `${task.taskCompletedAt.getFullYear().toString()}. ${(task.taskCompletedAt.getMonth() + 1).toString()}. ${task.taskCompletedAt.getDate().toString()}. ${task.taskCompletedAt.getHours().toString()}:${task.taskCompletedAt.getMinutes().toString()}`;
         } else {
-            deadline_CompletedAt.textContent = `${task.taskDeadline.getFullYear().toString()}. ${(task.taskDeadline.getMonth() + 1).toString()}. ${task.taskDeadline.getDate().toString()}`;
+            deadline_CompletedAt.textContent = `${task.taskDeadline.getFullYear().toString()}. ${(task.taskDeadline.getMonth() + 1).toString()}. ${task.taskDeadline.getDate().toString()}. ${task.taskDeadline.getHours().toString()}:${task.taskDeadline.getMinutes().toString()}`;
         }
 
         const button = document.createElement('button');
@@ -128,9 +128,10 @@ const createTaskCardsInDOM = function (tasks: Task[]) {
 
             taskNameInput.value = task.taskName;
             taskDescInput.value = task.taskDesc;
-            taskDeadlineInput.value = task.taskDeadline;
+            taskDeadlineInput.value = task.taskDeadline.toISOString().slice(0, 16);;
             taskImportanceInput.value = task.taskImportance;
             taskNewTypeInput.value = false;
+            
         });
 
         card.appendChild(name)
