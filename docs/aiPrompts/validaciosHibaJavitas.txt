@@ -1,0 +1,47 @@
+User: Invalid adattal/adatokkal letrehozni a taskot, ahol taskImportance nem szam
+AssertionError: expected function to throw an error, but it didn't
+ ❯ src/tests/Task.test.ts:274:13
+    272|         expect(() => createTestTask({
+    273|             taskImportance: Number.NaN
+    274|         })).toThrow(
+       |             ^
+    275|             new Error('A fontosság 1 és 5 közé essen.'),
+    276|         );
+
+GitHub Copilot: A feladat most egy szűk validációs hiba: megnézem, hol áll össze a Task, és hogy a nem szám típusú `taskImportance` miért csúszik át a mostani ellenőrzésen. Utána egy célzott javítást teszek, majd rögtön lefuttatok egy szűk ellenőrzést a érintett tesztre.
+
+Read [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/tests/Task.test.ts#240-240), lines 240 to 290
+
+Read [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/scripts/classes/Task.ts)
+
+Read [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/scripts/classes/TaskInterface.ts)
+
+Megvan a hiba oka: a mostani ellenőrzés csak a típust nézi, ezért a `NaN` átmegy, mert `typeof NaN === "number"`. Ezt szűkítve `Number.isFinite`-re javítom, ami az invalid számokat is kidobja, és utána csak a Task-tesztre futok rá.
+
+Apply Patch
+
+Generating patch (8 lines) in [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/scripts/classes/Task.ts)
+
+
+```
+
+```
+A validációs feltétel már szigorúbb, most a legkisebb ellenőrzést futtatom, ami ezt a hibát ténylegesen meg tudja cáfolni: a Task tesztfájlt vagy a hozzá tartozó teszt parancsot.
+
+Checked [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/scripts/classes/Task.ts), [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/tests/Task.test.ts), no problems found
+
+Read [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/package.json)
+
+Ran terminal command: npm test -- --run src/tests/Task.test.ts -t "Invalid adattal/adatokkal letrehozni a taskot, ahol taskImportance nem szam"
+
+A célzott tesztfuttatás ebben a környezetben nem indult el, ezért a következő legszűkebb ellenőrzést használom: megnézem a diffet és a statikus hibákat, hogy biztosan csak a validációs ág változott.
+
+Ran terminal command: git diff -- src/scripts/classes/Task.ts
+
+Read [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/scripts/classes/Task.ts#35-35), lines 35 to 65
+
+A `taskImportance` validációját kijavítottam a Task.ts fájlban: a `NaN` és más nem-finite értékek most már elbuknak a `1..5` ellenőrzésen, így a teszt által várt hiba ténylegesen dobódik.
+
+A statikus ellenőrzés rendben van, de a célzott Vitest futtatását ebben a környezetben nem tudtam lefuttatni, mert a parancsot a tooling itt kihagyta. Ha akarod, megpróbálhatjuk egy másik tesztparanccsal vagy végigfuttathatom a teljes Task.test.ts csomagot is, amint a futtatás 
+
+Made changes.

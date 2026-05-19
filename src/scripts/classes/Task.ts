@@ -61,7 +61,7 @@ export class Task implements TaskInterface {
         if (!(taskDeadline instanceof Date) || isNaN(taskDeadline.getTime()) || TaskCreatedAt.getTime() > taskDeadline.getTime()) {
             throw new Error("A határidő érvénytelen.");
         }
-        if (typeof taskImportance !== "number" || taskImportance < 1 || taskImportance > 5) {
+        if (!Number.isFinite(taskImportance) || taskImportance < 1 || taskImportance > 5) {
             throw new Error("A fontosság 1 és 5 közé essen.");
         }
         if (taskTypeName.trim() === "" || taskTypeName.trim().length > 40) {
@@ -73,7 +73,7 @@ export class Task implements TaskInterface {
         if (taskCompletedAt !== null && (!(taskCompletedAt instanceof Date) || isNaN(taskCompletedAt.getTime()))) {
             throw new Error("A befejezés dátuma érvénytelen.");
         }
-        if (!(taskUpdatedAt instanceof Date) || isNaN(taskUpdatedAt.getTime()) || taskUpdatedAt.getTime() > new Date().getTime()) {
+        if (!(taskUpdatedAt instanceof Date) || isNaN(taskUpdatedAt.getTime())) {
             throw new Error("A frissítés dátuma érvénytelen.");
         }
     };

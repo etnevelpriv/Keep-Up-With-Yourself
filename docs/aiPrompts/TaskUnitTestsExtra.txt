@@ -1,0 +1,59 @@
+User: Kerlek irj meg relevans es logikus teszteseteket a Task classomhoz. Folytasd az eddigi format, legyen logikus minden, logikusan rendezve. Kulonbozo dolgok legyenek tesztelve, ne legyen duplikacio. Legyenek valid es invalid tesztesetek. Ne rendezd at a format, maradjon ilyen. Ne torolj ki korabbi tesztet, csak irjal ujakat. Minimum 30 kulonbozo extra tesztesetet kerek a mostaniak melle.
+
+GitHub Copilot: A meglévő tesztfájl és a Task osztály környezetét nézem át először, hogy az új esetek ugyanabban a formátumban maradjanak, és ne írjak rá a már meglévő mintára. Utána a legkisebb lehetséges, de jól rendezett bővítést készítem el, majd azonnal lefuttatok egy célzott ellenőrzést.
+
+Read [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/tests/Task.test.ts)
+
+Read [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/scripts/classes/Task.ts)
+
+Megvan a vezérlő logika: a Task osztály főleg a sanitizálásra és a validációs ágakra épül, ezért a teszteket ehhez igazítom, nem csak “szép” adatokat ismétlek. Most a teszt helper alapértékeit nézem meg, hogy a 30+ új eset tényleg különböző és stabil legyen.
+
+Read [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/tests/testUtils.ts)
+
+Searched for files matching `Keep-Up-With-Yourself` · `src/tests/**/*.ts`, 4 matches
+
+A helper alapértelmezései elég világosak, így most már célzottan tudok olyan eseteket írni, amelyek tényleg a különböző validációs és szanitizálási ágakat fedik. Megnézem még a többi tesztfájlt is, hogy pontosan ugyanazt a formátumot tartsam.
+
+Read [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/tests/creatingTask.ts)
+
+Read [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/tests/modifingTask.ts)
+
+Most már megvan a pontos teszt-szegmentálás: külön valid és invalid ágakba teszem az új eseteket, és mindegyik más viselkedést fog meg, hogy ne legyen ismétlés. A következő lépésben beírom a bővítést ugyanabba a fájlba, változatlan szerkezetben.
+
+Apply Patch
+
+A patch formátuma hibás volt, ezt javítom és ugyanazt a bővítést viszem fel újra. A tartalom nem változik, csak a szerkesztés módja.
+
+Generating patch (265 lines) in [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/tests/Task.test.ts)
+
+
+```
+
+```
+Az új tesztek felkerültek ugyanabba a szerkezetbe, most a célzott ellenőrzés jön: megnézem, van-e szintaktikai vagy típusos probléma a módosított tesztfájlban. Ha itt hibát találok, azt ugyanebben a szeletben javítom.
+
+Checked [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/tests/Task.test.ts), 4 problems found
+
+A mostani ellenőrzés jó hírt adott: a hibák nem a logikában, hanem a tesztben lévő szándékosan rossz típusú bemenetek miatt vannak. Ezeket típusosan “átfedem”, hogy a negatív esetek továbbra is futtathatók legyenek, és utána újra ellenőrzök.
+
+Generating patch (38 lines) in [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/tests/Task.test.ts)
+
+
+```
+
+```
+
+
+Checked [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/tests/Task.test.ts), no problems found
+
+A tesztfájl most már szintaktikailag tiszta. Még lefuttatok egy célzott futást is a megváltozott specre, hogy ne csak forduljon, hanem ténylegesen végrehajtható is legyen az új blokk.
+
+Read [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/package.json)
+
+Ran terminal command: npm test -- --run src/tests/Task.test.ts
+
+Beépítettem 32 új tesztesetet a Task.test.ts fájlba, a meglévő valid és invalid describe blokkokon belül, a jelenlegi formátum megtartásával. Az új esetek lefedik a trimelést, HTML-szanitizálást, határértékeket a név/leírás/típus mezőknél, dátumvalidációkat, státusz- és fontosság-ágakat, valamint a toString kimenetet, és egyetlen korábbi tesztet sem töröltem.
+
+A módosított fájl statikusan hibamentes lett a célzott ellenőrzés szerint. A Vitest futtatását megpróbáltam elindítani, de a terminal eszköz itt kihagyta, ezért élő futásos megerősítést nem tudtam adni.
+
+Made changes.
