@@ -15,7 +15,7 @@ const init = async function () {
         e.preventDefault();
         const formElements = getFormElements();
         console.log(formElements);
-        const newTask = new Task(formElements[0], formElements[1], formElements[2], formElements[3], formElements[4], "Folyamatban", undefined, new Date(), new Date())
+        const newTask = new Task(formElements[0], formElements[1], new Date(formElements[2]), Number(formElements[3]), formElements[4], "Folyamatban", undefined, new Date(), new Date())
         console.log(newTask)
         document.getElementById("createForm")?.reset();
     });
