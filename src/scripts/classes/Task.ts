@@ -10,7 +10,7 @@ export class Task implements TaskInterface {
     taskCompletedAt: Date | null;
     TaskCreatedAt: Date;
     taskUpdatedAt: Date;
-    constructor (
+    constructor(
         taskName: string,
         taskDesc: string,
         taskDeadline: Date,
@@ -21,6 +21,9 @@ export class Task implements TaskInterface {
         TaskCreatedAt: Date,
         taskUpdatedAt: Date
     ) {
+        taskName = this.sanitizeText(taskName);
+        taskDesc = this.sanitizeText(taskDesc);
+        taskTypeName = this.sanitizeText(taskTypeName);
         this.dataValidation(taskName, taskDesc, taskDeadline, taskImportance, taskTypeName, taskStatus, taskCompletedAt, TaskCreatedAt, taskUpdatedAt);
         this.taskName = taskName;
         this.taskDesc = taskDesc;
@@ -32,7 +35,7 @@ export class Task implements TaskInterface {
         this.TaskCreatedAt = TaskCreatedAt;
         this.taskUpdatedAt = taskUpdatedAt;
     };
-    toString () {
+    toString() {
         return (`Nev: ${this.taskName}, Leiras:${this.taskDesc}, Hatarido:${this.taskDeadline}, Fontossag:${this.taskImportance}, Tipus:${this.taskTypeName}, Statusz:${this.taskStatus}, Keszult:${this.TaskCreatedAt}, Frissitve:${this.taskUpdatedAt}, Befejezve:${this.taskCompletedAt}`);
     };
     dataValidation(
@@ -52,11 +55,11 @@ export class Task implements TaskInterface {
         if (typeof taskDesc !== "string") {
             throw new Error("A leírás érvénytelen.");
         }
-        if (!(taskDeadline instanceof Date) || isNaN(taskDeadline.getTime()) || TaskCreatedAt.getTime() > taskDeadline.getTime()) {
-            throw new Error("A határidő érvénytelen.");
-        }
         if (!(TaskCreatedAt instanceof Date) || isNaN(TaskCreatedAt.getTime()) || TaskCreatedAt.getTime() > new Date().getTime()) {
             throw new Error("A létrehozás dátuma érvénytelen.");
+        }
+        if (!(taskDeadline instanceof Date) || isNaN(taskDeadline.getTime()) || TaskCreatedAt.getTime() > taskDeadline.getTime()) {
+            throw new Error("A határidő érvénytelen.");
         }
         if (typeof taskImportance !== "number" || taskImportance < 1 || taskImportance > 5) {
             throw new Error("A fontosság 1 és 5 közé essen.");
@@ -74,7 +77,16 @@ export class Task implements TaskInterface {
             throw new Error("A frissítés dátuma érvénytelen.");
         }
     };
-    private sanitizeText (text) {
-        return text;
+    // Megkertem az ai-t hogy sanitizeolja
+    private sanitizeText(text: string) {
+        const map: Record<string, string> = {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;",
+        };
+
+        return text.trim().replace(/[&<>"']/g, char => map[char]);
     };
 };
