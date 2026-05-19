@@ -122,9 +122,23 @@ describe("VALID Task class tesztelese", () => {
         );
         expect(testTask.taskStatus).toBe('Teljesített');
     });
+    test("Valid adatokkal letrehozni a taskot, ahol taskDesc egy ures string", () => {
+        const testTask = new Task(
+            "TESZT_NEV",
+            "",
+            new Date("2026-09-09"),
+            5,
+            "TESZT_TASKTYPENAME",
+            "Teljesített",
+            null,
+            new Date("2026-01-02"),
+            new Date("2026-02-03")
+        );
+        expect(testTask.taskStatus).toBe('Teljesített');
+    });
 });
 describe("INVALID Task class tesztelese", () => {
-    test("Valid adattal/adatokkal letrehozni a taskot, ahol taskName egy ures string", () => {
+    test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskName egy ures string", () => {
         expect(() => new Task(
             "",
             "TESZT_DESCRIPTION_Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur accusantium pariatur minus tenetur, quos velit illo officiis magnam autem cupiditate temporibus sed ex provident, voluptates quaerat doloribus. Sapiente, sunt repellendus.",
@@ -137,6 +151,51 @@ describe("INVALID Task class tesztelese", () => {
             new Date("2026-02-03")
         )).toThrow(
             new Error('A feladat neve kötelező.'),
+        );
+    });
+    test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskName nem string", () => {
+        expect(() => new Task(
+            3,
+            "TESZT_DESCRIPTION_Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur accusantium pariatur minus tenetur, quos velit illo officiis magnam autem cupiditate temporibus sed ex provident, voluptates quaerat doloribus. Sapiente, sunt repellendus.",
+            new Date("2026-09-09"),
+            3,
+            "TESZT_TASKTYPENAME",
+            "Folyamatban",
+            null,
+            new Date("2026-01-02"),
+            new Date("2026-02-03")
+        )).toThrow(
+            new Error('A feladat neve kötelező.'),
+        );
+    });
+    test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskName == `   `", () => {
+        expect(() => new Task(
+            "   ",
+            "TESZT_DESCRIPTION_Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur accusantium pariatur minus tenetur, quos velit illo officiis magnam autem cupiditate temporibus sed ex provident, voluptates quaerat doloribus. Sapiente, sunt repellendus.",
+            new Date("2026-09-09"),
+            3,
+            "TESZT_TASKTYPENAME",
+            "Folyamatban",
+            null,
+            new Date("2026-01-02"),
+            new Date("2026-02-03")
+        )).toThrow(
+            new Error('A feladat neve kötelező.'),
+        );
+    });
+    test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskDesc nem string", () => {
+        expect(() => new Task(
+            "TESZT_NEV",
+            6,
+            new Date("2026-09-09"),
+            3,
+            "TESZT_TASKTYPENAME",
+            "Folyamatban",
+            null,
+            new Date("2026-01-02"),
+            new Date("2026-02-03")
+        )).toThrow(
+            new Error('A leírás érvénytelen.'),
         );
     });
 });
