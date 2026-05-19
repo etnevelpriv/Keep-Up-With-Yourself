@@ -13,7 +13,6 @@ const init = async function () {
         e.preventDefault();
         const formElements = getFormElements();
         console.log(formElements);
-
     });
 };
 
@@ -22,17 +21,23 @@ const getFormElements = function () {
     const taskDesc = (document.getElementById('taskNameInput') as HTMLFormElement).value;
     const taskDeadline = (document.getElementById('taskDeadlineInput') as HTMLFormElement).value;
     const taskImportance = (document.getElementById('taskImportanceInput') as HTMLFormElement).value;
-    const taskTypeName = (document.getElementById('taskTypeNameInput') as HTMLFormElement).value;
+    const taskNewType = (document.getElementById('taskNewTypeInput') as HTMLFormElement).checked;
+    let taskTypeName = null
+    if (taskNewType) {
+        taskTypeName = (document.getElementById('taskTypeNameInput') as HTMLFormElement).value;
+    } else {
+        taskTypeName = (document.getElementById('taskTypeNameSelect') as HTMLFormElement).value;
+    }
     return [taskName, taskDesc, taskDeadline, taskImportance, taskTypeName]
 };
 
 const getTaskTypes = function (user: any) {
     const tasksTypes = user.taskTypes
-    const arr:string[] = []
-    tasksTypes.forEach((tasksType:any) => {
+    const arr: string[] = []
+    tasksTypes.forEach((tasksType: any) => {
         arr.push(tasksType.taskTypeName)
     });
-    return(arr);
+    return (arr);
 }
 
 const createSelectOptions = function (arr: string[]) {
@@ -59,7 +64,7 @@ const getUser = async function (auth: any) {
                     };
                 };
             });
-        } catch (err:any) {
+        } catch (err: any) {
             reject(err);
             throw new Error(err);
         }
