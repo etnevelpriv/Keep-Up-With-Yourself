@@ -24,7 +24,8 @@ service cloud.firestore {
         && request.resource.data.userID == resource.data.userID
         && request.resource.data.userEmail == resource.data.userEmail;
 
-      allow delete: if false;
-    }
+      allow delete: if request.auth != null
+        && request.auth.uid == userID;
+      }
   }
 }

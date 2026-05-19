@@ -1,8 +1,8 @@
 import "../styles/base.css";
 import "../styles/profile.css";
 import "./header.ts";
-import { getAuth, onAuthStateChanged, signOut, sendPasswordResetEmail } from "firebase/auth";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { getAuth, onAuthStateChanged, signOut, sendPasswordResetEmail, deleteUser } from "firebase/auth";
+import { doc, getDoc, deleteDoc } from "firebase/firestore";
 import { db } from "./firebase.ts"
 import { User } from "./classes/User.ts";
 
@@ -32,8 +32,15 @@ const init = async function () {
             throw new Error(`Hiba uzener: ${error.code}, Hiba kod: ${error.errorMessage}`);
         });
     });
-    document.getElementById("deleteProfileButton")?.addEventListener("click", () => {
+    document.getElementById("deleteProfileButton")?.addEventListener("click", async () => {
 
+        try {
+            const currentUser = auth.currentUser;
+            await deleteDoc(doc(db, "users", userPayload.userID));
+            await deleteUser(currentUser)
+        } catch (err) {
+            throw new Error(err)
+        }
     });
 };
 
