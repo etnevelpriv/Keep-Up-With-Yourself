@@ -1,12 +1,12 @@
 import "../styles/base.css";
 import "./header.ts";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase.ts"
 
-const init = function () {
+const init = async function () {
     const auth = getAuth();
-    const user = getUser(auth);
+    const user = await getUser(auth);
     loadTaskTypes(user)
     document.getElementById("createForm")?.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -30,18 +30,24 @@ const loadTaskTypes = function (user) {
 }
 
 const getUser = async function (auth: any) {
-    const authUser = onAuthStateChanged(auth, async (user) => {
-        if (user) {
-            const docRef = doc(db, "users", user.uid);
-            const docSnap = await getDoc(docRef);
-            if (docSnap.exists()) {
-                if (user.emailVerified) {
-                  return(docSnap.data());
+    return new Promise((resolve, reject) => {
+        try {
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    const docRef = doc(db, "users", user.uid);
+                    const docSnap = await getDoc(docRef);
+                    if (docSnap.exists()) {
+                        if (user.emailVerified) {
+                            resolve(docSnap.data());
+                        };
+                    };
                 };
-            };
-        };
-    });
-    return authUser;
+            });
+        } catch (err:any) {
+            reject(err);
+            throw new Error(err);
+        }
+    })
 };
 
 document.addEventListener("DOMContentLoaded", init);
