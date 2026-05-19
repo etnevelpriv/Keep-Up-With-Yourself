@@ -93,6 +93,10 @@ const createTaskCardsInDOM = function (tasks: Task[]) {
             deadline_CompletedAt.textContent = `${task.taskDeadline.getFullYear().toString()}. ${(task.taskDeadline.getMonth() + 1).toString()}. ${task.taskDeadline.getDate().toString()}`;
         }
 
+        const button = document.createElement('button');
+        button.classList.add("showModal")
+        button.textContent = "Feladat módosítása";
+
         card.appendChild(name)
         card.appendChild(desc)
         card.appendChild(importance)
@@ -100,6 +104,7 @@ const createTaskCardsInDOM = function (tasks: Task[]) {
         card.appendChild(createdAt)
         card.appendChild(status)
         card.appendChild(deadline_CompletedAt)
+        card.appendChild(button)
         container?.appendChild(card);
     });
 };
