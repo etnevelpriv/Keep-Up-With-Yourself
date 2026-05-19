@@ -236,7 +236,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 
 ## 6. Taskok frissetese (0 / 6)
 
-- Modusuljanak a taskStatus-ok a server oldalon, ha a deadline utan vagyunk mar, az ellenorzes csak bizonyos idonkent legyen. A kliensoldalon minden alkalommal ellenorizze a program, amikor a felhasznalo betolti az oldalt [Levente] (nincs kesz)  
+- Modusuljanak a taskStatus-ok a server oldalon, ha a deadline utan vagyunk mar, az ellenorzes csak bizonyos idonkent legyen. A kliensoldalon minden alkalommal ellenorizze a program, amikor a felhasznalo betolti az oldalt [Levente] (kesz)  
 - Az elozo pont manualis tesztekese [Levente] (nincs kesz)  
 - "Feladat kesz"/valami hasonlo gomb keszitese minden feladathoz, modosuljon a taskStatus es a taskCompletedAt a kliensoldalon keresztul, ha a felhasznalo az adott taskot kesznek jeloli [Levente] (kesz)  
 - "Feladat megsincs kesz"/valami hasonlo gomb keszitese minden kesz feladathoz, modosuljon a taskStatus es a taskCompletedAt a kliensoldalon keresztul, ha a felhasznalo az adott taskot nem elkeszultnek jeloli [Levente] (kesz)  

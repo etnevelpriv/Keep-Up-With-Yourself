@@ -27,6 +27,7 @@ const init = async function () {
     setupModifyModal();
     updateImportanceText();
     syncTaskTypeFields();
+    checkIfExpired(tasks);
     document.getElementById("taskImportanceInput")?.addEventListener("input", updateImportanceText);
     document.getElementById('taskNewTypeInput')?.addEventListener("change", () => {
         syncTaskTypeFields();
@@ -92,7 +93,7 @@ const turnArrIntoTasks = function (arr: any[]) {
     return arrOfTasks;
 };
 
-const createTaskCardsInDOM = function (tasks: TaskViewItem[], user: any) {
+const createTaskCardsInDOM = async function (tasks: TaskViewItem[], user: any) {
     const container = document.getElementById("tasksCards");
     if (!container) return;
 
@@ -111,8 +112,15 @@ const createTaskCardsInDOM = function (tasks: TaskViewItem[], user: any) {
         return;
     };
 
-    tasks.forEach((taskItem: TaskViewItem) => {
+    tasks.forEach(async (taskItem: TaskViewItem) => {
+
         const task = taskItem.task;
+        if ((task.taskDeadline.getTime() < (new Date().getTime())) && task.taskStatus != "Teljesített") {
+            task.taskStatus = "Lejárt";
+            task.taskUpdatedAt = new Date();
+            await updateTaskInDB(task, user, taskItem.originalIndex);
+        };
+
         const card = document.createElement("div");
         card.classList.add("task-card");
         card.id = `${taskItem.originalIndex}`;
@@ -236,10 +244,6 @@ const createTaskCardsInDOM = function (tasks: TaskViewItem[], user: any) {
                 };
             });
         };
-
-
-
-
         card.appendChild(name)
         card.appendChild(desc)
         card.appendChild(importance)
@@ -517,6 +521,4 @@ const updateImportanceText = function () {
 
     taskImportanceText.textContent = importanceLabels[taskImportanceInput.value] || `${taskImportanceInput.value} / 5`;
 };
-
-
 document.addEventListener("DOMContentLoaded", init);
