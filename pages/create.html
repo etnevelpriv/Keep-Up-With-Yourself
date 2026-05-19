@@ -29,6 +29,43 @@
         </nav>
     </header>
 
+    <main>
+        <div class="create-head">
+
+        </div>
+        <form class="create-form" id="createForm">
+            <div class="form-element">
+                <label for="taskName">Feladat neve</label>
+                <input type="text" name="taskName" id="taskNameInput">
+            </div>
+            <div class="form-element">
+                <label for="taskDesc">Feladat leírása</label>
+                <textarea name="taskDesc" id="taskDescTextarea"></textarea>
+            </div>
+            <div class="form-element">
+                <label for="taskDeadline">Feladat határideje</label>
+                <input type="datetime-local" name="taskDeadline" id="taskDeadlineInput">
+            </div>
+            <div class="form-element">
+                <label for="taskImportance">Feladat fontossága</label>
+                <input type="range" min="1" max="5" step="1" name="taskImportance" id="taskImportanceInput">
+                <span id="taskImportanceText"></span>
+            </div>
+            <div class="form-element">
+                <label for="taskNewType">Új típus hozzáadása</label>
+                <input type="checkbox" name="taskNewType" id="taskNewTypeInput">
+            </div>
+            <div id="newType" class="form-element">
+                <label for="taskTypeName">Feladat típusa</label>
+                <input type="text" name="taskTypeName" id="taskTypeNameInput">
+            </div>
+            <div id="oldType" class="form-element">
+                <label for="taskTypeName">Feladat típusa</label>
+                <select name="taskTypeName" id="taskTypeNameSelect">
+                </select>
+            </div>
+        </form>
+    </main>
 
     <script type="module" src="../src/scripts/auth.ts"></script>
     <script type="module" src="../src/scripts/create.ts"></script>
