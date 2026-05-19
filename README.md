@@ -218,7 +218,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - Tipus mezo legyen kivalaszthato korabbibol, akar system, akar a user sajat tipusai, de lehessen ujat is hozzaadni [Levente] (kesz)  
 - Backenden legyenek lekorlatozva a hibas feltoltesek [Levente] (nincs kesz)  
 - Frontenden legyenek lekorlatozva a hibas feltoltesek [Levente] (kesz)  
-- Teljes css megirasa a base css segitsegevel [Marci] (nincs kesz)  
+- Teljes css megirasa a base css segitsegevel [AI] (kesz)  
 - Automatizalt teszt kod irasa vitest segitsegevel a feltolteshez (Ha lehet ilyet, ha nem, akkor is oldd meg Kika valahogy a tesztelest, koszi puszi) [Kristof] (nincs kesz)  
 
 ---

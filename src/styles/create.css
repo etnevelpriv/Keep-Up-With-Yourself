@@ -52,7 +52,6 @@ main::after {
     background: var(--secondary-color);
     box-shadow: var(--shadow-medium-dark);
     font-size: clamp(2.3rem, 8vw, 6rem);
-    font-weight: 900;
     line-height: 0.9;
     text-transform: uppercase;
     overflow-wrap: anywhere;
@@ -89,7 +88,7 @@ main::after {
 }
 
 .create-form::before {
-    content: "CREATE";
+    content: "FELADAT";
     position: absolute;
     top: calc(var(--gap5) * -1);
     right: var(--gap5);
@@ -209,14 +208,26 @@ main::after {
 }
 
 .form-element input[type="range"] {
-    min-height: var(--gap9);
-    padding: var(--gap3);
+    min-height: var(--gap10);
+    padding: var(--gap4) 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
     cursor: pointer;
-    accent-color: var(--primary-color);
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.form-element input[type="range"]:hover,
+.form-element input[type="range"]:focus-visible {
+    transform: none;
+    background: transparent;
+    box-shadow: none;
 }
 
 .form-element input[type="range"]::-webkit-slider-runnable-track {
-    height: var(--gap4);
+    width: 100%;
+    height: var(--gap5);
     border: var(--border-thin);
     background:
         repeating-linear-gradient(45deg,
@@ -227,18 +238,18 @@ main::after {
 }
 
 .form-element input[type="range"]::-webkit-slider-thumb {
-    width: var(--gap7);
-    height: var(--gap7);
-    margin-top: calc(var(--gap1) * -1);
+    width: var(--gap6);
+    height: var(--gap8);
+    margin-top: calc((var(--gap8) - var(--gap5)) / -2 - 2px);
     border: var(--border-normal);
-    background: var(--white);
-    box-shadow: var(--shadow-small-dark);
+    background: var(--grey);
     -webkit-appearance: none;
     appearance: none;
 }
 
 .form-element input[type="range"]::-moz-range-track {
-    height: var(--gap4);
+    width: 100%;
+    height: var(--gap5);
     border: var(--border-thin);
     background:
         repeating-linear-gradient(45deg,
@@ -249,10 +260,11 @@ main::after {
 }
 
 .form-element input[type="range"]::-moz-range-thumb {
-    width: var(--gap7);
-    height: var(--gap7);
+    width: var(--gap6);
+    height: var(--gap8);
     border: var(--border-normal);
-    background: var(--white);
+    border-radius: 0;
+    background: var(--secondary-color);
     box-shadow: var(--shadow-small-dark);
 }
 
@@ -424,7 +436,7 @@ main::after {
 
     .create-head::before {
         box-shadow: var(--shadow-small-dark);
-        font-size: clamp(2rem, 13vw, 3.5rem);
+        font-size: clamp(2rem, 10vw, 3.5rem);
     }
 
     .create-head::after {
