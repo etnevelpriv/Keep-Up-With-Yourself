@@ -92,7 +92,7 @@ const saveTaskTypeToDB = async function (taskType: string, user: any) {
     if (taskType !== 'Takarítás' && taskType !== 'Munka' && taskType !== 'Tanulás') {
         const payload = {
             taskTypeName: taskType,
-            taspType_isSystem: false
+            taskType_isSystem: false
         }
         // Tudtam, hogy elobb atkell tenni setbe, majd vissza, de en nem igy csinaltam volna, a chatbarat ezt ajanlotta es jol mukodik, szoval itt hagyom
         user.taskTypes = [...new Set([...user.taskTypes, payload])];
