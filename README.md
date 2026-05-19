@@ -210,7 +210,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 
 ---
 
-## 4. Letrehozas oldal elkeszitese (0 / 8)
+## 4. Letrehozas oldal elkeszitese (6 / 8)
 
 - Teljes HTML struktrura felallitasa a create.html-hez [Levente] (kesz)  
 - Elkesziteni a szukseges interfacet es a szukseges class-t megfelelo hibakezelessel [Levente] (kesz)  
