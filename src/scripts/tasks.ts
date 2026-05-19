@@ -11,10 +11,16 @@ const init = async function () {
     const user = await getUser(auth);
     const arr = getTasks(user)
     const tasks: Task[] = turnArrIntoTasks(arr);
-    createTaskCardsInDOM(tasks);
+    createTaskCardsInDOM(tasks, user);
     const taskTypesNames = getTaskTypes(user)
     createSelectOptions(taskTypesNames);
     console.log(tasks)
+    updateImportanceText();
+    syncTaskTypeFields();
+    document.getElementById("taskImportanceInput")?.addEventListener("input", updateImportanceText);
+    document.getElementById('taskNewTypeInput')?.addEventListener("change", () => {
+        syncTaskTypeFields();
+    });
 };
 
 const getUser = async function (auth: any) {
@@ -76,7 +82,7 @@ const turnArrIntoTasks = function (arr: []) {
     return arrOfTasks;
 };
 
-const createTaskCardsInDOM = function (tasks: Task[]) {
+const createTaskCardsInDOM = function (tasks: Task[], user: any) {
     const container = document.getElementById("tasksCards");
     let i = -1;
     tasks.forEach((task: Task) => {
@@ -119,7 +125,10 @@ const createTaskCardsInDOM = function (tasks: Task[]) {
         button.classList.add("showModal")
         button.textContent = "Feladat módosítása";
         button.addEventListener("click", () => {
-            document.getElementById("modifyForm")?.classList.add("show");
+            const form = document.getElementById("modifyForm");
+            if (form) {
+                form.classList.add("show");
+            };
             const taskNameInput = document.getElementById('taskNameInput') as HTMLFormElement;
             const taskDescInput = document.getElementById('taskDescTextarea') as HTMLFormElement;
             const taskDeadlineInput = document.getElementById('taskDeadlineInput') as HTMLFormElement;
@@ -131,7 +140,27 @@ const createTaskCardsInDOM = function (tasks: Task[]) {
             taskDeadlineInput.value = task.taskDeadline.toISOString().slice(0, 16);;
             taskImportanceInput.value = task.taskImportance;
             taskNewTypeInput.value = false;
-            
+
+            if (form) {
+                form.addEventListener("submit", async (e) => {
+                    e.preventDefault();
+                    try {
+                        const formElements = getFormElements(user);
+                        console.log(formElements);
+                        const newTask = new Task(formElements[0], formElements[1], new Date(formElements[2]), Number(formElements[3]), formElements[4], task.taskStatus, task.taskCompletedAt, task.TaskCreatedAt, new Date())
+                        console.log(newTask);
+                        await createTaskInDB(newTask, user);
+                        const form = document.getElementById("modifyForm") as HTMLFormElement
+                        form.classList.remove("show")
+                        form.reset();
+                        updateImportanceText();
+                        syncTaskTypeFields();
+                        showMessage("info", "A feladat sikeresen módosult.");
+                    } catch (err: any) {
+                        showMessage("error", err.message || "Nem sikerült létrehozni a feladatot.");
+                    };
+                });
+            };
         });
 
         card.appendChild(name)
@@ -145,5 +174,125 @@ const createTaskCardsInDOM = function (tasks: Task[]) {
         container?.appendChild(card);
     });
 };
+
+const getFormElements = function (user: any) {
+    const taskName = (document.getElementById('taskNameInput') as HTMLFormElement).value;
+    const taskDesc = (document.getElementById('taskDescTextarea') as HTMLFormElement).value;
+    const taskDeadline = (document.getElementById('taskDeadlineInput') as HTMLFormElement).value;
+    const taskImportance = (document.getElementById('taskImportanceInput') as HTMLFormElement).value;
+    const taskNewType = (document.getElementById('taskNewTypeInput') as HTMLFormElement).checked;
+    let taskTypeName = null
+    if (taskNewType) {
+        taskTypeName = (document.getElementById('taskTypeNameInput') as HTMLFormElement).value;
+        saveTaskTypeToDB(taskTypeName, user)
+    } else {
+        taskTypeName = (document.getElementById('taskTypeNameSelect') as HTMLFormElement).value;
+    }
+    return [taskName, taskDesc, taskDeadline, taskImportance, taskTypeName]
+};
+
+
+const saveTaskTypeToDB = async function (taskType: string, user: any) {
+    if (taskType !== 'Takarítás' && taskType !== 'Munka' && taskType !== 'Tanulás') {
+        const payload = {
+            taskTypeName: taskType,
+            taskType_isSystem: false
+        }
+        // Tudtam, hogy elobb atkell tenni setbe, majd vissza, de en nem igy csinaltam volna, a chatbarat ezt ajanlotta es jol mukodik, szoval itt hagyom
+        user.taskTypes = [...new Set([...user.taskTypes, payload])];
+
+        try {
+            const auth = getAuth();
+            const currentUser = auth.currentUser;
+            if (currentUser) {
+                const userDocRef = doc(db, "users", currentUser.uid);
+                await updateDoc(userDocRef, {
+                    taskTypes: user.taskTypes
+                });
+                console.log("Minden szupi");
+            }
+        } catch (err: any) {
+            throw new Error(err);
+        }
+    }
+}
+
+const createTaskInDB = async function (task: Task, user: any) {
+    const taskPayload = {
+        taskName: task.taskName,
+        taskDesc: task.taskDesc,
+        taskDeadline: task.taskDeadline,
+        taskImportance: task.taskImportance,
+        taskTypeName: task.taskTypeName,
+        taskStatus: task.taskStatus,
+        taskCompletedAt: task.taskCompletedAt,
+        TaskCreatedAt: task.TaskCreatedAt,
+        taskUpdatedAt: task.taskUpdatedAt
+    };
+
+    user.tasks.push(taskPayload);
+    console.log(user);
+    try {
+        const auth = getAuth();
+        const currentUser = auth.currentUser;
+        if (currentUser) {
+            const userDocRef = doc(db, "users", currentUser.uid);
+            await updateDoc(userDocRef, {
+                tasks: user.tasks
+            });
+            console.log("Minden szupi");
+        }
+    } catch (err: any) {
+        throw new Error(err);
+    }
+};
+
+const showMessage = function (type: "error" | "info", message: string) {
+    const messageElement = document.getElementById(type === "error" ? "errorMessage" : "infoMessage");
+    if (messageElement) {
+        messageElement.textContent = "";
+        window.setTimeout(() => {
+            messageElement.textContent = message;
+        }, 0);
+    };
+};
+
+const syncTaskTypeFields = function () {
+    const taskNewTypeInput = document.getElementById('taskNewTypeInput') as HTMLInputElement | null;
+    const newType = document.getElementById('newType');
+    const oldType = document.getElementById('oldType');
+    const taskTypeNameInput = document.getElementById('taskTypeNameInput') as HTMLInputElement | null;
+    const taskTypeNameSelect = document.getElementById('taskTypeNameSelect') as HTMLSelectElement | null;
+    if (!taskNewTypeInput || !newType || !oldType || !taskTypeNameInput || !taskTypeNameSelect) return;
+
+    if (taskNewTypeInput.checked) {
+        newType.classList.remove("hide");
+        oldType.classList.add("hide");
+        taskTypeNameInput.required = true;
+        taskTypeNameSelect.required = false;
+    } else {
+        newType.classList.add("hide");
+        oldType.classList.remove("hide");
+        taskTypeNameInput.required = false;
+        taskTypeNameSelect.required = true;
+    };
+};
+
+const updateImportanceText = function () {
+    const taskImportanceInput = document.getElementById('taskImportanceInput') as HTMLInputElement | null;
+    const taskImportanceText = document.getElementById('taskImportanceText');
+    if (!taskImportanceInput || !taskImportanceText) return;
+
+    const importanceLabels: Record<string, string> = {
+        "1": "1 / 5 - Alacsony",
+        "2": "2 / 5 - Kisebb",
+        "3": "3 / 5 - Közepes",
+        "4": "4 / 5 - Fontos",
+        "5": "5 / 5 - Sürgős"
+    };
+
+    taskImportanceText.textContent = importanceLabels[taskImportanceInput.value] || `${taskImportanceInput.value} / 5`;
+};
+
 
 document.addEventListener("DOMContentLoaded", init);
