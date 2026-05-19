@@ -15,9 +15,10 @@ const init = async function () {
         e.preventDefault();
         const formElements = getFormElements();
         console.log(formElements);
-        const newTask = new Task(formElements[0], formElements[1], new Date(formElements[2]), Number(formElements[3]), formElements[4], "Folyamatban", undefined, new Date(), new Date())
-        console.log(newTask)
-        document.getElementById("createForm")?.reset();
+        const newTask = new Task(formElements[0], formElements[1], new Date(formElements[2]), Number(formElements[3]), formElements[4], "Folyamatban", null, new Date(), new Date())
+        console.log(newTask);
+        (document.getElementById("createForm") as HTMLFormElement).reset();
+        createTaskInDB(newTask, user);
     });
     document.getElementById('taskNewTypeInput')?.addEventListener("change", () => {
         const newType = document.getElementById('newType');
@@ -84,6 +85,36 @@ const getUser = async function (auth: any) {
             throw new Error(err);
         }
     })
+};
+
+const createTaskInDB = async function(task: Task, user:any) {
+    const taskPayload = {
+        taskName: task.taskName,
+        taskDesc: task.taskDesc,
+        taskDeadline: task.taskDeadline,
+        taskImportance: task.taskImportance,
+        taskTypeName: task.taskTypeName,
+        taskStatus: task.taskStatus,
+        taskCompletedAt: task.taskCompletedAt,
+        TaskCreatedAt: task.TaskCreatedAt,
+        taskUpdatedAt: task.taskUpdatedAt
+    };
+
+    user.tasks.push(taskPayload);
+    console.log(user);
+    try {
+        const auth = getAuth();
+        const currentUser = auth.currentUser;
+        if (currentUser) {
+            const userDocRef = doc(db, "users", currentUser.uid);
+            await updateDoc(userDocRef, {
+                tasks: user.tasks
+            });
+            console.log("Minden szupi");
+        }
+    } catch (err: any) {
+        throw new Error(err);
+    }
 };
 
 document.addEventListener("DOMContentLoaded", init);

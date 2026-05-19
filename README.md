@@ -212,12 +212,12 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 
 ## 4. Letrehozas oldal elkeszitese (0 / 8)
 
-- Teljes HTML struktrura felallitasa a create.html-hez [Marci] (nincs kesz)  
-- Elkesziteni a szukseges interfacet es a szukseges class-t megfelelo hibakezelessel [Marci] (nincs kesz)  
-- Implementalni az adatbazishoz valo hozzaadas funkciot [Marci] (nincs kesz)  
-- Tipus mezo legyen kivalaszthato korabbibol, akar system, akar a user sajat tipusai, de lehessen ujat is hozzaadni [Marci] (nincs kesz)  
+- Teljes HTML struktrura felallitasa a create.html-hez [Levente] (kesz)  
+- Elkesziteni a szukseges interfacet es a szukseges class-t megfelelo hibakezelessel [Levente] (kesz)  
+- Implementalni az adatbazishoz valo hozzaadas funkciot [Levente] (kesz)  
+- Tipus mezo legyen kivalaszthato korabbibol, akar system, akar a user sajat tipusai, de lehessen ujat is hozzaadni [Levente] (kesz)  
 - Backenden legyenek lekorlatozva a hibas feltoltesek [Levente] (nincs kesz)  
-- Frontenden legyenek lekorlatozva a hibas feltoltesek [Marci] (nincs kesz)  
+- Frontenden legyenek lekorlatozva a hibas feltoltesek [Levente] (kesz)  
 - Teljes css megirasa a base css segitsegevel [Marci] (nincs kesz)  
 - Automatizalt teszt kod irasa vitest segitsegevel a feltolteshez (Ha lehet ilyet, ha nem, akkor is oldd meg Kika valahogy a tesztelest, koszi puszi) [Kristof] (nincs kesz)  
 

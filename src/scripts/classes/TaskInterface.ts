@@ -5,7 +5,7 @@ export interface TaskInterface {
     taskImportance: number;
     taskTypeName: string;
     taskStatus: "Folyamatban" | "Lejárt" | "Teljesített";
-    taskCompletedAt: Date | undefined;
+    taskCompletedAt: Date | null;
     TaskCreatedAt: Date;
-    taskUpdatedAt: Date | undefined;
+    taskUpdatedAt: Date;
 };

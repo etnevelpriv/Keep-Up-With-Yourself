@@ -7,9 +7,9 @@ export class Task implements TaskInterface {
     taskImportance: number;
     taskTypeName: string;
     taskStatus: "Folyamatban" | "Lejárt" | "Teljesített";
-    taskCompletedAt: Date | undefined;
+    taskCompletedAt: Date | null;
     TaskCreatedAt: Date;
-    taskUpdatedAt: Date | undefined;
+    taskUpdatedAt: Date;
     constructor (
         taskName: string,
         taskDesc: string,
@@ -17,7 +17,7 @@ export class Task implements TaskInterface {
         taskImportance: number,
         taskTypeName: string,
         taskStatus: "Folyamatban" | "Lejárt" | "Teljesített",
-        taskCompletedAt: Date | undefined,
+        taskCompletedAt: Date | null,
         TaskCreatedAt: Date,
         taskUpdatedAt: Date
     ) {
@@ -42,7 +42,7 @@ export class Task implements TaskInterface {
         taskImportance: number,
         taskTypeName: string,
         taskStatus: "Folyamatban" | "Lejárt" | "Teljesített",
-        taskCompletedAt: Date | undefined,
+        taskCompletedAt: Date | null,
         TaskCreatedAt: Date,
         taskUpdatedAt: Date
     ) {
@@ -67,11 +67,11 @@ export class Task implements TaskInterface {
         if (taskStatus !== "Folyamatban" && taskStatus !== "Lejárt" && taskStatus !== "Teljesített") {
             throw new Error("Az állapot érvénytelen.");
         }
-        if (taskCompletedAt !== undefined && (!(taskCompletedAt instanceof Date) || isNaN(taskCompletedAt.getTime()))) {
+        if (taskCompletedAt !== null && (!(taskCompletedAt instanceof Date) || isNaN(taskCompletedAt.getTime()))) {
             throw new Error("A befejezés dátuma érvénytelen.");
         }
         if (!(taskUpdatedAt instanceof Date) || isNaN(taskUpdatedAt.getTime()) || new Date().getTime() > TaskCreatedAt.getTime()) {
             throw new Error("A frissítés dátuma érvénytelen.");
         }
     };
-}
+};
