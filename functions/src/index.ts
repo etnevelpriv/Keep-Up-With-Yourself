@@ -6,7 +6,7 @@ admin.initializeApp();
 
 const db = admin.firestore();
 
-export const updateExpiredTasks = onSchedule("every 15 minutes", async () => {
+export const updateExpiredTasks = onSchedule("every 24 hours", async () => {
   const now = admin.firestore.Timestamp.now();
 
   const userSnap = await db.collection("users").get();
