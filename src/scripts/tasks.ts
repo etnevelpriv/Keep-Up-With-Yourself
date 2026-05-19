@@ -12,6 +12,8 @@ const init = async function () {
     const arr = getTasks(user)
     const tasks: Task[] = turnArrIntoTasks(arr);
     createTaskCardsInDOM(tasks);
+    const taskTypesNames = getTaskTypes(user)
+    createSelectOptions(taskTypesNames);
     console.log(tasks)
 };
 
@@ -35,6 +37,26 @@ const getUser = async function (auth: any) {
         }
     })
 };
+
+const getTaskTypes = function (user: any) {
+    const tasksTypes = user.taskTypes
+    const arr: string[] = []
+    tasksTypes.forEach((tasksType: any) => {
+        arr.push(tasksType.taskTypeName)
+    });
+    return (arr);
+}
+
+const createSelectOptions = function (arr: string[]) {
+    const select = document.getElementById("taskTypeNameSelect") as HTMLElement;
+    arr.forEach(element => {
+        const option = document.createElement("option") as HTMLOptionElement;
+        option.value = element;
+        option.textContent = element;
+        select.appendChild(option);
+    });
+};
+
 
 const getTasks = function (user: any) {
     const tasks = user.tasks;
@@ -96,6 +118,20 @@ const createTaskCardsInDOM = function (tasks: Task[]) {
         const button = document.createElement('button');
         button.classList.add("showModal")
         button.textContent = "Feladat módosítása";
+        button.addEventListener("click", () => {
+            document.getElementById("modifyForm")?.classList.add("show");
+            const taskNameInput = document.getElementById('taskNameInput') as HTMLFormElement;
+            const taskDescInput = document.getElementById('taskDescTextarea') as HTMLFormElement;
+            const taskDeadlineInput = document.getElementById('taskDeadlineInput') as HTMLFormElement;
+            const taskImportanceInput = document.getElementById('taskImportanceInput') as HTMLFormElement;
+            const taskNewTypeInput = document.getElementById('taskNewTypeInput') as HTMLFormElement;
+
+            taskNameInput.value = task.taskName;
+            taskDescInput.value = task.taskDesc;
+            taskDeadlineInput.value = task.taskDeadline;
+            taskImportanceInput.value = task.taskImportance;
+            taskNewTypeInput.value = false;
+        });
 
         card.appendChild(name)
         card.appendChild(desc)
