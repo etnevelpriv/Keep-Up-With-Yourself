@@ -7,7 +7,8 @@ import { db } from "./firebase.ts"
 const init = async function () {
     const auth = getAuth();
     const user = await getUser(auth);
-    loadTaskTypes(user)
+    const taskTypesNames = getTaskTypes(user)
+
     document.getElementById("createForm")?.addEventListener("submit", (e) => {
         e.preventDefault();
         const formElements = getFormElements();
@@ -25,8 +26,13 @@ const getFormElements = function () {
     return [taskName, taskDesc, taskDeadline, taskImportance, taskTypeName]
 };
 
-const loadTaskTypes = function (user) {
-    console.log(user)
+const getTaskTypes = function (user: any) {
+    const tasksTypes = user.taskTypes
+    const arr:string[] = []
+    tasksTypes.forEach((tasksType:any) => {
+        arr.push(tasksType.taskTypeName)
+    });
+    return(arr);
 }
 
 const getUser = async function (auth: any) {
