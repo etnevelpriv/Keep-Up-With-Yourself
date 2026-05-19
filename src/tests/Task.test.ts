@@ -1,5 +1,4 @@
 import { expect, test, describe } from 'vitest'
-import { Task } from '../scripts/classes/Task';
 import { createTestTask } from './testUtils';
 
 describe("VALID Task class tesztelese", () => {
@@ -21,176 +20,80 @@ describe("VALID Task class tesztelese", () => {
         expect(testTask.taskUpdatedAt.getTime()).toBe(new Date("2026-02-03").getTime());
     });
     test("Valid adatokkal letrehozni a taskot, ahol taskCompletedAt == null", () => {
-        const testTask = new Task(
-            "TESZT_NEV",
-            "TESZT_DESCRIPTION_Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur accusantium pariatur minus tenetur, quos velit illo officiis magnam autem cupiditate temporibus sed ex provident, voluptates quaerat doloribus. Sapiente, sunt repellendus.",
-            new Date("2026-09-09"),
-            3,
-            "TESZT_TASKTYPENAME",
-            "Folyamatban",
-            null,
-            new Date("2026-01-02"),
-            new Date("2026-02-03")
-        );
+        const testTask = createTestTask({
+            taskCompletedAt: null
+        });
         expect(testTask.taskCompletedAt).toBe(null);
     });
     test("Valid adatokkal letrehozni a taskot, ahol taskCompletedAt != null", () => {
-        const testTask = new Task(
-            "TESZT_NEV",
-            "TESZT_DESCRIPTION_Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur accusantium pariatur minus tenetur, quos velit illo officiis magnam autem cupiditate temporibus sed ex provident, voluptates quaerat doloribus. Sapiente, sunt repellendus.",
-            new Date("2026-09-09"),
-            3,
-            "TESZT_TASKTYPENAME",
-            "Folyamatban",
-            new Date("2026-10-10"),
-            new Date("2026-01-02"),
-            new Date("2026-02-03")
-        );
+        const testTask = createTestTask({
+            taskCompletedAt: new Date("2026-10-10")
+        });
         expect((testTask.taskCompletedAt)?.getTime()).toBe(new Date("2026-10-10").getTime());
     });
     test("Valid adatokkal letrehozni a taskot, ahol taskImportance egy alacsony hatarertek", () => {
-        const testTask = new Task(
-            "TESZT_NEV",
-            "TESZT_DESCRIPTION_Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur accusantium pariatur minus tenetur, quos velit illo officiis magnam autem cupiditate temporibus sed ex provident, voluptates quaerat doloribus. Sapiente, sunt repellendus.",
-            new Date("2026-09-09"),
-            1,
-            "TESZT_TASKTYPENAME",
-            "Folyamatban",
-            null,
-            new Date("2026-01-02"),
-            new Date("2026-02-03")
-        );
+        const testTask = createTestTask({
+            taskImportance: 1
+        });
         expect(testTask.taskImportance).toBe(1);
     });
     test("Valid adatokkal letrehozni a taskot, ahol taskImportance egy magas hatarertek", () => {
-        const testTask = new Task(
-            "TESZT_NEV",
-            "TESZT_DESCRIPTION_Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur accusantium pariatur minus tenetur, quos velit illo officiis magnam autem cupiditate temporibus sed ex provident, voluptates quaerat doloribus. Sapiente, sunt repellendus.",
-            new Date("2026-09-09"),
-            5,
-            "TESZT_TASKTYPENAME",
-            "Folyamatban",
-            null,
-            new Date("2026-01-02"),
-            new Date("2026-02-03")
-        );
+        const testTask = createTestTask({
+            taskImportance: 5
+        });
         expect(testTask.taskImportance).toBe(5);
     });
     test("Valid adatokkal letrehozni a taskot, ahol taskStatus == Folyamatban", () => {
-        const testTask = new Task(
-            "TESZT_NEV",
-            "TESZT_DESCRIPTION_Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur accusantium pariatur minus tenetur, quos velit illo officiis magnam autem cupiditate temporibus sed ex provident, voluptates quaerat doloribus. Sapiente, sunt repellendus.",
-            new Date("2026-09-09"),
-            5,
-            "TESZT_TASKTYPENAME",
-            "Folyamatban",
-            null,
-            new Date("2026-01-02"),
-            new Date("2026-02-03")
-        );
+        const testTask = createTestTask({
+            taskStatus: "Folyamatban"
+        });
         expect(testTask.taskStatus).toBe('Folyamatban');
     });
     test("Valid adatokkal letrehozni a taskot, ahol taskStatus == Lejárt", () => {
-        const testTask = new Task(
-            "TESZT_NEV",
-            "TESZT_DESCRIPTION_Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur accusantium pariatur minus tenetur, quos velit illo officiis magnam autem cupiditate temporibus sed ex provident, voluptates quaerat doloribus. Sapiente, sunt repellendus.",
-            new Date("2026-09-09"),
-            5,
-            "TESZT_TASKTYPENAME",
-            "Lejárt",
-            null,
-            new Date("2026-01-02"),
-            new Date("2026-02-03")
-        );
+        const testTask = createTestTask({
+            taskStatus: "Lejárt"
+        });
         expect(testTask.taskStatus).toBe('Lejárt');
     });
     test("Valid adatokkal letrehozni a taskot, ahol taskStatus == Teljesített", () => {
-        const testTask = new Task(
-            "TESZT_NEV",
-            "TESZT_DESCRIPTION_Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur accusantium pariatur minus tenetur, quos velit illo officiis magnam autem cupiditate temporibus sed ex provident, voluptates quaerat doloribus. Sapiente, sunt repellendus.",
-            new Date("2026-09-09"),
-            5,
-            "TESZT_TASKTYPENAME",
-            "Teljesített",
-            null,
-            new Date("2026-01-02"),
-            new Date("2026-02-03")
-        );
+        const testTask = createTestTask({
+            taskStatus: "Teljesített"
+        });
         expect(testTask.taskStatus).toBe('Teljesített');
     });
     test("Valid adatokkal letrehozni a taskot, ahol taskDesc egy ures string", () => {
-        const testTask = new Task(
-            "TESZT_NEV",
-            "",
-            new Date("2026-09-09"),
-            5,
-            "TESZT_TASKTYPENAME",
-            "Teljesített",
-            null,
-            new Date("2026-01-02"),
-            new Date("2026-02-03")
-        );
-        expect(testTask.taskStatus).toBe('Teljesített');
+        const testTask = createTestTask({
+            taskDesc: ""
+        });
+        expect(testTask.taskDesc).toBe('');
     });
 });
 describe("INVALID Task class tesztelese", () => {
     test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskName egy ures string", () => {
-        expect(() => new Task(
-            "",
-            "TESZT_DESCRIPTION_Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur accusantium pariatur minus tenetur, quos velit illo officiis magnam autem cupiditate temporibus sed ex provident, voluptates quaerat doloribus. Sapiente, sunt repellendus.",
-            new Date("2026-09-09"),
-            3,
-            "TESZT_TASKTYPENAME",
-            "Folyamatban",
-            null,
-            new Date("2026-01-02"),
-            new Date("2026-02-03")
-        )).toThrow(
+        expect(() => createTestTask({
+            taskName: ""
+        })).toThrow(
             new Error('A feladat neve érvénytelen.'),
         );
     });
     test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskName nem string", () => {
-        expect(() => new Task(
-            3,
-            "TESZT_DESCRIPTION_Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur accusantium pariatur minus tenetur, quos velit illo officiis magnam autem cupiditate temporibus sed ex provident, voluptates quaerat doloribus. Sapiente, sunt repellendus.",
-            new Date("2026-09-09"),
-            3,
-            "TESZT_TASKTYPENAME",
-            "Folyamatban",
-            null,
-            new Date("2026-01-02"),
-            new Date("2026-02-03")
-        )).toThrow(
+        expect(() => createTestTask({
+            taskName : 10
+        })).toThrow(
             new Error('Ahol a szöveget kell megadni, ott szöveg legyen megadva. Valamelyik adat érvénytelen.'),
         );
     });
     test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskName == `   `", () => {
-        expect(() => new Task(
-            "   ",
-            "TESZT_DESCRIPTION_Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur accusantium pariatur minus tenetur, quos velit illo officiis magnam autem cupiditate temporibus sed ex provident, voluptates quaerat doloribus. Sapiente, sunt repellendus.",
-            new Date("2026-09-09"),
-            3,
-            "TESZT_TASKTYPENAME",
-            "Folyamatban",
-            null,
-            new Date("2026-01-02"),
-            new Date("2026-02-03")
-        )).toThrow(
+        expect(() => createTestTask({
+            taskName: "   "
+        })).toThrow(
             new Error('A feladat neve érvénytelen.'),
         );
     });
     test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskDesc nem string", () => {
-        expect(() => new Task(
-            "TESZT_NEV",
-            6,
-            new Date("2026-09-09"),
-            3,
-            "TESZT_TASKTYPENAME",
-            "Folyamatban",
-            null,
-            new Date("2026-01-02"),
-            new Date("2026-02-03")
-        )).toThrow(
+        expect(() => createTestTask({
+            taskDesc: 3
+        })).toThrow(
             new Error('Ahol a szöveget kell megadni, ott szöveg legyen megadva. Valamelyik adat érvénytelen.'),
         );
     });
