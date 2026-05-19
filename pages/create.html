@@ -36,19 +36,19 @@
         <form class="create-form" id="createForm">
             <div class="form-element">
                 <label for="taskName">Feladat neve</label>
-                <input type="text" name="taskName" id="taskNameInput">
+                <input required type="text" name="taskName" id="taskNameInput">
             </div>
             <div class="form-element">
                 <label for="taskDesc">Feladat leírása</label>
-                <textarea name="taskDesc" id="taskDescTextarea"></textarea>
+                <textarea required name="taskDesc" id="taskDescTextarea"></textarea>
             </div>
             <div class="form-element">
                 <label for="taskDeadline">Feladat határideje</label>
-                <input type="datetime-local" name="taskDeadline" id="taskDeadlineInput">
+                <input required type="datetime-local" name="taskDeadline" id="taskDeadlineInput">
             </div>
             <div class="form-element">
                 <label for="taskImportance">Feladat fontossága</label>
-                <input type="range" min="1" max="5" step="1" name="taskImportance" id="taskImportanceInput">
+                <input required type="range" min="1" max="5" step="1" name="taskImportance" id="taskImportanceInput">
                 <span id="taskImportanceText"></span>
             </div>
             <div class="form-element">
