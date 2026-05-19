@@ -8,7 +8,7 @@ const init = async function () {
     const auth = getAuth();
     const user = await getUser(auth);
     const taskTypesNames = getTaskTypes(user)
-
+    createSelectOptions(taskTypesNames);
     document.getElementById("createForm")?.addEventListener("submit", (e) => {
         e.preventDefault();
         const formElements = getFormElements();
@@ -34,6 +34,16 @@ const getTaskTypes = function (user: any) {
     });
     return(arr);
 }
+
+const createSelectOptions = function (arr: string[]) {
+    const select = document.getElementById("taskTypeNameSelect") as HTMLElement;
+    arr.forEach(element => {
+        const option = document.createElement("option") as HTMLOptionElement;
+        option.value = element;
+        option.textContent = element;
+        select.appendChild(option);
+    });
+};
 
 const getUser = async function (auth: any) {
     return new Promise((resolve, reject) => {
