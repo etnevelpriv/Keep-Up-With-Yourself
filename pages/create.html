@@ -11,7 +11,7 @@
     <header>
         <nav class="navbar">
             <a class="navbar-logo" href="#hero">
-                <img src="../public/assets/images/logo.png" alt="Logo">
+                <img src="/assets/images/logo.png" alt="Logo">
             </a>
             <!-- https://www.sliderrevolution.com/resources/css-hamburger-menu/ -->
             <svg class="nav-toggle" id="navToggle" viewBox="0 0 100 100" width="80">
@@ -75,20 +75,8 @@
         </div>
     </main>
 
-    <script type="module" src="/src/scripts/auth.ts"></script>
-    <script type="module" src="/src/scripts/create.ts"></script>
-
-    <!-- <script type="module">
-        import { db } from "../src/scripts/firebase.ts"
-        import { doc, getDoc, updateDoc } from "firebase/firestore";
-
-        async function readUser() {
-            const userRef = doc(db, 'users', "huNtHln5hCZlBT4PjLLigB22Uc82")
-            const user = await getDoc(userRef)
-            console.log(`useeeeeeeeeeetesssssssssszt: ${JSON.stringify(user.data())}`)
-        }
-        readUser();
-    </script> -->
+    <script type="module" src="../src/scripts/auth.ts"></script>
+    <script type="module" src="../src/scripts/create.ts"></script>
 </body>
 
 </html>
