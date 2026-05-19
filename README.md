@@ -234,34 +234,33 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 
 ---
 
-## 6. Taskok frissetese (0 / 6)
+## 6. Taskok frissetese (5 / 5)
 
 - Modusuljanak a taskStatus-ok a server oldalon, ha a deadline utan vagyunk mar, az ellenorzes csak bizonyos idonkent legyen. A kliensoldalon minden alkalommal ellenorizze a program, amikor a felhasznalo betolti az oldalt [Levente] (kesz)  
-- Az elozo pont manualis tesztekese [Levente] (nincs kesz)  
+- Az elozo pont manualis tesztekese [Levente] (kesz)  
 - "Feladat kesz"/valami hasonlo gomb keszitese minden feladathoz, modosuljon a taskStatus es a taskCompletedAt a kliensoldalon keresztul, ha a felhasznalo az adott taskot kesznek jeloli [Levente] (kesz)  
 - "Feladat megsincs kesz"/valami hasonlo gomb keszitese minden kesz feladathoz, modosuljon a taskStatus es a taskCompletedAt a kliensoldalon keresztul, ha a felhasznalo az adott taskot nem elkeszultnek jeloli [Levente] (kesz)  
 - "Feladat modositasa"/valami hasonlo gomb keszitese minden feladathoz, a gomb lenyomasara a create oldalhoz hasonlo modal ugorjon fel, ahol a felhasznalo az adott task minden valtozojat modosithatja. Ne irja at a taskCreatedAt, de a taskUpdatedAt valtozot igen. A validacio maradjon meg, csak ugy, mint a task letrahozasanal [Levente] (kesz)  
-- Feladat kesz / Feladat megsincs kesz / Feladat modositasahoz teszt irasa, responsok lekerese [Levente] (nincs kesz)  
 
 ---
 
 ## 7. Profil oldal elkeszitese (0 / 4)
 
-- Teljes HTML struktrura felallitasa a profile.html-hez [Kristof] (nincs kesz)  
+- Teljes HTML struktrura felallitasa a profile.html-hez [Levente] (kesz)  
 - Korabbi interface es class segitsegevel megjeleniteni a felhasznalo adatait [Kristof] (nincs kesz)  
 - "Nev modositasa"/valami hasonlo gomb elkeszitese, a gomb legyen mukodokepes, a gomb lenyomasara egy modal ugorjon fel, ahol meglehet adni az uj nevet a kliensoldalrol frissitse az adatbazisban a felhasznalo nevet [Kristof] (nincs kesz)  
 - "Jelszo modositasa"/valami hasonlo gomb elkeszitese, a gomb tenylegesen kuldje ki az emailt, a korabbi authentication resznel hasznalt function ujra fel lehet itt is hasznalni, nem kell ujat irni [Kristof] (nincs kesz)  
 
 ---
 
-## 8. Vegso simitasok - Nem kotelezo jelleggel, csak ha mar tenyleg minden kesz es meg akarnam folytatni (0 / 8)
+## 8. Vegso simitasok - Nem kotelezo jelleggel, csak ha mar tenyleg minden kesz es meg akarnam folytatni (2 / 8)
 
 - Nehany metatag hozzaadasa a landing pagehez [Levente] (nincs kesz)  
 - Nehany pelda doski keszitese a jogi nyilatkozathoz [Levente] (nincs kesz)  
 - Deploy [Levente] (nincs kesz)  
 - Deploy utan manualis teszt nehany profilrol [Levente] (nincs kesz)  
-- Domain berlese [Levente] (nincs kesz)  
-- DNS konfiguralasa [Levente] (nincs kesz)  
+- Domain berlese [Levente] (kesz)  
+- DNS konfiguralasa [Levente] (kesz)  
 - Megkerni a Google bacsit, hogy indexelje az oldalt [Levente] (nincs kesz)  
 - GA suti hozzaadasa [Levente] (nincs kesz)  
 
