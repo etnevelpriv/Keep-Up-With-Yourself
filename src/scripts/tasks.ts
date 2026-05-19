@@ -66,7 +66,7 @@ const createTaskCardsInDOM = function (tasks: Task[]) {
         const name = document.createElement('h2');
         const desc = document.createElement('p');
         const deadline = document.createElement('strong');
-        const importance = document.createElement('span')
+        const importance = document.createElement('p')
         const type = document.createElement('p');
 
         name.classList.add("card-name")
@@ -76,6 +76,10 @@ const createTaskCardsInDOM = function (tasks: Task[]) {
         type.classList.add("card-type")
 
         name.textContent = task.taskName;
+        desc.textContent = task.taskDesc;
+        deadline.textContent = task.taskDeadline.toString();
+        importance.textContent = `${task.taskImportance}`;
+        type.textContent = task.taskTypeName;
 
         card.appendChild(name)
         card.appendChild(desc)
