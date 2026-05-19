@@ -244,7 +244,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 
 ---
 
-## 7. Profil oldal elkeszitese (0 / 4)
+## 7. Profil oldal elkeszitese (1 / 4)
 
 - Teljes HTML struktrura felallitasa a profile.html-hez [Levente] (kesz)  
 - Korabbi interface es class segitsegevel megjeleniteni a felhasznalo adatait [Kristof] (nincs kesz)  

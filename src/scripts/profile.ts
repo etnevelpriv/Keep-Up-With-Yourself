@@ -4,12 +4,15 @@ import "./header.ts";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase.ts"
+import { User } from "./classes/User.ts";
 
 const init = async function () {
     const auth = getAuth();
-    const user = await getUser(auth)
-
-
+    const userPayload = await getUser(auth);
+    console.log(userPayload)
+    const user = new User(userPayload.userName, undefined, userPayload.userEmail, new Date(userPayload.userCreatedAt.seconds *1000), userPayload.userVerified)
+    console.log(user.toString());
+    
     document.getElementById("signOutButton")?.addEventListener("click", () => {
         signOut(auth).then(() => {
             console.log("Sikeresen kijelentkezett a felhasznalo.")
