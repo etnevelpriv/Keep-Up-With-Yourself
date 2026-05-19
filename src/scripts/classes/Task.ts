@@ -38,7 +38,7 @@ export class Task implements TaskInterface {
     toString() {
         return (`Nev: ${this.taskName}, Leiras:${this.taskDesc}, Hatarido:${this.taskDeadline}, Fontossag:${this.taskImportance}, Tipus:${this.taskTypeName}, Statusz:${this.taskStatus}, Keszult:${this.TaskCreatedAt}, Frissitve:${this.taskUpdatedAt}, Befejezve:${this.taskCompletedAt}`);
     };
-    dataValidation(
+    private dataValidation(
         taskName: string,
         taskDesc: string,
         taskDeadline: Date,
@@ -49,10 +49,10 @@ export class Task implements TaskInterface {
         TaskCreatedAt: Date,
         taskUpdatedAt: Date
     ) {
-        if (typeof taskName !== "string" || taskName.trim() === "") {
-            throw new Error("A feladat neve kötelező.");
+        if (typeof taskName !== "string" || taskName.trim() === "" || taskName.trim().length < 3 || taskName.trim().length > 50) {
+            throw new Error("A feladat neve érvénytelen.");
         }
-        if (typeof taskDesc !== "string") {
+        if (typeof taskDesc !== "string" || taskDesc.trim().length > 300) {
             throw new Error("A leírás érvénytelen.");
         }
         if (!(TaskCreatedAt instanceof Date) || isNaN(TaskCreatedAt.getTime()) || TaskCreatedAt.getTime() > new Date().getTime()) {
@@ -64,8 +64,8 @@ export class Task implements TaskInterface {
         if (typeof taskImportance !== "number" || taskImportance < 1 || taskImportance > 5) {
             throw new Error("A fontosság 1 és 5 közé essen.");
         }
-        if (typeof taskTypeName !== "string" || taskTypeName.trim() === "") {
-            throw new Error("A típus neve kötelező.");
+        if (typeof taskTypeName !== "string" || taskTypeName.trim() === "" || taskTypeName.trim().length > 40) {
+            throw new Error("A típus érvénytelen.");
         }
         if (taskStatus !== "Folyamatban" && taskStatus !== "Lejárt" && taskStatus !== "Teljesített") {
             throw new Error("Az állapot érvénytelen.");
