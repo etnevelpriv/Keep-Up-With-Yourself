@@ -1,29 +1,6 @@
 import "../styles/base.css";
 import "../styles/landing.css";
-
-const navToggle = document.getElementById("navToggle");
-const navList = document.getElementById("navList");
-const header = document.querySelector("header");
-
-const closeNavigation = function () {
-    navToggle?.classList.remove("active");
-    navList?.classList.remove("is-open");
-};
-
-navToggle?.addEventListener("click", () => {
-    navToggle.classList.toggle("active");
-    navList?.classList.toggle("is-open");
-});
-
-navList?.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", closeNavigation);
-});
-
-document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-        closeNavigation();
-    }
-});
+import "./header.ts";
 
 const revealElements = document.querySelectorAll(
     ".hero-textContent, .task-board, .feature-card, .section-head, .problem-card, .solution-card, .workflow-item, .statistics-card, .security-visual, .cta-card"

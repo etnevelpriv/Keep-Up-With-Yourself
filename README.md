@@ -197,7 +197,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 ## 2. Firestore db felallitasa es szabalyok megirasa (1 / 2)
 
 - TaskType collection letrehozasa, nehany tesztadat letrehozasa [Levente] (kesz)  
-- Database rules megirasa [Levente] (nincs kesz)  
+- Database rules megirasa [Levente] (kesz)  
 
 ---
 

@@ -1,0 +1,179 @@
+/* navbar */
+/* ai */
+/* https://www.w3schools.com/cssref/pr_grid-template-columns.php */
+/* https://www.w3schools.com/cssref/func_min.php */
+/* https://www.w3schools.com/cssref/css_pr_padding-block.php */
+header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    border-bottom: var(--border-normal);
+    background-color: var(--background-color);
+    box-shadow: 0 4px 0 0 var(--black);
+}
+
+.navbar {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: var(--gap6);
+    align-items: center;
+    width: min(100% - 28px, 1280px);
+    margin-inline: auto;
+    padding-block: var(--gap4);
+}
+
+.navbar-logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--gap12);
+    height: var(--gap12);
+}
+
+
+.navbar-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: var(--gap1);
+}
+
+.navbar ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--gap2);
+}
+
+.navbar li a,
+footer nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--gap8);
+    padding: var(--gap3) var(--gap4);
+    border: 2px solid transparent;
+    font-size: var(--gap3);
+    line-height: 1;
+    text-transform: uppercase;
+    transition: all 120ms linear;
+}
+
+.navbar li a:hover,
+.navbar li a:active,
+footer nav a:hover,
+footer nav a:active {
+    border-color: var(--black);
+    background-color: var(--grey);
+    box-shadow: var(--shadow-small-dark);
+    transform: rotate(-3deg);
+}
+
+/* Hamburger ikon animacio alapja: https://www.sliderrevolution.com/resources/css-hamburger-menu/ */
+.nav-toggle {
+    display: none;
+    width: var(--gap12);
+    height: var(--gap12);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: all 180ms linear;
+    user-select: none;
+    background-color: transparent !important;
+}
+
+.nav-toggle:hover {
+    background: var(--secondary-color);
+}
+
+.nav-toggle .top {
+    stroke-dasharray: 40 139;
+}
+
+.nav-toggle .bottom {
+    stroke-dasharray: 40 180;
+}
+
+.nav-toggle .line {
+    fill: none;
+    transition: stroke-dasharray 400ms, stroke-dashoffset 400ms;
+    stroke: var(--black);
+    stroke-width: 5.5;
+    stroke-linecap: round;
+}
+
+.nav-toggle.active {
+    transform: rotate(45deg) translate(2px, 2px);
+    box-shadow: none;
+}
+
+.nav-toggle.active .top {
+    stroke-dashoffset: -98px;
+}
+
+.nav-toggle.active .bottom {
+    stroke-dashoffset: -138px;
+}
+
+@media (max-width: 860px) {
+    .navbar {
+        position: relative;
+        grid-template-columns: 1fr auto;
+        gap: var(--gap4);
+    }
+
+    .nav-toggle {
+        display: block;
+    }
+
+    .nav-cta {
+        display: none;
+    }
+
+    .navbar ul {
+        position: absolute;
+        inset: calc(100% + var(--gap4)) 0 auto 0;
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap3);
+        padding: var(--gap5);
+        border: var(--border-heavy);
+        background: var(--secondary-color);
+        box-shadow: var(--shadow-large-dark);
+        transform: translateY(-140%);
+        opacity: 0;
+        pointer-events: none;
+        transition: all 180ms ease-out;
+    }
+
+    .navbar ul.is-open {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .navbar li {
+        display: flex;
+    }
+
+    .navbar li a {
+        width: 100%;
+        min-height: var(--gap9);
+        justify-content: center;
+        border: var(--border-thin);
+        background: var(--white);
+        box-shadow: var(--shadow-small-dark);
+        text-align: center;
+    }
+}
+
+@media (max-width: 680px) {
+
+    .navbar {
+        width: min(100% - 20px, var(--container));
+    }
+
+    .navbar-logo,
+    .nav-toggle {
+        width: var(--gap11);
+        height: var(--gap11);
+    }
