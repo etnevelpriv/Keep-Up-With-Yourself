@@ -49,10 +49,10 @@ export class Task implements TaskInterface {
         TaskCreatedAt: Date,
         taskUpdatedAt: Date
     ) {
-        if (typeof taskName !== "string" || taskName.trim() === "" || taskName.trim().length < 3 || taskName.trim().length > 50) {
+        if (taskName.trim() === "" || taskName.trim().length < 3 || taskName.trim().length > 50) {
             throw new Error("A feladat neve érvénytelen.");
         }
-        if (typeof taskDesc !== "string" || taskDesc.trim().length > 300) {
+        if (taskDesc.trim().length > 300) {
             throw new Error("A leírás érvénytelen.");
         }
         if (!(TaskCreatedAt instanceof Date) || isNaN(TaskCreatedAt.getTime()) || TaskCreatedAt.getTime() > new Date().getTime()) {
@@ -64,7 +64,7 @@ export class Task implements TaskInterface {
         if (typeof taskImportance !== "number" || taskImportance < 1 || taskImportance > 5) {
             throw new Error("A fontosság 1 és 5 közé essen.");
         }
-        if (typeof taskTypeName !== "string" || taskTypeName.trim() === "" || taskTypeName.trim().length > 40) {
+        if (taskTypeName.trim() === "" || taskTypeName.trim().length > 40) {
             throw new Error("A típus érvénytelen.");
         }
         if (taskStatus !== "Folyamatban" && taskStatus !== "Lejárt" && taskStatus !== "Teljesített") {
@@ -79,6 +79,9 @@ export class Task implements TaskInterface {
     };
     // Megkertem az ai-t hogy sanitizeolja
     private sanitizeText(text: string) {
+        if (typeof text !== "string") {
+            throw new Error("Ahol a szöveget kell megadni, ott szöveg legyen megadva. Valamelyik adat érvénytelen.")
+        };
         const map: Record<string, string> = {
             "&": "&amp;",
             "<": "&lt;",

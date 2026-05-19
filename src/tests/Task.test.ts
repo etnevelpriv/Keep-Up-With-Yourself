@@ -150,7 +150,7 @@ describe("INVALID Task class tesztelese", () => {
             new Date("2026-01-02"),
             new Date("2026-02-03")
         )).toThrow(
-            new Error('A feladat neve kötelező.'),
+            new Error('A feladat neve érvénytelen.'),
         );
     });
     test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskName nem string", () => {
@@ -165,7 +165,7 @@ describe("INVALID Task class tesztelese", () => {
             new Date("2026-01-02"),
             new Date("2026-02-03")
         )).toThrow(
-            new Error('A feladat neve kötelező.'),
+            new Error('Ahol a szöveget kell megadni, ott szöveg legyen megadva. Valamelyik adat érvénytelen.'),
         );
     });
     test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskName == `   `", () => {
@@ -180,7 +180,7 @@ describe("INVALID Task class tesztelese", () => {
             new Date("2026-01-02"),
             new Date("2026-02-03")
         )).toThrow(
-            new Error('A feladat neve kötelező.'),
+            new Error('A feladat neve érvénytelen.'),
         );
     });
     test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskDesc nem string", () => {
@@ -195,7 +195,7 @@ describe("INVALID Task class tesztelese", () => {
             new Date("2026-01-02"),
             new Date("2026-02-03")
         )).toThrow(
-            new Error('A leírás érvénytelen.'),
+            new Error('Ahol a szöveget kell megadni, ott szöveg legyen megadva. Valamelyik adat érvénytelen.'),
         );
     });
 });
