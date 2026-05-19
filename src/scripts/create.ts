@@ -7,8 +7,7 @@ import { db } from "./firebase.ts"
 const init = function () {
     const auth = getAuth();
     const user = getUser(auth);
-
-    // loadTaskTypes()
+    loadTaskTypes(user)
     document.getElementById("createForm")?.addEventListener("submit", (e) => {
         e.preventDefault();
         const formElements = getFormElements();
@@ -26,12 +25,12 @@ const getFormElements = function () {
     return [taskName, taskDesc, taskDeadline, taskImportance, taskTypeName]
 };
 
-const loadTaskTypes = function () {
-
+const loadTaskTypes = function (user) {
+    console.log(user)
 }
 
-const getUser = function (auth: any) {
-    onAuthStateChanged(auth, async (user) => {
+const getUser = async function (auth: any) {
+    const authUser = onAuthStateChanged(auth, async (user) => {
         if (user) {
             const docRef = doc(db, "users", user.uid);
             const docSnap = await getDoc(docRef);
@@ -42,6 +41,7 @@ const getUser = function (auth: any) {
             };
         };
     });
+    return authUser;
 };
 
 document.addEventListener("DOMContentLoaded", init);
