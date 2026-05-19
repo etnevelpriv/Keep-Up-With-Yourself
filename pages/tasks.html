@@ -30,6 +30,59 @@
     </header>
 
     <main>
+        <div class="tasks-head"></div>
+        <div class="tasks-controls" aria-label="Feladatok szűrése és rendezése">
+            <fieldset class="filter-group">
+                <legend>Állapot szűrése</legend>
+                <label>
+                    <input type="checkbox" name="statusFilter" value="Folyamatban">
+                    Folyamatban
+                </label>
+                <label>
+                    <input type="checkbox" name="statusFilter" value="Lejárt">
+                    Lejárt
+                </label>
+                <label>
+                    <input type="checkbox" name="statusFilter" value="Teljesített">
+                    Teljesített
+                </label>
+            </fieldset>
+            <fieldset class="filter-group">
+                <legend>Fontosság szűrése</legend>
+                <label>
+                    <input type="checkbox" name="importanceFilter" value="1">
+                    1
+                </label>
+                <label>
+                    <input type="checkbox" name="importanceFilter" value="2">
+                    2
+                </label>
+                <label>
+                    <input type="checkbox" name="importanceFilter" value="3">
+                    3
+                </label>
+                <label>
+                    <input type="checkbox" name="importanceFilter" value="4">
+                    4
+                </label>
+                <label>
+                    <input type="checkbox" name="importanceFilter" value="5">
+                    5
+                </label>
+            </fieldset>
+            <div class="sort-group">
+                <label for="taskSortSelect">Rendezés</label>
+                <select id="taskSortSelect" name="taskSortSelect">
+                    <option value="none">Alapértelmezett</option>
+                    <option value="deadline-asc">Határidő szerint növekvő</option>
+                    <option value="deadline-desc">Határidő szerint csökkenő</option>
+                    <option value="name-asc">Név szerint növekvő</option>
+                    <option value="name-desc">Név szerint csökkenő</option>
+                </select>
+            </div>
+            <button type="button" id="resetTaskFilters">Szűrők törlése</button>
+            <p class="tasks-summary" id="tasksSummary" aria-live="polite"></p>
+        </div>
         <div class="tasks-cards" id="tasksCards"></div>
         <div class="modify-modal" id="modifyModal">
             <div class="modal-head">

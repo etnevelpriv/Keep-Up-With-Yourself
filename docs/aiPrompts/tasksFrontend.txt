@@ -1,0 +1,41 @@
+Ezt kerlek csinald meg teljesen, hasznald fel a base.css-t a dizajnhoz, inspiralodj a landing.css-bol. Vedd figyelembe minden fajl mukodeset es strukturajat az elemek kialakitasakkor. Nincs szukseg egyeb funkciokra, vagy a ts kodok strukturalasara. A jelenlegi format tartsd teljesen. Nincs szukseg ujabb sectionokre a html fajlban (egyedul  ami kell a rendezeshez). A hibak es az infok jelenjenek meg magyar nyelven a kepernyon pupup formaban. A popup uzeneteket lehessen bezarni x gombbal, de zarodjanak be maguktol is 5 mp utan. A popupokban pont ugyan olyan stilusa legyen, mint a login es a regiszter oldalon. A html struktura ujratervezesere sincs szukseg, ne torolj ki semmit sem.Feladat: tasks.html teljes dizajnolasa, felugro modalok, uzenetek jol jelenjenek meg, teljes tasks.css elkeszitese, UI optimalizalasa. Rendezes es szures funckio megvalositasa a leirtak szerint. - A korabbi feladatokat lehet szurni status es importance szerint, akar tobb elemek kilehet jelolni mindkettobol a szuroben.   
+- A korabbi feladatokat lehet rendezni deadline es nev szerint mind novekvo, mind csokkeno sorrendben.
+
+Show more
+5:16 PM
+
+
+
+Worked for 8m 52s
+Elkészült a tasks oldal kért része.
+
+Módosítottam:
+
+pages/tasks.html: szűrés/rendezés vezérlősáv hozzáadva a meglévő struktúra elé, a meglévő elemek törlése nélkül.
+src/scripts/tasks.ts: többválasztós status és importance szűrés, név/deadline szerinti növekvő/csökkenő rendezés, popup üzenetek, módosító modal zárás, eredeti DB-index megtartása rendezés után is.
+src/styles/tasks.css: teljes neobrutalista tasks UI, kártyák, vezérlők, modal, responsive nézet, login/register stílusú popupok.
+Ellenőrzés:
+
+tasks.ts célzott TypeScript ellenőrzés: sikeres.
+npx vite build: sikeres.
+Dev szerveren tasks.html, tasks.ts, tasks.css: 200-as válasszal betöltődött.
+npm run build: továbbra is megáll korábbi, nem ehhez a tasks munkához tartozó hibákon auth.ts, User.ts, firebase.ts, header.ts, login.ts, register.ts fájlokban.
+Megjegyzés: a README.md már módosított állapotban volt, ahhoz nem nyúltam.
+
+
+Létrehozás
+Website
+Open
+
+Edited 3 files
++1,471
+-252
+Undo
+Review
+pages/tasks.html
+src/scripts/tasks.ts
+src/styles/tasks.css
+
+
+
+

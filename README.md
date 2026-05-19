@@ -39,8 +39,8 @@
 
 #### Szures es rendezes
 
-- A korabbi feladatokat lehet szurni badge es cim szerint.  
-- A korabbi feladatokat lehet rendezni deadline szerint.  
+- A korabbi feladatokat lehet szurni status es importance szerint, akar tobb elemek kilehet jelolni mindkettobol a szuroben.   
+- A korabbi feladatokat lehet rendezni deadline es nev szerint mind novekvo, mind csokkeno sorrendben. 
 
 ---
 
@@ -223,14 +223,14 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 
 ---
 
-## 5. Listazas oldal elkeszitese (0 / 6)
+## 5. Listazas oldal elkeszitese (5 / 6)
 
 - Teljes HTML struktrura felallitasa a tasks.html-hez [Levente] (kesz)  
 - Az aktualis user taskjaihoz tartozo lekerdezes funkcio implementalasa [Levente] (kesz)  
 - Taskok megjelenitese annak minden adataval egyutt kreativ modon [Levente] (kesz)  
-- Rendezes funckio megvalositasa a leirtak szerint [Kristof] (nincs kesz)  
-- Teljes css megirasa a base css segitsegevel [Kristof] (nincs kesz)  
-- Oldal ellenorzese es manualis tesztelese kulonbozo kepernyokon sok kulonbozo task-al, majd a kepernyo fotok kimentese es docx fajlba [Kristof] (nincs kesz)  
+- Rendezes es szures funckio megvalositasa a leirtak szerint [AI] (kesz)  
+- Teljes css megirasa a base css segitsegevel [AI] (kesz)  
+- Oldal ellenorzese es manualis tesztelese kulonbozo kepernyokon sok kulonbozo task-al, majd a kepernyo fotok kimentese es docx fajlba [Levente] (nincs kesz)  
 
 ---
 
