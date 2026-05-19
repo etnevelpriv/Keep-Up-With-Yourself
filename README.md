@@ -210,7 +210,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 
 ---
 
-## 4. Letrehozas oldal elkeszitese (6 / 8)
+## 4. Letrehozas oldal elkeszitese (7 / 8)
 
 - Teljes HTML struktrura felallitasa a create.html-hez [Levente] (kesz)  
 - Elkesziteni a szukseges interfacet es a szukseges class-t megfelelo hibakezelessel [Levente] (kesz)  
@@ -219,14 +219,14 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - Backenden legyenek lekorlatozva a hibas feltoltesek [Levente] (nincs kesz)  
 - Frontenden legyenek lekorlatozva a hibas feltoltesek [Levente] (kesz)  
 - Teljes css megirasa a base css segitsegevel [AI] (kesz)  
-- Automatizalt teszt kod irasa vitest segitsegevel a feltolteshez (Ha lehet ilyet, ha nem, akkor is oldd meg Kika valahogy a tesztelest, koszi puszi) [Kristof] (nincs kesz)  
+- Automatizalt teszt kod irasa vitest segitsegevel a classhoz [Levente] (kesz)  
 
 ---
 
 ## 5. Listazas oldal elkeszitese (0 / 6)
 
-- Teljes HTML struktrura felallitasa a tasks.html-hez [Kristof] (nincs kesz)  
-- Az aktualis user taskjaihoz tartozo lekeres funkcio implementalasa a korabbi class es interface alapjan [Kristof] (nincs kesz)  
+- Teljes HTML struktrura felallitasa a tasks.html-hez [Levente] (kesz)  
+- Az aktualis user taskjaihoz tartozo lekerdezes funkcio implementalasa [Levente] (nincs kesz)  
 - Taskok megjelenitese annak minden adataval egyutt kreativ modon [Kristof] (nincs kesz)  
 - Rendezes funckio megvalositasa a leirtak szerint [Kristof] (nincs kesz)  
 - Teljes css megirasa a base css segitsegevel [Kristof] (nincs kesz)  

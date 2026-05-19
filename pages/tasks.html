@@ -29,6 +29,50 @@
         </nav>
     </header>
 
+    <main>
+        <div class="tasks-cards" id="tasksCards"></div>
+        <div class="modify-modal" id="modifyModal">
+            <div class="modal-head">
+                <h2>Feladat módosítása</h2>
+                <span></span>
+            </div>
+            <form class="modify-form" id="modifyForm">
+                <div class="form-element">
+                    <label for="taskName">Feladat neve</label>
+                    <input required type="text" name="taskName" minlength="3" maxlength="50" id="taskNameInput">
+                </div>
+                <div class="form-element">
+                    <label for="taskDesc">Feladat leírása</label>
+                    <textarea required name="taskDesc" maxlength="300" id="taskDescTextarea"></textarea>
+                </div>
+                <div class="form-element">
+                    <label for="taskDeadline">Feladat határideje</label>
+                    <input required type="datetime-local" name="taskDeadline" id="taskDeadlineInput">
+                </div>
+                <div class="form-element">
+                    <label for="taskImportance">Feladat fontossága</label>
+                    <input required type="range" min="1" max="5" step="1" name="taskImportance"
+                        id="taskImportanceInput">
+                    <span id="taskImportanceText"></span>
+                </div>
+                <div class="form-element">
+                    <label for="taskNewType">Új típus hozzáadása</label>
+                    <input type="checkbox" name="taskNewType" id="taskNewTypeInput">
+                </div>
+                <div id="newType" class="form-element hide">
+                    <label for="taskTypeName">Feladat típusa</label>
+                    <input type="text" name="taskTypeName" maxlength="40" id="taskTypeNameInput">
+                </div>
+                <div id="oldType" class="form-element">
+                    <label for="taskTypeName">Feladat típusa</label>
+                    <select name="taskTypeName" required id="taskTypeNameSelect">
+                    </select>
+                </div>
+                <input type="submit" value="Feladat módosítása">
+            </form>
+        </div>
+    </main>
+
     <script type="module" src="../src/scripts/auth.ts"></script>
     <script type="module" src="../src/scripts/tasks.ts"></script>
 </body>
