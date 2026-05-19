@@ -1,5 +1,5 @@
-import { onSchedule } from "firebase-functions/v2/scheduler";
-import { logger } from "firebase-functions";
+import {onSchedule} from "firebase-functions/v2/scheduler";
+import {logger} from "firebase-functions";
 import * as admin from "firebase-admin";
 
 admin.initializeApp();

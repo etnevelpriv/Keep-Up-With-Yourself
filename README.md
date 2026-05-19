@@ -264,6 +264,11 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - GA suti hozzaadasa [Levente] (nincs kesz)
 - Megfelelo readme megirasa, hogy cv-be illo legyen [Levente] (nincs kesz)
 - email templatek megirasa [Levente] (nincs kesz)
+- slugok kijavitasa (pl: /pages/login.html -> login) [Levente] (nincs kesz)
+- statisztikak implementalasa [Levente] (nincs kesz)
+- task type normalizacio [Levente] (nincs kesz)
+- logolas firebasen [Levente] (nincs kesz)
+- task torles funkcio [Levente] (nincs kesz)
 
 ---
 Repo klonozasa: git clone https://github.com/etnevelpriv/Keep-Up-With-Yourself.git
