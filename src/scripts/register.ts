@@ -18,11 +18,10 @@ const init = function () {
         signInWithPopup(auth, provider)
             .then((result) => {
                 const credential = GoogleAuthProvider.credentialFromResult(result);
-                const token = credential.accessToken;
                 const user = result.user;
                 console.log(credential, result);
-                const name = user.displayName;
-                const email = user.email;
+                const name = user.displayName ?? "";
+                const email = user.email ?? "";
                 const userObj = new User(name, undefined, email, new Date(), true);
                 userObj.saveUserInfoToDb(user.uid, undefined);
                 const infoMessageDiv = document.getElementById("infoMessage");

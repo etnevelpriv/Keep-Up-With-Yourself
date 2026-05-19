@@ -74,14 +74,14 @@ export class User implements UserInterface {
     createUserWithEmailProvider() {
         const auth = getAuth();
 
-        createUserWithEmailAndPassword(auth, this.email, this.password)
+        createUserWithEmailAndPassword(auth, this.email, this.password!)
             .then((userCredential) => {
                 const user = userCredential.user;
                 console.log(user);
                 this.saveUserInfoToDb(userCredential.user.uid, user)
             })
-            .catch((error) => {
-                const errorCodes = {
+            .catch((error: any) => {
+                const errorCodes: Record<string, string> = {
                     "auth/email-already-in-use": "Ezzel az e-mail címmel már létezik felhasználói fiók.",
                 };
 

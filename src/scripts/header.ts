@@ -2,7 +2,6 @@ import "../styles/header.css";
 
 const navToggle = document.getElementById("navToggle");
 const navList = document.getElementById("navList");
-const header = document.querySelector("header");
 
 const closeNavigation = function () {
     navToggle?.classList.remove("active");

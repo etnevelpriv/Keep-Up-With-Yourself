@@ -20,7 +20,6 @@ const init = function () {
         signInWithPopup(auth, provider)
             .then(async (result) => {
                 const credential = GoogleAuthProvider.credentialFromResult(result);
-                const token = credential.accessToken;
                 const user = result.user;
                 console.log(credential, result);
                 const name = user.displayName;
@@ -29,7 +28,7 @@ const init = function () {
                 const docRef = doc(db, "users", user.uid);
                 const docSnap = await getDoc(docRef);
                 if (!(docSnap.exists())) {
-                    const userObj = new User(name, undefined, email, new Date(), true);
+                    const userObj = new User(name ?? "", undefined, email ?? "", new Date(), true);
                     userObj.saveUserInfoToDb(user.uid, undefined);
                 };
                 const infoMessageDiv = document.getElementById("infoMessage");
@@ -48,7 +47,8 @@ const init = function () {
     });
 
     document.getElementById("forgotPassSendButton")?.addEventListener("click", () => {
-        const email = document.getElementById("forgotPassEmailInput").value;
+        const emailInput = document.getElementById("forgotPassEmailInput") as HTMLInputElement | null;
+        const email = emailInput?.value ?? "";
         const auth = getAuth();
         sendPasswordResetEmail(auth, email)
             .then(() => {
@@ -59,7 +59,7 @@ const init = function () {
                 console.log("forgotPassSendButton megnyomva, ha az email letezik a felhasznalok koztt, kikuldjuk az emailt")
             })
             .catch((error) => {
-                const errorCodes = {
+                const errorCodes: Record<string, string> = {
                     "auth/missing-email": "Nem adtál meg e-mail címet.",
                     "auth/missing-password": "Nincs megfelelően megadva a jelszó.",
                     "auth/invalid-email": "Hibás e-mail cím."
@@ -95,7 +95,7 @@ const sendLoginForm = function (e: Event) {
             };
         })
         .catch((error) => {
-            const errorCodes = {
+            const errorCodes: Record<string, string> = {
                 "auth/invalid-credential": "Helytelen felhasználói adatok.",
                 "auth/missing-password": "Nem adtál meg jelszót.",
                 "auth/invalid-email": "Hibás e-mail cím."

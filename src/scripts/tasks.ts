@@ -28,7 +28,6 @@ const init = async function () {
     setupModifyModal();
     updateImportanceText();
     syncTaskTypeFields();
-    checkIfExpired(tasks);
     document.getElementById("taskImportanceInput")?.addEventListener("input", updateImportanceText);
     document.getElementById('taskNewTypeInput')?.addEventListener("change", () => {
         syncTaskTypeFields();
