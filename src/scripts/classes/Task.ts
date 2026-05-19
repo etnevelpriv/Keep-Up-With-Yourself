@@ -74,4 +74,7 @@ export class Task implements TaskInterface {
             throw new Error("A frissítés dátuma érvénytelen.");
         }
     };
+    private sanitizeText (text) {
+        return text;
+    };
 };
