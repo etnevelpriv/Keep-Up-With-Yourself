@@ -10,7 +10,7 @@ const init = async function () {
     const auth = getAuth();
     const user = await getUser(auth);
     const arr = getTasks(user)
-    const tasks:Task[] = turnArrIntoTasks(arr);
+    const tasks: Task[] = turnArrIntoTasks(arr);
     createTaskCardsInDOM(tasks);
     console.log(tasks)
 };
@@ -65,27 +65,41 @@ const createTaskCardsInDOM = function (tasks: Task[]) {
 
         const name = document.createElement('h2');
         const desc = document.createElement('p');
-        const deadline = document.createElement('strong');
+        const deadline_CompletedAt = document.createElement('strong');
         const importance = document.createElement('p')
         const type = document.createElement('p');
+        const createdAt = document.createElement('p');
+        const status = document.createElement('strong');
+
 
         name.classList.add("card-name")
         desc.classList.add("card-desc")
-        deadline.classList.add("card-deadline")
+        deadline_CompletedAt.classList.add("card-deadline")
         importance.classList.add("card-importance")
         type.classList.add("card-type")
+        createdAt.classList.add("card-createdAt")
+        status.classList.add("card-status")
 
         name.textContent = task.taskName;
         desc.textContent = task.taskDesc;
-        deadline.textContent = task.taskDeadline.toString();
         importance.textContent = `${task.taskImportance}`;
         type.textContent = task.taskTypeName;
+        createdAt.textContent = `${task.TaskCreatedAt.getFullYear().toString()}. ${(task.TaskCreatedAt.getMonth() + 1).toString()}. ${task.TaskCreatedAt.getDate().toString()}`;
+        status.textContent = task.taskStatus;
+
+        if (task.taskCompletedAt != null) {
+            deadline_CompletedAt.textContent = `${task.taskCompletedAt.getFullYear().toString()}. ${(task.taskCompletedAt.getMonth() + 1).toString()}. ${task.taskCompletedAt.getDate().toString()}`;
+        } else {
+            deadline_CompletedAt.textContent = `${task.taskDeadline.getFullYear().toString()}. ${(task.taskDeadline.getMonth() + 1).toString()}. ${task.taskDeadline.getDate().toString()}`;
+        }
 
         card.appendChild(name)
         card.appendChild(desc)
-        card.appendChild(deadline)
         card.appendChild(importance)
         card.appendChild(type)
+        card.appendChild(createdAt)
+        card.appendChild(status)
+        card.appendChild(deadline_CompletedAt)
         container?.appendChild(card);
     });
 };
