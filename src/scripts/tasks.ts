@@ -139,7 +139,7 @@ const createTaskCardsInDOM = function (tasks: Task[], user: any) {
             taskDescInput.value = task.taskDesc;
             taskDeadlineInput.value = task.taskDeadline.toISOString().slice(0, 16);;
             taskImportanceInput.value = task.taskImportance;
-            taskNewTypeInput.value = false;
+            taskNewTypeInput.checked = false;
 
             if (form) {
                 form.addEventListener("submit", async (e) => {
@@ -149,7 +149,7 @@ const createTaskCardsInDOM = function (tasks: Task[], user: any) {
                         console.log(formElements);
                         const newTask = new Task(formElements[0], formElements[1], new Date(formElements[2]), Number(formElements[3]), formElements[4], task.taskStatus, task.taskCompletedAt, task.TaskCreatedAt, new Date())
                         console.log(newTask);
-                        await createTaskInDB(newTask, user);
+                        await updateTaskInDB(newTask, user, Number(card.id));
                         const form = document.getElementById("modifyForm") as HTMLFormElement
                         form.classList.remove("show")
                         form.reset();
@@ -217,7 +217,7 @@ const saveTaskTypeToDB = async function (taskType: string, user: any) {
     }
 }
 
-const createTaskInDB = async function (task: Task, user: any) {
+const updateTaskInDB = async function (task: Task, user: any, index:number) {
     const taskPayload = {
         taskName: task.taskName,
         taskDesc: task.taskDesc,
@@ -230,7 +230,7 @@ const createTaskInDB = async function (task: Task, user: any) {
         taskUpdatedAt: task.taskUpdatedAt
     };
 
-    user.tasks.push(taskPayload);
+    user.tasks[index] = taskPayload
     console.log(user);
     try {
         const auth = getAuth();
