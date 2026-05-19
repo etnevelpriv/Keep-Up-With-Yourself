@@ -64,14 +64,14 @@
                 <select name="taskTypeName" id="taskTypeNameSelect">
                 </select>
             </div>
-            <input type="button" value="Feladat létrehozása">
+            <input type="submit" value="Feladat létrehozása">
         </form>
     </main>
 
     <script type="module" src="../src/scripts/auth.ts"></script>
     <script type="module" src="../src/scripts/create.ts"></script>
 
-    <script type="module">
+    <!-- <script type="module">
         import { db } from "../src/scripts/firebase.ts"
         import { doc, getDoc, updateDoc } from "firebase/firestore";
 
@@ -81,7 +81,7 @@
             console.log(`useeeeeeeeeeetesssssssssszt: ${JSON.stringify(user.data())}`)
         }
         readUser();
-    </script>
+    </script> -->
 </body>
 
 </html>

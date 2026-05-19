@@ -6,4 +6,7 @@ const init = function () {
 };
 
 document.addEventListener("DOMContentLoaded", init);
-document.getElementById("createForm")?.addEventListener("submit", ()=>{});
+document.getElementById("createForm")?.addEventListener("submit", (e)=>{
+    e.preventDefault();
+    console.log("bibibi");
+});
