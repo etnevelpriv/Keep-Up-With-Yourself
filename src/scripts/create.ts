@@ -17,6 +17,7 @@ const init = async function () {
         console.log(formElements);
         const newTask = new Task(formElements[0], formElements[1], formElements[2], formElements[3], formElements[4], "Folyamatban", undefined, new Date(), new Date())
         console.log(newTask)
+        document.getElementById("createForm")?.reset();
     });
     document.getElementById('taskNewTypeInput')?.addEventListener("change", () => {
         const newType = document.getElementById('newType');
