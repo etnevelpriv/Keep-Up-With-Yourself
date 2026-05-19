@@ -1,4 +1,5 @@
 import "../styles/base.css";
+import "../styles/create.css";
 import "./header.ts";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
@@ -13,6 +14,10 @@ const init = async function () {
         e.preventDefault();
         const formElements = getFormElements();
         console.log(formElements);
+    });
+    document.getElementById('taskNewTypeInput')?.addEventListener("change", () => {
+        document.getElementById('newType')?.classList.toggle("hide");
+        document.getElementById('oldType')?.classList.toggle("hide");
     });
 };
 
