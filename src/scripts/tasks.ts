@@ -122,7 +122,7 @@ const createTaskCardsInDOM = function (tasks: Task[], user: any) {
         }
 
         const button = document.createElement('button');
-        button.classList.add("showModal")
+        button.classList.add("show-modal")
         button.textContent = "Feladat módosítása";
         button.addEventListener("click", () => {
             const form = document.getElementById("modifyForm");
@@ -163,6 +163,30 @@ const createTaskCardsInDOM = function (tasks: Task[], user: any) {
             };
         });
 
+        const buttonReady = document.createElement('button');
+        buttonReady.classList.add("button-ready")
+        if (task.taskStatus == "Teljesített") {
+            buttonReady.textContent = "Mégsincs kész";
+            buttonReady.addEventListener("click", () => {
+                if (task.taskDeadline.getTime() < new Date().getTime()) {
+                    task.taskStatus = "Lejárt";
+                } else {
+                    task.taskStatus = "Folyamatban";
+                }
+                updateTaskInDB(task, user, Number(card.id));
+            });
+
+        } else {
+            buttonReady.textContent = "Kész";
+            buttonReady.addEventListener("click", () => {
+                task.taskStatus = "Teljesített";
+                updateTaskInDB(task, user, Number(card.id));
+            });
+        };
+
+
+
+
         card.appendChild(name)
         card.appendChild(desc)
         card.appendChild(importance)
@@ -171,6 +195,7 @@ const createTaskCardsInDOM = function (tasks: Task[], user: any) {
         card.appendChild(status)
         card.appendChild(deadline_CompletedAt)
         card.appendChild(button)
+        card.appendChild(buttonReady)
         container?.appendChild(card);
     });
 };
@@ -217,7 +242,7 @@ const saveTaskTypeToDB = async function (taskType: string, user: any) {
     }
 }
 
-const updateTaskInDB = async function (task: Task, user: any, index:number) {
+const updateTaskInDB = async function (task: Task, user: any, index: number) {
     const taskPayload = {
         taskName: task.taskName,
         taskDesc: task.taskDesc,
@@ -246,7 +271,6 @@ const updateTaskInDB = async function (task: Task, user: any, index:number) {
         throw new Error(err);
     }
 };
-
 const showMessage = function (type: "error" | "info", message: string) {
     const messageElement = document.getElementById(type === "error" ? "errorMessage" : "infoMessage");
     if (messageElement) {
