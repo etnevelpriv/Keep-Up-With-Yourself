@@ -1,12 +1,21 @@
-const registerUser = function (name, email, password) {
+const registerWithEmail = function (name, email, password) {
 
 };
-const loginUser = function (email, password) {
+const loginWithEmail = function (email, password) {
+
+};
+const loginWithGoogle = function () {
 
 };
 const signOutUser = function() {
 
 };
-const sendPasswordResetEmail = function () {
+const sendPasswordReset = function () {
+
+};
+const sendEmailVerification = function () {
+
+};
+const deleteCurrentUserAccount = function () {
 
 };
