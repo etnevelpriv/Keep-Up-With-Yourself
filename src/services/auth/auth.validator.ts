@@ -1,10 +1,10 @@
-const validateEmail = function (email:string) {
+const validateUserEmail = function (email:string) {
 
 };
-const validatePassword = function (password:string | undefined) {
+const validateUserPassword = function (password:string | undefined) {
 
 };
-const validateName = function (name:string) {
+const validateUserName = function (name:string) {
 
 };
 const validateRegisterInput = function (name:string, email: string, password: string) {

@@ -289,6 +289,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - landing page lakat javítás [Levente] (nincs kész)
 - favicon beallitasa [Levente] (nincs kesz)
 - admin oldal letrehozasa [Levente] (nincs kesz)
+- lehessen torolni taskTypeot [Levente] (nincs kesz)
 
 ---
 Repo klonozasa: git clone https://github.com/etnevelpriv/Keep-Up-With-Yourself.git
