@@ -285,6 +285,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - Gamification (xp, szintek, badgek, rangok) [Levente] (nincs kesz)
 - Jelszavak több karaktert is tartalmassanak [Kristóf] (nincs kesz)
 - Auth rate limiting [Levente] (nincs kész)
+- landing page lakat javítás [Levente] (nincs kész)
 ---
 Repo klonozasa: git clone https://github.com/etnevelpriv/Keep-Up-With-Yourself.git
 Dependencyk letoltese: npm i
