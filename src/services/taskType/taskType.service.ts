@@ -1,15 +1,15 @@
-const getTaskTypes = function (uid:string) {
+export const getTaskTypes = function (uid:string) {
 
 };
-const getNormalizedTaskTypes = function () {
+export const getNormalizedTaskTypes = function () {
 
 }
-const uploadTaskType = function (uid:string, taskType:string) {
+export const uploadTaskType = function (uid:string, taskType:string) {
 
 };
-const deleteTaskType = function (uid:string, taskType:string) {
+export const deleteTaskType = function (uid:string, taskType:string) {
     
 }
-const normalizeTaskType = function (taskType:string) {
+export const normalizeTaskType = function (taskType:string) {
 
 };

@@ -1,3 +1,3 @@
-const redirectUser = function () {
+export const redirectUser = function () {
 
 }

@@ -1,24 +1,24 @@
-const registerWithEmail = function (name:string, email:string, password:string) {
+export const registerWithEmail = function (name:string, email:string, password:string) {
 
 };
-const loginWithEmail = function (email:string, password:string) {
+export const loginWithEmail = function (email:string, password:string) {
 
 };
-const loginWithGoogle = function () {
+export const loginWithGoogle = function () {
 
 };
-const getCurrentUser = function () {
+export const getCurrentUser = function () {
 
 };
-const signOutUser = function() {
+export const signOutUser = function() {
 
 };
-const sendPasswordReset = function (email:string) {
+export const sendPasswordReset = function (email:string) {
 
 };
-const sendEmailVerification = function () {
+export const sendEmailVerification = function () {
 
 };
-const deleteCurrentUserAccount = function () {
+export const deleteCurrentUserAccount = function () {
 
 };

@@ -1,15 +1,15 @@
-const createTask = function (uid:string, data:any) {
+export const createTask = function (uid:string, data:any) {
 
 };
-const getTasks = function (uid:string) {
+export const getTasks = function (uid:string) {
 
 };
-const getTask = function (uid:string, tid:string) {
+export const getTask = function (uid:string, tid:string) {
 
 };
-const updateTask = function (uid:string, tid:string, data:any) {
+export const updateTask = function (uid:string, tid:string, data:any) {
 
 };
-const deleteTask = function(uid:string, tid:string) {
+export const deleteTask = function(uid:string, tid:string) {
 
 };

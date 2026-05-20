@@ -1,15 +1,15 @@
-const validateUserEmail = function (email:string) {
+export const validateUserEmail = function (email:string) {
 
 };
-const validateUserPassword = function (password:string | undefined) {
+export const validateUserPassword = function (password:string | undefined) {
 
 };
-const validateUserName = function (name:string) {
+export const validateUserName = function (name:string) {
 
 };
-const validateRegisterInput = function (name:string, email: string, password: string) {
+export const validateRegisterInput = function (name:string, email: string, password: string) {
 
 };
-const validateLoginInput = function (email: string, password: string) {
+export const validateLoginInput = function (email: string, password: string) {
 
 };

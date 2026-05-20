@@ -1,18 +1,18 @@
-const validateTaskName = function (name:string) {
+export const validateTaskName = function (name:string) {
 
 };
-const validateTaskDescription = function (desc:string) {
+export const validateTaskDescription = function (desc:string) {
 
 };
-const validateTaskDeadline = function (deadline:Date) {
+export const validateTaskDeadline = function (deadline:Date) {
 
 };
-const validateTaskStatus = function (status:string) {
+export const validateTaskStatus = function (status:string) {
 
 };
-const validateTaskImportance = function (importance:string) {
+export const validateTaskImportance = function (importance:string) {
 
 };
-const validateTaskTaskType = function (TaskType:string) {
+export const validateTaskTaskType = function (TaskType:string) {
 
 };
