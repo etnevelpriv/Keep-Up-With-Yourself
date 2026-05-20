@@ -1,6 +1,6 @@
 import "../styles/auth.css";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
-import { User } from "./classes/User";
+import { User } from "../models/User.ts";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "./firebase";
 

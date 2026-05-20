@@ -1,7 +1,7 @@
-import type { UserInterface } from "./UserInterface.ts";
+import type { UserInterface } from "../interfaces/UserInterface.ts";
 import { setDoc, doc } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
-import { db } from "../firebase.ts"
+import { db } from "../scripts/firebase.ts"
 
 const errorMessageDiv = document.getElementById("errorMessage");
 

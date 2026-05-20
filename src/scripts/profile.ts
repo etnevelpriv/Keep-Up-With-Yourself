@@ -7,7 +7,7 @@ import { getAuth, onAuthStateChanged, signOut, sendPasswordResetEmail, deleteUse
 import type { Auth } from "firebase/auth";
 import { doc, getDoc, deleteDoc } from "firebase/firestore";
 import { db } from "./firebase.ts"
-import { User } from "./classes/User.ts";
+import { User } from "../models/User.ts";
 
 type UserPayload = {
     userID: string;

@@ -1,6 +1,6 @@
 // AI
-import { Task } from "../scripts/classes/Task";
-import type { TaskInterface } from "../scripts/classes/TaskInterface";
+import { Task } from "../models/Task.ts";
+import type { TaskInterface } from "../interfaces/TaskInterface.ts";
 
 export function createTestTask(overrides?: Partial<TaskInterface>): Task {
     const now = new Date();

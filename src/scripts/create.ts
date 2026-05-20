@@ -5,7 +5,7 @@ import "../styles/loggedInUserNav.css";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase.ts"
-import { Task } from "./classes/Task.ts";
+import { Task } from "../models/Task.ts";
 
 const init = async function () {
     const auth = getAuth();

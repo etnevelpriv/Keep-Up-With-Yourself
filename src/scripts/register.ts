@@ -1,5 +1,5 @@
 import "../styles/auth.css";
-import { User } from "./classes/User";
+import { User } from "../models/User.ts";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 const init = function () {

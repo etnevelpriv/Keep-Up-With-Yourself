@@ -1,4 +1,4 @@
-import type { TaskInterface } from "./TaskInterface";
+import type { TaskInterface } from "../interfaces/TaskInterface.ts";
 
 export class Task implements TaskInterface {
     taskName: string;
