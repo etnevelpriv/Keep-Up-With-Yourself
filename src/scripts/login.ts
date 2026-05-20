@@ -1,36 +1,43 @@
 import "../styles/auth.css";
-import { getAuth, getRedirectResult, signInWithPopup, signInWithRedirect, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
-import type { UserCredential } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import { User } from "./classes/User";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "./firebase";
-import { createGoogleProvider, getGoogleAuthErrorMessage, shouldUseRedirectForGoogleAuth } from "./googleAuth";
 
 const init = function () {
-    console.log("Betoltodott a login.ts")
+    console.log("Betoltodott a register.ts")
     const form: HTMLElement = document.getElementById("loginForm") as HTMLElement;
     form.addEventListener("submit", sendLoginForm);
-    handleGoogleRedirectResult();
 
-    document.getElementById("googleButton")?.addEventListener("click", async (event) => {
-        event.preventDefault();
+    document.getElementById("googleButton")?.addEventListener("click", () => {
         console.log("Google gombra kattintva")
-        const provider = createGoogleProvider();
+        const provider = new GoogleAuthProvider();
+        provider.addScope('https://www.googleapis.com/auth/userinfo.email');
+        provider.addScope('https://www.googleapis.com/auth/userinfo.profile');
         const auth = getAuth();
-        auth.useDeviceLanguage();
+        auth.useDeviceLanguage;
 
-        try {
-            if (shouldUseRedirectForGoogleAuth()) {
-                await signInWithRedirect(auth, provider);
-                return;
-            };
+        signInWithPopup(auth, provider)
+            .then(async (result) => {
+                const credential = GoogleAuthProvider.credentialFromResult(result);
+                const user = result.user;
+                console.log(credential, result);
+                const name = user.displayName;
+                const email = user.email;
 
-            const result = await signInWithPopup(auth, provider);
-            await handleGoogleLoginResult(result);
-        } catch (error) {
-            showGoogleAuthError(error);
-            console.error("Google bejelentkezesi hiba:", error);
-        };
+                const docRef = doc(db, "users", user.uid);
+                const docSnap = await getDoc(docRef);
+                if (!(docSnap.exists())) {
+                    const userObj = new User(name ?? "", undefined, email ?? "", new Date(), true);
+                    userObj.saveUserInfoToDb(user.uid, undefined);
+                };
+                const infoMessageDiv = document.getElementById("infoMessage");
+                if (infoMessageDiv) {
+                    infoMessageDiv.textContent = "Sikeres bejelentkezés, töltsd újra az oldalt a fiókod megtekintéséhez.";
+                };
+            }).catch((error) => {
+                throw new Error(`Hiba uzener: ${error.code}, Hiba kod: ${error.errorMessage}, Email: ${error.costumData.email}, Hitelesito adat: ${GoogleAuthProvider.credentialFromError(error)}`);
+            });
     });
 
     document.getElementById("forgotPassButton")?.addEventListener("click", () => {
@@ -69,46 +76,6 @@ const init = function () {
                 throw new Error(`Hiba uzener: ${error.code}, Hiba kod: ${error.errorMessage}`);
             });
     });
-};
-
-const handleGoogleRedirectResult = async function () {
-    const auth = getAuth();
-    auth.useDeviceLanguage();
-
-    try {
-        const result = await getRedirectResult(auth);
-        if (!result) return;
-
-        await handleGoogleLoginResult(result);
-    } catch (error) {
-        showGoogleAuthError(error);
-        console.error("Google atiranyitasos bejelentkezesi hiba:", error);
-    };
-};
-
-const handleGoogleLoginResult = async function (result: UserCredential) {
-    const user = result.user;
-    console.log(result);
-    const name = user.displayName;
-    const email = user.email;
-
-    const docRef = doc(db, "users", user.uid);
-    const docSnap = await getDoc(docRef);
-    if (!(docSnap.exists())) {
-        const userObj = new User(name ?? "", undefined, email ?? "", new Date(), true);
-        await userObj.saveUserInfoToDb(user.uid, undefined);
-    };
-    const infoMessageDiv = document.getElementById("infoMessage");
-    if (infoMessageDiv) {
-        infoMessageDiv.textContent = "Sikeres bejelentkezés, töltsd újra az oldalt a fiókod megtekintéséhez.";
-    };
-};
-
-const showGoogleAuthError = function (error: unknown) {
-    const errorMessageDiv = document.getElementById("errorMessage");
-    if (errorMessageDiv) {
-        errorMessageDiv.textContent = getGoogleAuthErrorMessage(error);
-    };
 };
 
 const sendLoginForm = function (e: Event) {

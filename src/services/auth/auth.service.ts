@@ -6,4 +6,7 @@ const loginUser = function (email, password) {
 };
 const signOutUser = function() {
 
-}
+};
+const sendPasswordResetEmail = function () {
+
+};
