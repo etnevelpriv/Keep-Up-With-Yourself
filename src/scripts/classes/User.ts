@@ -139,7 +139,7 @@ export class User implements UserInterface {
     sendVerificationLink(user: any) {
         console.log("sendVerificationLink metodus elindult")
         const actionCodeSettings = {
-            url: 'https://keep-up-with-yourself.web.app/create',
+            url: 'https://keepupwithyourself.hu/pages/create.html',
             handleCodeInApp: true,
         };
         sendEmailVerification(user, actionCodeSettings)
