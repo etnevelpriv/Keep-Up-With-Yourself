@@ -275,7 +275,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - CRUD unit/integration tesztek. [Levente] (nincs kesz)
 - Error/loading/empty state-ek. [Levente] (nincs kesz)
 - Email templatek.[Marcell] (nincs kesz)
-- Log collection. [Levente] (nincs kesz)
+- Log collection, külön documentumok az auth logoknak és a task logoknak. [Levente] (nincs kesz)
 - Profile statisztika. [Marcell] (nincs kesz)
 - SEO + Google indexelés. [Levente] (nincs kesz)
 - GA cookie consent. [Levente] (nincs kesz)
@@ -284,6 +284,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - Streak rendszer kiépítése [Levente] (nincs kesz)
 - Gamification (xp, szintek, badgek, rangok) [Levente] (nincs kesz)
 - Jelszavak több karaktert is tartalmassanak [Kristóf] (nincs kesz)
+- Auth rate limiting [Levente] (nincs kész)
 ---
 Repo klonozasa: git clone https://github.com/etnevelpriv/Keep-Up-With-Yourself.git
 Dependencyk letoltese: npm i
