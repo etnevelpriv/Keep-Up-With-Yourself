@@ -261,6 +261,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 ## 8. MVP deploy utáni teendők (0 / 24)
 
 - Service layer létrehozása [Levente] (nincs kesz)
+- Popup utils letrehozasa [Levente] (nincs kesz)
 - users/{uid}/tasks/{taskId} subcollection. [Levente] (nincs kesz)
 - users/{uid}/taskTypes/{typeId} subcollection. [Levente] (nincs kesz)
 - Firestore rules mezőszintű validációval. [Levente] (nincs kesz)
@@ -288,6 +289,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - landing page lakat javítás [Levente] (nincs kész)
 - favicon beallitasa [Levente] (nincs kesz)
 - admin oldal letrehozasa [Levente] (nincs kesz)
+
 ---
 Repo klonozasa: git clone https://github.com/etnevelpriv/Keep-Up-With-Yourself.git
 Dependencyk letoltese: npm i
