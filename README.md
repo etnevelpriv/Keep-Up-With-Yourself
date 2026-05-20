@@ -250,9 +250,9 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 
 ---
 
-## 8. Vegso simitasok - Nem kotelezo jelleggel, csak ha mar tenyleg minden kesz es meg akarnam folytatni (4 / 5)
+## 8. Vegso simitasok - Nem kotelezo jelleggel, csak ha mar tenyleg minden kesz es meg akarnam folytatni (5 / 5)
 
-- Nehany metatag hozzaadasa a landing pagehez [Levente] (nincs kesz)   
+- Nehany metatag hozzaadasa a landing pagehez [Levente] (kesz)   
 - Deploy [Levente] (kesz)  
 - Deploy utan manualis teszt nehany profilrol [Levente] (kesz)  
 - Domain berlese [Levente] (kesz)  
@@ -287,6 +287,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - Auth rate limiting [Levente] (nincs kész)
 - landing page lakat javítás [Levente] (nincs kész)
 - favicon beallitasa [Levente] (nincs kesz)
+- admin oldal letrehozasa [Levente] (nincs kesz)
 ---
 Repo klonozasa: git clone https://github.com/etnevelpriv/Keep-Up-With-Yourself.git
 Dependencyk letoltese: npm i
