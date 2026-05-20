@@ -258,7 +258,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - Domain berlese [Levente] (kesz)  
 - DNS konfiguralasa [Levente] (kesz)
 
-## 8. MVP deploy utáni teendők ( / )
+## 8. MVP deploy utáni teendők (0 / 24)
 
 - Service layer létrehozása 
 - users/{uid}/tasks/{taskId} subcollection.
