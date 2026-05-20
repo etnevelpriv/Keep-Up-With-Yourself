@@ -186,8 +186,8 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - Az emailek (verifikacios es reset password) szama legyen korlatozva [Levente] (kesz)
 - Hiba megjelenitese, tajekoztato informaciok megjelenitese a felhasznalonak magyarul minden esetben login es register eseteben is, pl: Az email cim meg nincs hitelesitve, az email cim mar hasznalatban van, a hitelesito email elkuldve, stb... [Levente] (kesz)
 - login.html es register.html teljes dizajnolasa, felugro modalok, uzenetek jol jelenjenek meg, teljes auth.css elkeszitese, UI optimalizalasa [AI] (kesz)
-- Regisztracio kezi tesztelese es minden teszt eset dokumentalasa word fajlban [Levente] (nincs kesz)  
-- Bejelentkezes kezi tesztelese es minden teszt eset dokumentalasa word fajlban [Levente] (nincs kesz)  
+- Regisztracio kezi tesztelese es minden teszt eset dokumentalasa word fajlban [Kristóf] (nincs kesz)  
+- Bejelentkezes kezi tesztelese es minden teszt eset dokumentalasa word fajlban [Kristóf] (nincs kesz)  
 - Reset password kezi tesztelese es minden teszt eset dokumentalasa word fajlban [Levente] (nincs kesz)  
 - Verifikacio kezi tesztelese es minden teszt eset dokumentalasa word fajlban [Levente] (nincs kesz)  
 
@@ -228,7 +228,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - Taskok megjelenitese annak minden adataval egyutt kreativ modon [Levente] (kesz)  
 - Rendezes es szures funckio megvalositasa a leirtak szerint [AI] (kesz)  
 - Teljes css megirasa a base css segitsegevel [AI] (kesz)  
-- Oldal ellenorzese es manualis tesztelese kulonbozo kepernyokon sok kulonbozo task-al, majd a kepernyo fotok kimentese es docx fajlba [Levente] (nincs kesz)  
+- Oldal ellenorzese es manualis tesztelese kulonbozo kepernyokon sok kulonbozo task-al, majd a kepernyo fotok kimentese es docx fajlba [Kristóf] (nincs kesz)  
 
 ---
 
@@ -260,30 +260,30 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 
 ## 8. MVP deploy utáni teendők (0 / 24)
 
-- Service layer létrehozása 
-- users/{uid}/tasks/{taskId} subcollection.
-- users/{uid}/taskTypes/{typeId} subcollection.
-- Firestore rules mezőszintű validációval.
-- Projekt prezentációja (projekt bemutatása fejlesztői/üzleti/user szempontbol, abrak, diagrammok, swot analizis, projekt roadmap, flowchart)
-- Task létrehozás/módosítás/törlés külön service layerben.
-- Fióktörlés megerősítéssel.
-- Rate limit auth emailekre.
-- Jogi oldalak.
-- README professzionális átírás.
-- Manual test docs.
-- Firestore rules test.
-- CRUD unit/integration tesztek.
-- Error/loading/empty state-ek.
-- Email templatek.
-- Log collection.
-- Profile statisztika.
-- SEO + Google indexelés.
-- GA cookie consent.
-- Slugok.
-- Password visibility toggle.
-- Streak rendszer kiépítése
-- Gamification (xp, szintek, badgek, rangok)
-- Jelszavak több karaktert is tartalmassanak
+- Service layer létrehozása [Levente] (nincs kesz)
+- users/{uid}/tasks/{taskId} subcollection. [Levente] (nincs kesz)
+- users/{uid}/taskTypes/{typeId} subcollection. [Levente] (nincs kesz)
+- Firestore rules mezőszintű validációval. [Levente] (nincs kesz)
+- Projekt prezentációja (projekt bemutatása fejlesztői/üzleti/user szempontbol, abrak, diagrammok, swot analizis, projekt roadmap, flowchart) [Levente] (nincs kesz)
+- Task létrehozás/módosítás/törlés külön service layerben. [Levente] (nincs kesz)
+- Fióktörlés és kijelentkezés megerősítéssel (felugró modal). [Levente] (nincs kesz)
+- Rate limit auth emailekre. [Levente] (nincs kesz)
+- Jogi oldalak. [Kristóf] (nincs kesz)
+- README professzionális átírás. [Levente] (nincs kesz)
+- Manual test docs. [Levente és Kristóf] (nincs kesz)
+- Firestore rules test. [Levente] (nincs kesz)
+- CRUD unit/integration tesztek. [Levente] (nincs kesz)
+- Error/loading/empty state-ek. [Levente] (nincs kesz)
+- Email templatek.[Marcell] (nincs kesz)
+- Log collection. [Levente] (nincs kesz)
+- Profile statisztika. [Marcell] (nincs kesz)
+- SEO + Google indexelés. [Levente] (nincs kesz)
+- GA cookie consent. [Levente] (nincs kesz)
+- Slugok. [Marcell] (nincs kesz)
+- Password visibility toggle font awesome ikonnal. [Levente] (nincs kesz)
+- Streak rendszer kiépítése [Levente] (nincs kesz)
+- Gamification (xp, szintek, badgek, rangok) [Levente] (nincs kesz)
+- Jelszavak több karaktert is tartalmassanak [Kristóf] (nincs kesz)
 ---
 Repo klonozasa: git clone https://github.com/etnevelpriv/Keep-Up-With-Yourself.git
 Dependencyk letoltese: npm i
