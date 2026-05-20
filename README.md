@@ -99,7 +99,6 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 
 - Egy felhasznalonak csak 1 fiokja lehet.  
 - Ketto fele provider elfogadott. Google, Email/Password.  
-
 - Ha a felhasznalo mar regisztralt Google providerrel akkor mar nem tud se bejelentkezni, se regisztralni ugyan azon email cimmel.  
 - Ha a felhasznalo mar regisztralt Email/Password providerrel, akkor mar nem engedi regisztralni ugyan azzal a providerrel, de Google-el igen (igy 2 provider lesz csatolva 1 fiokhoz).  
 - Ha a felhasznalo meg nem regisztralt, akkor barmivel regisztralhat.  
@@ -210,13 +209,12 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 
 ---
 
-## 4. Letrehozas oldal elkeszitese (7 / 8)
+## 4. Letrehozas oldal elkeszitese (7 / 7)
 
 - Teljes HTML struktrura felallitasa a create.html-hez [Levente] (kesz)  
 - Elkesziteni a szukseges interfacet es a szukseges class-t megfelelo hibakezelessel [Levente] (kesz)  
 - Implementalni az adatbazishoz valo hozzaadas funkciot [Levente] (kesz)  
 - Tipus mezo legyen kivalaszthato korabbibol, akar system, akar a user sajat tipusai, de lehessen ujat is hozzaadni [Levente] (kesz)  
-- Backenden legyenek lekorlatozva a hibas feltoltesek [Levente] (nincs kesz)  
 - Frontenden legyenek lekorlatozva a hibas feltoltesek [Levente] (kesz)  
 - Teljes css megirasa a base css segitsegevel [AI] (kesz)  
 - Automatizalt teszt kod irasa vitest segitsegevel a classhoz [Levente] (kesz)  
@@ -252,24 +250,40 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 
 ---
 
-## 8. Vegso simitasok - Nem kotelezo jelleggel, csak ha mar tenyleg minden kesz es meg akarnam folytatni (2 / 8)
+## 8. Vegso simitasok - Nem kotelezo jelleggel, csak ha mar tenyleg minden kesz es meg akarnam folytatni (4 / 5)
 
-- Nehany metatag hozzaadasa a landing pagehez [Levente] (nincs kesz)  
-- Nehany pelda doski keszitese a jogi nyilatkozathoz [Levente] (nincs kesz)  
-- Deploy [Levente] (nincs kesz)  
-- Deploy utan manualis teszt nehany profilrol [Levente] (nincs kesz)  
+- Nehany metatag hozzaadasa a landing pagehez [Levente] (nincs kesz)   
+- Deploy [Levente] (kesz)  
+- Deploy utan manualis teszt nehany profilrol [Levente] (kesz)  
 - Domain berlese [Levente] (kesz)  
-- DNS konfiguralasa [Levente] (kesz)  
-- Megkerni a Google bacsit, hogy indexelje az oldalt [Levente] (nincs kesz)  
-- GA suti hozzaadasa [Levente] (nincs kesz)
-- Megfelelo readme megirasa, hogy cv-be illo legyen [Levente] (nincs kesz)
-- email templatek megirasa [Levente] (nincs kesz)
-- slugok kijavitasa (pl: /pages/login.html -> login) [Levente] (nincs kesz)
-- statisztikak implementalasa [Levente] (nincs kesz)
-- task type normalizacio [Levente] (nincs kesz)
-- logolas firebasen [Levente] (nincs kesz)
-- task torles funkcio [Levente] (nincs kesz)
+- DNS konfiguralasa [Levente] (kesz)
 
+## 8. MVP deploy utáni teendők ( / )
+
+- Service layer létrehozása 
+- users/{uid}/tasks/{taskId} subcollection.
+- users/{uid}/taskTypes/{typeId} subcollection.
+- Firestore rules mezőszintű validációval.
+- Projekt prezentációja (projekt bemutatása fejlesztői/üzleti/user szempontbol, abrak, diagrammok, swot analizis, projekt roadmap, flowchart)
+- Task létrehozás/módosítás/törlés külön service layerben.
+- Fióktörlés megerősítéssel.
+- Rate limit auth emailekre.
+- Jogi oldalak.
+- README professzionális átírás.
+- Manual test docs.
+- Firestore rules test.
+- CRUD unit/integration tesztek.
+- Error/loading/empty state-ek.
+- Email templatek.
+- Log collection.
+- Profile statisztika.
+- SEO + Google indexelés.
+- GA cookie consent.
+- Slugok.
+- Password visibility toggle.
+- Streak rendszer kiépítése
+- Gamification (xp, szintek, badgek, rangok)
+- Jelszavak több karaktert is tartalmassanak
 ---
 Repo klonozasa: git clone https://github.com/etnevelpriv/Keep-Up-With-Yourself.git
 Dependencyk letoltese: npm i
