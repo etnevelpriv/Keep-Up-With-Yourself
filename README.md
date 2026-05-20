@@ -286,6 +286,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - Jelszavak több karaktert is tartalmassanak [Kristóf] (nincs kesz)
 - Auth rate limiting [Levente] (nincs kész)
 - landing page lakat javítás [Levente] (nincs kész)
+- favicon beallitasa [Levente] (nincs kesz)
 ---
 Repo klonozasa: git clone https://github.com/etnevelpriv/Keep-Up-With-Yourself.git
 Dependencyk letoltese: npm i
