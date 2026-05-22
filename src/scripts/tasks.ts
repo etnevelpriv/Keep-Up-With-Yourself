@@ -6,6 +6,7 @@ import { Task } from "../models/Task.ts";
 import { showErrorPopUp, showInfoPopUp } from "../utils/popup.ts";
 import { getCurrentUser } from "../services/auth/auth.service.ts";
 import { updateUserDocumentInDatabase } from "../services/user/user.service.ts";
+import { getTasks, updateTask } from "../services/task/task.service.ts";
 
 type TaskViewItem = {
     task: Task;
@@ -51,12 +52,6 @@ const createSelectOptions = function (arr: string[]) {
         option.textContent = element;
         select.appendChild(option);
     });
-};
-
-
-const getTasks = function (user: any) {
-    const tasks = user.tasks;
-    return tasks;
 };
 
 const turnArrIntoTasks = function (arr: any[]) {
@@ -435,15 +430,18 @@ const updateTaskInDB = async function (task: Task, user: any, index: number) {
         taskUpdatedAt: task.taskUpdatedAt
     };
 
-    user.tasks[index] = taskPayload
-    const currentUser = await getCurrentUser();
-    if (!currentUser) {
-        return;
-    }
+    // user.tasks[index] = taskPayload
+    // const currentUser = await getCurrentUser();
+    // if (!currentUser) {
+    //     return;
+    // }
 
-    await updateUserDocumentInDatabase(currentUser.userID, {
-        tasks: user.tasks
-    });
+    // await updateUserDocumentInDatabase(currentUser.userID, {
+    //     tasks: user.tasks
+    // });
+    // updateTask(user, taskPayload, index);
+    updateTask(user, taskPayload, index)
+
 };
 const syncTaskTypeFields = function () {
     const taskNewTypeInput = document.getElementById('taskNewTypeInput') as HTMLInputElement | null;

@@ -6,6 +6,7 @@ import { Task } from "../models/Task.ts";
 import { showErrorPopUp, showInfoPopUp } from "../utils/popup.ts";
 import { getCurrentUser } from "../services/auth/auth.service.ts";
 import { updateUserDocumentInDatabase } from "../services/user/user.service.ts";
+import { createTask } from "../services/task/task.service.ts";
 
 const init = async function () {
     const user = await getCurrentUser();
@@ -143,15 +144,7 @@ const createTaskInDB = async function (task: Task, user: any) {
         taskUpdatedAt: task.taskUpdatedAt
     };
 
-    user.tasks.push(taskPayload);
-    const currentUser = await getCurrentUser();
-    if (!currentUser) {
-        return;
-    }
-
-    await updateUserDocumentInDatabase(currentUser.userID, {
-        tasks: user.tasks
-    });
+    createTask(user, taskPayload);
 };
 
 document.addEventListener("DOMContentLoaded", init);
