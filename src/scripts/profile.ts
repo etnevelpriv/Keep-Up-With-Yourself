@@ -24,12 +24,12 @@ type UserPayload = {
 
 const init = async function () {
     getAuth();
-    const currentUser = getCurrentUser();
+    const currentUser = await getCurrentUser();
     if (!currentUser) {
         return;
     }
 
-    const userPayload = await getUserDocumentFromDatabase(currentUser.uid) as UserPayload | false;
+    const userPayload = currentUser as UserPayload | null;
     if (!userPayload) {
         console.error("A felhasznalo letezik, de az adatbazisban nincs hozza dokumentum.");
         return;

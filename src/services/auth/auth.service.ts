@@ -1,8 +1,10 @@
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, sendPasswordResetEmail, sendEmailVerification, createUserWithEmailAndPassword, signOut, deleteUser } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, sendPasswordResetEmail, sendEmailVerification, createUserWithEmailAndPassword, signOut, deleteUser, onAuthStateChanged } from "firebase/auth";
 import { User } from "../../models/User.ts";
 import { showInfoPopUp, showErrorPopUp } from "../../utils/popup.ts"
 import { createUserDocumentInDatabase, deleteUserDocumentFromDatabase, getUserDocumentFromDatabase } from "../user/user.service.ts"
 import { validateLoginInput, validateRegisterInput } from "./auth.validator.ts";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../scripts/firebase.ts";
 
 const auth = getAuth();
 
@@ -13,7 +15,7 @@ export const registerWithEmail = function (name: string, email: string, password
             const user = userCredential.user;
             console.log(user);
             await createUserDocumentInDatabase(userCredential.user.uid, email, name, createdAt, verified);
-            await sendEmailVerificationToUser(user);
+            sendEmailVerificationToUser(user);
         })
         .catch((error: any) => {
             const errorCodes: Record<string, string> = {
@@ -74,14 +76,32 @@ export const loginWithGoogle = function () {
         });
 };
 export const getCurrentUser = function () {
-    try {
-        const currentUser = auth.currentUser;
-        if (currentUser) {
-            return currentUser;
-        };
-    } catch (err: any) {
-        throw new Error(err);
-    };
+    // try {
+    //     const currentUser = auth.currentUser;
+    //     if (currentUser) {
+    //         return currentUser;
+    //     };
+    // } catch (err: any) {
+    //     throw new Error(err);
+    // };
+        return new Promise((resolve, reject) => {
+            try {
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        const docRef = doc(db, "users", user.uid);
+                        const docSnap = await getDoc(docRef);
+                        if (docSnap.exists()) {
+                            if (user.emailVerified) {
+                                resolve(docSnap.data());
+                            };
+                        };
+                    };
+                });
+            } catch (err: any) {
+                reject(err);
+                throw new Error(err);
+            }
+        })
 };
 export const signOutUser = function () {
     signOut(auth).then(() => {

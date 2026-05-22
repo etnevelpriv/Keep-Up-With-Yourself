@@ -15,7 +15,8 @@ type TaskViewItem = {
 let taskViewItems: TaskViewItem[] = [];
 
 const init = async function () {
-    const user = getCurrentUser();
+    const user = await getCurrentUser();
+    console.log(user)
     const arr = getTasks(user)
     const tasks: Task[] = turnArrIntoTasks(arr);
     taskViewItems = tasks.map((task, originalIndex) => ({ task, originalIndex }));
@@ -442,12 +443,12 @@ const saveTaskTypeToDB = async function (taskType: string, user: any) {
         // } catch (err: any) {
         //     throw new Error(err);
         // }
-        const currentUser = getCurrentUser();
+        const currentUser = await getCurrentUser();
         if (!currentUser) {
             return;
         }
 
-        await updateUserDocumentInDatabase(currentUser.uid, {
+        await updateUserDocumentInDatabase(currentUser.userID, {
             taskTypes: user.taskTypes
         });
     }
@@ -481,12 +482,12 @@ const updateTaskInDB = async function (task: Task, user: any, index: number) {
     // } catch (err: any) {
     //     throw new Error(err);
     // }
-    const currentUser = getCurrentUser();
+    const currentUser = await getCurrentUser();
     if (!currentUser) {
         return;
     }
 
-    await updateUserDocumentInDatabase(currentUser.uid, {
+    await updateUserDocumentInDatabase(currentUser.userID, {
         tasks: user.tasks
     });
 };

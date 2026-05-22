@@ -8,7 +8,10 @@ import { getCurrentUser } from "../services/auth/auth.service.ts";
 import { updateUserDocumentInDatabase } from "../services/user/user.service.ts";
 
 const init = async function () {
-    const user = getCurrentUser();
+    const user = await getCurrentUser();
+    if (!user) {
+        return;
+    }
     const taskTypesNames = getTaskTypes(user)
     createSelectOptions(taskTypesNames);
     updateImportanceText();
@@ -150,12 +153,12 @@ const saveTaskTypeToDB = async function (taskType: string, user: any) {
         // } catch (err: any) {
         //     throw new Error(err);
         // }
-        const currentUser = getCurrentUser();
+        const currentUser = await getCurrentUser();
         if (!currentUser) {
             return;
         }
 
-        await updateUserDocumentInDatabase(currentUser.uid, {
+        await updateUserDocumentInDatabase(currentUser.userID, {
             taskTypes: user.taskTypes
         });
     }
@@ -189,12 +192,12 @@ const createTaskInDB = async function (task: Task, user: any) {
     // } catch (err: any) {
     //     throw new Error(err);
     // }
-    const currentUser = getCurrentUser();
+    const currentUser = await getCurrentUser();
     if (!currentUser) {
         return;
     }
 
-    await updateUserDocumentInDatabase(currentUser.uid, {
+    await updateUserDocumentInDatabase(currentUser.userID, {
         tasks: user.tasks
     });
 };
