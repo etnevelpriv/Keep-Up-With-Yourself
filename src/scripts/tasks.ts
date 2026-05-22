@@ -181,7 +181,7 @@ const createTaskCardsInDOM = async function (tasks: TaskViewItem[], user: any) {
                         renderTasks(user);
                         showInfoPopUp("A feladat sikeresen módosult.");
                     } catch (err: any) {
-                        showErrorPopUp(err);
+                        showErrorPopUp(String(err));
                         throw new Error(err)
                     };
                 };

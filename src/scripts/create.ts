@@ -29,7 +29,7 @@ const init = async function () {
             syncTaskTypeFields();
             showInfoPopUp("A feladat sikeresen létrejött.");
         } catch (err: any) {
-            showErrorPopUp(err);
+            showErrorPopUp(String(err));
             throw new Error(err)
         };
     });
