@@ -62,11 +62,11 @@ const getTasks = function (user: any) {
 const turnArrIntoTasks = function (arr: any[]) {
     const arrOfTasks: Task[] = [];
     arr.forEach((element: any) => {
-        console.log(element.TaskCreatedAt)
+        console.log(element.taskCreatedAt)
         if (element.taskCompletedAt == null) {
-            arrOfTasks.push(new Task(element.taskName, element.taskDesc, new Date(element.taskDeadline.seconds * 1000), element.taskImportance, element.taskTypeName, element.taskStatus, null, new Date(element.TaskCreatedAt.seconds * 1000), new Date(element.taskUpdatedAt.seconds * 1000)))
+            arrOfTasks.push(new Task(element.taskName, element.taskDesc, new Date(element.taskDeadline.seconds * 1000), element.taskImportance, element.taskTypeName, element.taskStatus, null, new Date(element.taskCreatedAt.seconds * 1000), new Date(element.taskUpdatedAt.seconds * 1000)))
         } else {
-            arrOfTasks.push(new Task(element.taskName, element.taskDesc, new Date(element.taskDeadline.seconds * 1000), element.taskImportance, element.taskTypeName, element.taskStatus, new Date(element.taskCompletedAt.seconds * 1000), new Date(element.TaskCreatedAt.seconds * 1000), new Date(element.taskUpdatedAt.seconds * 1000)))
+            arrOfTasks.push(new Task(element.taskName, element.taskDesc, new Date(element.taskDeadline.seconds * 1000), element.taskImportance, element.taskTypeName, element.taskStatus, new Date(element.taskCompletedAt.seconds * 1000), new Date(element.taskCreatedAt.seconds * 1000), new Date(element.taskUpdatedAt.seconds * 1000)))
         }
     });
     return arrOfTasks;
@@ -127,7 +127,7 @@ const createTaskCardsInDOM = async function (tasks: TaskViewItem[], user: any) {
         desc.textContent = task.taskDesc;
         importance.textContent = `Fontosság: ${task.taskImportance} / 5`;
         type.textContent = `Típus: ${task.taskTypeName}`;
-        createdAt.textContent = `Létrehozva: ${formatDate(task.TaskCreatedAt)}`;
+        createdAt.textContent = `Létrehozva: ${formatDate(task.taskCreatedAt)}`;
         status.textContent = task.taskStatus;
 
         if (task.taskCompletedAt != null) {
@@ -168,7 +168,7 @@ const createTaskCardsInDOM = async function (tasks: TaskViewItem[], user: any) {
                     try {
                         const formElements = getFormElements(user);
                         console.log(formElements);
-                        const newTask = new Task(formElements[0], formElements[1], new Date(formElements[2]), Number(formElements[3]), formElements[4], task.taskStatus, task.taskCompletedAt, task.TaskCreatedAt, new Date())
+                        const newTask = new Task(formElements[0], formElements[1], new Date(formElements[2]), Number(formElements[3]), formElements[4], task.taskStatus, task.taskCompletedAt, task.taskCreatedAt, new Date())
                         console.log(newTask);
                         await updateTaskInDB(newTask, user, taskItem.originalIndex);
                         taskItem.task = newTask;
@@ -431,7 +431,7 @@ const updateTaskInDB = async function (task: Task, user: any, index: number) {
         taskTypeName: task.taskTypeName,
         taskStatus: task.taskStatus,
         taskCompletedAt: task.taskCompletedAt,
-        TaskCreatedAt: task.TaskCreatedAt,
+        taskCreatedAt: task.taskCreatedAt,
         taskUpdatedAt: task.taskUpdatedAt
     };
 

@@ -139,7 +139,7 @@ const createTaskInDB = async function (task: Task, user: any) {
         taskTypeName: task.taskTypeName,
         taskStatus: task.taskStatus,
         taskCompletedAt: task.taskCompletedAt,
-        TaskCreatedAt: task.TaskCreatedAt,
+        taskCreatedAt: task.taskCreatedAt,
         taskUpdatedAt: task.taskUpdatedAt
     };
 

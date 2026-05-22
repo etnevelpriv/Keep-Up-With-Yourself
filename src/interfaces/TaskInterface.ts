@@ -6,6 +6,6 @@ export interface TaskInterface {
     taskTypeName: string;
     taskStatus: "Folyamatban" | "Lejárt" | "Teljesített";
     taskCompletedAt: Date | null;
-    TaskCreatedAt: Date;
+    taskCreatedAt: Date;
     taskUpdatedAt: Date;
 };
