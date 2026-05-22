@@ -1,8 +1,9 @@
 import "../styles/auth.css";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
-import { User } from "../models/User.ts";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "./firebase";
+// import { User } from "../models/User.ts";
+// import { doc, getDoc } from "firebase/firestore";
+// import { db } from "./firebase";
+import { loginWithGoogle } from "../services/auth/auth.service";
 
 const init = function () {
     console.log("Betoltodott a register.ts")
@@ -10,34 +11,35 @@ const init = function () {
     form.addEventListener("submit", sendLoginForm);
 
     document.getElementById("googleButton")?.addEventListener("click", () => {
-        console.log("Google gombra kattintva")
-        const provider = new GoogleAuthProvider();
-        provider.addScope('https://www.googleapis.com/auth/userinfo.email');
-        provider.addScope('https://www.googleapis.com/auth/userinfo.profile');
-        const auth = getAuth();
-        auth.useDeviceLanguage;
+        // console.log("Google gombra kattintva")
+        // const provider = new GoogleAuthProvider();
+        // provider.addScope('https://www.googleapis.com/auth/userinfo.email');
+        // provider.addScope('https://www.googleapis.com/auth/userinfo.profile');
+        // const auth = getAuth();
+        // auth.useDeviceLanguage;
 
-        signInWithPopup(auth, provider)
-            .then(async (result) => {
-                const credential = GoogleAuthProvider.credentialFromResult(result);
-                const user = result.user;
-                console.log(credential, result);
-                const name = user.displayName;
-                const email = user.email;
+        // signInWithPopup(auth, provider)
+        //     .then(async (result) => {
+        //         const credential = GoogleAuthProvider.credentialFromResult(result);
+        //         const user = result.user;
+        //         console.log(credential, result);
+        //         const name = user.displayName;
+        //         const email = user.email;
 
-                const docRef = doc(db, "users", user.uid);
-                const docSnap = await getDoc(docRef);
-                if (!(docSnap.exists())) {
-                    const userObj = new User(name ?? "", undefined, email ?? "", new Date(), true);
-                    userObj.saveUserInfoToDb(user.uid, undefined);
-                };
-                const infoMessageDiv = document.getElementById("infoMessage");
-                if (infoMessageDiv) {
-                    infoMessageDiv.textContent = "Sikeres bejelentkezés, töltsd újra az oldalt a fiókod megtekintéséhez.";
-                };
-            }).catch((error) => {
-                throw new Error(`Hiba uzener: ${error.code}, Hiba kod: ${error.errorMessage}, Email: ${error.costumData.email}, Hitelesito adat: ${GoogleAuthProvider.credentialFromError(error)}`);
-            });
+        //         const docRef = doc(db, "users", user.uid);
+        //         const docSnap = await getDoc(docRef);
+        //         if (!(docSnap.exists())) {
+        //             const userObj = new User(name ?? "", undefined, email ?? "", new Date(), true);
+        //             userObj.saveUserInfoToDb(user.uid, undefined);
+        //         };
+        //         const infoMessageDiv = document.getElementById("infoMessage");
+        //         if (infoMessageDiv) {
+        //             infoMessageDiv.textContent = "Sikeres bejelentkezés, töltsd újra az oldalt a fiókod megtekintéséhez.";
+        //         };
+        //     }).catch((error) => {
+        //         throw new Error(`Hiba uzener: ${error.code}, Hiba kod: ${error.errorMessage}, Email: ${error.costumData.email}, Hitelesito adat: ${GoogleAuthProvider.credentialFromError(error)}`);
+        //     });
+        loginWithGoogle();
     });
 
     document.getElementById("forgotPassButton")?.addEventListener("click", () => {

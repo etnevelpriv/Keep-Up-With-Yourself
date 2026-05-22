@@ -1,6 +1,13 @@
-const showErrorPopUp = function (message:string) {
-
+export const showErrorPopUp = function (message: string) {
+    const infoMessageDiv = document.getElementById("errorMessage");
+    if (infoMessageDiv) {
+        infoMessageDiv.textContent = message;
+    };
 };
-const showInfoPopUp = function (message:string) {
-    
+export const showInfoPopUp = function (message: string) {
+    const infoMessageDiv = document.getElementById("infoMessage");
+    if (infoMessageDiv) {
+        infoMessageDiv.textContent = message;
+    };
+
 }
