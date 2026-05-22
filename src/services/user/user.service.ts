@@ -1,6 +1,6 @@
 import { doc, getDoc, updateDoc, setDoc, deleteDoc } from "firebase/firestore";
 import { db } from "../../scripts/firebase.ts"
-import { showInfoPopUp, showErrorPopUp } from "../../utils/popup.ts"
+import { showErrorPopUp } from "../../utils/popup.ts"
 
 export const syncUserVerificationStatus = async function (uid: string) {
     await updateDoc(doc(db, "users", uid), {

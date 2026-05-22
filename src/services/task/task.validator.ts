@@ -1,18 +1,18 @@
-export const validateTaskName = function (name:string) {
+export const validateTaskName = function (_name:string) {
 
 };
-export const validateTaskDescription = function (desc:string) {
+export const validateTaskDescription = function (_desc:string) {
 
 };
-export const validateTaskDeadline = function (deadline:Date) {
+export const validateTaskDeadline = function (_deadline:Date) {
 
 };
-export const validateTaskStatus = function (status:string) {
+export const validateTaskStatus = function (_status:string) {
 
 };
-export const validateTaskImportance = function (importance:string) {
+export const validateTaskImportance = function (_importance:string) {
 
 };
-export const validateTaskTaskType = function (TaskType:string) {
+export const validateTaskTaskType = function (_taskType:string) {
 
 };

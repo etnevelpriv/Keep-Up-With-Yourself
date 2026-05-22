@@ -3,7 +3,7 @@ import "../styles/profile.css";
 import "./header.ts";
 import "../styles/loggedInUserNav.css";
 
-import { getAuth, onAuthStateChanged, signOut, sendPasswordResetEmail, deleteUser } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 // import type { Auth } from "firebase/auth";
 // import { doc, getDoc, deleteDoc } from "firebase/firestore";
 // import { db } from "./firebase.ts"
@@ -22,9 +22,18 @@ type UserPayload = {
 };
 
 const init = async function () {
-    const auth = getAuth();
-    const userPayload = getUserDocumentFromDatabase(getCurrentUser());
-    console.log(userPayload)
+    getAuth();
+    const currentUser = getCurrentUser();
+    if (!currentUser) {
+        return;
+    }
+
+    const userPayload = await getUserDocumentFromDatabase(currentUser.uid) as UserPayload | false;
+    if (!userPayload) {
+        console.error("A felhasznalo letezik, de az adatbazisban nincs hozza dokumentum.");
+        return;
+    }
+
     const user: User = new User(userPayload.userName, undefined, userPayload.userEmail, new Date(userPayload.userCreatedAt.seconds * 1000), userPayload.userVerified)
     console.log(user.toString());
     showUserDataInDOM(user);

@@ -13,7 +13,7 @@ export const registerWithEmail = function (name: string, email: string, password
             const user = userCredential.user;
             console.log(user);
             await createUserDocumentInDatabase(userCredential.user.uid, email, name, createdAt, verified);
-            await sendEmailVerification(user);
+            await sendEmailVerificationToUser(user);
         })
         .catch((error: any) => {
             const errorCodes: Record<string, string> = {
@@ -55,7 +55,7 @@ export const loginWithGoogle = function () {
     const provider = new GoogleAuthProvider();
     provider.addScope('https://www.googleapis.com/auth/userinfo.email');
     provider.addScope('https://www.googleapis.com/auth/userinfo.profile');
-    auth.useDeviceLanguage;
+    auth.useDeviceLanguage();
     signInWithPopup(auth, provider)
         .then(async (result) => {
             const credential = GoogleAuthProvider.credentialFromResult(result);
@@ -66,7 +66,7 @@ export const loginWithGoogle = function () {
             const userDocument = await getUserDocumentFromDatabase(user.uid)
             if (!userDocument) {
                 const userObj = new User(name ?? "", undefined, email ?? "", new Date(), true);
-                createUserDocumentInDatabase(user.uid, userObj.email, userObj.name, userObj.createdAt, userObj.verified)
+                await createUserDocumentInDatabase(user.uid, userObj.email, userObj.name, userObj.createdAt, userObj.verified)
             };
             showInfoPopUp("Sikeres bejelentkezés, töltsd újra az oldalt a fiókod megtekintéséhez.")
         }).catch((error) => {

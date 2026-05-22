@@ -1,7 +1,5 @@
 import type { UserInterface } from "../interfaces/UserInterface.ts";
 
-const errorMessageDiv = document.getElementById("errorMessage");
-
 export class User implements UserInterface {
     name: string;
     password: string | undefined;

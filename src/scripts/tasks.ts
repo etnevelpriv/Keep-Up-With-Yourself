@@ -2,9 +2,6 @@ import "../styles/base.css";
 import "../styles/tasks.css";
 import "./header.ts";
 import "../styles/loggedInUserNav.css";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { db } from "./firebase.ts"
 import { Task } from "../models/Task.ts";
 import { getCurrentUser } from "../services/auth/auth.service.ts";
 import { updateUserDocumentInDatabase } from "../services/user/user.service.ts";
@@ -17,7 +14,6 @@ type TaskViewItem = {
 let taskViewItems: TaskViewItem[] = [];
 
 const init = async function () {
-    const auth = getAuth();
     const user = getCurrentUser();
     const arr = getTasks(user)
     const tasks: Task[] = turnArrIntoTasks(arr);
@@ -446,7 +442,11 @@ const saveTaskTypeToDB = async function (taskType: string, user: any) {
         //     throw new Error(err);
         // }
         const currentUser = getCurrentUser();
-        await updateUserDocumentInDatabase(currentUser?.uid, {
+        if (!currentUser) {
+            return;
+        }
+
+        await updateUserDocumentInDatabase(currentUser.uid, {
             taskTypes: user.taskTypes
         });
     }
@@ -481,7 +481,11 @@ const updateTaskInDB = async function (task: Task, user: any, index: number) {
     //     throw new Error(err);
     // }
     const currentUser = getCurrentUser();
-    await updateUserDocumentInDatabase(currentUser?.uid, {
+    if (!currentUser) {
+        return;
+    }
+
+    await updateUserDocumentInDatabase(currentUser.uid, {
         tasks: user.tasks
     });
 };

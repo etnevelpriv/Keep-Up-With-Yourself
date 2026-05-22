@@ -11,6 +11,11 @@ export const initializeAuthListener = function () {
             console.log(`A felhasznalo bevan jelentkezve: Email: ${user.email}, Nev: ${user.displayName}, UID: ${user.uid} Verfied: ${user.emailVerified}`);
             const userDocument = await getUserDocumentFromDatabase(user.uid);
             if (userDocument) {
+                if (!user.emailVerified) {
+                    console.log("A felhasznalo meg nem hitelesitette az email cimet", userDocument.userVerified);
+                    return;
+                };
+
                 if (!(userDocument.userVerified)) {
                     await syncUserVerificationStatus(user.uid);
                 };

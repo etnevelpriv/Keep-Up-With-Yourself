@@ -41,16 +41,16 @@ const init = function () {
 const sendRegisterForm = function (e: Event) {
     e.preventDefault();
     console.log("Regisztralas gombra kattintva")
-    const name = document.getElementById("nameInput") as HTMLFormElement;
-    const email = document.getElementById("emailInput") as HTMLFormElement;
-    const password = document.getElementById("passwordInput") as HTMLFormElement;
+    const name = document.getElementById("nameInput") as HTMLInputElement;
+    const email = document.getElementById("emailInput") as HTMLInputElement;
+    const password = document.getElementById("passwordInput") as HTMLInputElement;
     const userObj = new User(name.value, password.value, email.value, new Date(), false);
     console.log(userObj);
     const form = document.getElementById("registerForm") as HTMLFormElement
     form.reset()
 
     // userObj.createUserWithEmailProvider();
-    registerWithEmail(userObj.name, userObj.email, userObj.password, userObj.createdAt, userObj.verified)
+    registerWithEmail(userObj.name, userObj.email, password.value, userObj.createdAt, userObj.verified)
 };
 
 document.addEventListener("DOMContentLoaded", init);
