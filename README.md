@@ -168,7 +168,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 
 ---
 
-## 1. Auth letrehozasa (15 / 19)
+## 1. Auth letrehozasa (19 / 19)
 
 - Firebase projektben felallitani az authenticationt mindket providerhez [Levente] (kesz)  
 - Elkesziteni az alap regisztracios oldalt [Levente] (kesz)  
@@ -186,10 +186,10 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - Az emailek (verifikacios es reset password) szama legyen korlatozva [Levente] (kesz)
 - Hiba megjelenitese, tajekoztato informaciok megjelenitese a felhasznalonak magyarul minden esetben login es register eseteben is, pl: Az email cim meg nincs hitelesitve, az email cim mar hasznalatban van, a hitelesito email elkuldve, stb... [Levente] (kesz)
 - login.html es register.html teljes dizajnolasa, felugro modalok, uzenetek jol jelenjenek meg, teljes auth.css elkeszitese, UI optimalizalasa [AI] (kesz)
-- Regisztracio kezi tesztelese es minden teszt eset dokumentalasa word fajlban [Kristóf] (nincs kesz)  
-- Bejelentkezes kezi tesztelese es minden teszt eset dokumentalasa word fajlban [Kristóf] (nincs kesz)  
-- Reset password kezi tesztelese es minden teszt eset dokumentalasa word fajlban [Kristof] (nincs kesz)  
-- Verifikacio kezi tesztelese es minden teszt eset dokumentalasa word fajlban [Kristof] (nincs kesz)  
+- Regisztracio kezi tesztelese es minden teszt eset dokumentalasa word fajlban [Kristóf] (kesz)  
+- Bejelentkezes kezi tesztelese es minden teszt eset dokumentalasa word fajlban [Kristóf] (kesz)  
+- Reset password kezi tesztelese es minden teszt eset dokumentalasa word fajlban [Kristof] (kesz)  
+- Verifikacio kezi tesztelese es minden teszt eset dokumentalasa word fajlban [Kristof] (kesz)  
 
 ---
 
@@ -228,7 +228,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - Taskok megjelenitese annak minden adataval egyutt kreativ modon [Levente] (kesz)  
 - Rendezes es szures funckio megvalositasa a leirtak szerint [AI] (kesz)  
 - Teljes css megirasa a base css segitsegevel [AI] (kesz)  
-- Oldal ellenorzese es manualis tesztelese kulonbozo kepernyokon sok kulonbozo task-al, majd a kepernyo fotok kimentese es docx fajlba [Kristóf] (nincs kesz)  
+- Oldal ellenorzese es manualis tesztelese kulonbozo kepernyokon sok kulonbozo task-al, majd a kepernyo fotok kimentese es docx fajlba [Levente] (nincs kesz)  
 
 ---
 
@@ -258,20 +258,20 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - Domain berlese [Levente] (kesz)  
 - DNS konfiguralasa [Levente] (kesz)
 
-## 8. MVP deploy utáni teendők (0 / 24)
+## 8. MVP deploy utáni teendők (6 / 29)
 
-- Service layer létrehozása [Levente] (nincs kesz)
-- Popup utils letrehozasa [Levente] (nincs kesz)
+- Service layer létrehozása [Levente] (kesz)
+- Popup utils letrehozasa [Levente] (kesz)
 - users/{uid}/tasks/{taskId} subcollection. [Levente] (nincs kesz)
 - users/{uid}/taskTypes/{typeId} subcollection. [Levente] (nincs kesz)
 - Firestore rules mezőszintű validációval. [Levente] (nincs kesz)
 - Projekt prezentációja (projekt bemutatása fejlesztői/üzleti/user szempontbol, abrak, diagrammok, swot analizis, projekt roadmap, flowchart) [Levente] (nincs kesz)
-- Task létrehozás/módosítás/törlés külön service layerben. [Levente] (nincs kesz)
+- Task létrehozás/módosítás/törlés külön service layerben. [Levente] (kesz)
 - Fióktörlés és kijelentkezés megerősítéssel (felugró modal). [Levente] (nincs kesz)
 - Rate limit auth emailekre. [Levente] (nincs kesz)
 - Jogi oldalak. [Levente] (nincs kesz)
 - README professzionális átírás. [Levente] (nincs kesz)
-- Manual test docs. [Kristóf] (nincs kesz)
+- Manual test docs. [Kristóf] (kesz)
 - Firestore rules test. [Levente] (nincs kesz)
 - CRUD unit/integration tesztek. [Levente] (nincs kesz)
 - Error/loading/empty state-ek. [Levente] (nincs kesz)
@@ -284,9 +284,8 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - Password visibility toggle font awesome ikonnal. [Levente] (nincs kesz)
 - Streak rendszer kiépítése [Levente] (nincs kesz)
 - Gamification (xp, szintek, badgek, rangok) [Levente] (nincs kesz)
-- Jelszavak több karaktert is tartalmassanak [Levente] (nincs kesz)
+- Jelszavak több karaktert is tartalmassanak [Levente] (kesz)
 - Auth rate limiting [Levente] (nincs kész)
-- landing page lakat javítás [Levente] (nincs kész)
 - favicon beallitasa [Levente] (nincs kesz)
 - admin oldal letrehozasa [Levente] (nincs kesz)
 - lehessen torolni taskTypeot [Levente] (nincs kesz)
