@@ -1,6 +1,3 @@
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { db } from "./firebase.ts"
 import {initializeAuthListener} from "../services/auth/auth.listener.ts"
 
 // Innentol

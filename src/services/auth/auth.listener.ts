@@ -11,12 +11,13 @@ export const initializeAuthListener = function () {
             console.log(`A felhasznalo bevan jelentkezve: Email: ${user.email}, Nev: ${user.displayName}, UID: ${user.uid} Verfied: ${user.emailVerified}`);
             const userDocument = await getUserDocumentFromDatabase(user.uid);
             if (userDocument) {
-                if (!(userDocument.emailVerified)) {
+                if (!(userDocument.userVerified)) {
                     await syncUserVerificationStatus(user.uid);
                 };
                 redirecAuthenticatedtUser();
+            } else {
+                console.error("A felhasznalo letezik, de az adatbazisban nincs hozza dokumentum")
             };
-
         } else {
             console.log("Nincs bejelentkezett felhasznalo.");
             redirecUnauthenticatedtUser();
