@@ -148,7 +148,7 @@ main::after {
     border: var(--border-normal);
     background: var(--background-color);
     box-shadow: var(--shadow-small-dark);
-    font-size: clamp(var(--gap5), 3vw, var(--gap7));
+    font-size: clamp(var(--gap4), 4vw, var(--gap6));
     font-weight: 900;
     line-height: 1.05;
     overflow-wrap: anywhere;

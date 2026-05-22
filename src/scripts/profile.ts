@@ -40,66 +40,15 @@ const init = async function () {
     showUserDataInDOM(user);
 
     document.getElementById("changePasswordButton")?.addEventListener("click", () => {
-        // const auth = getAuth();
-        // sendPasswordResetEmail(auth, user.email)
-        //     .then(() => {
-        //         showInfoPopUp("Elküldtük a jelszó-visszaállítási e-mailt, ha a fiókhoz tartozik ez az e-mail cím.");
-        //         console.log("forgotPassSendButton megnyomva, ha az email letezik a felhasznalok koztt, kikuldjuk az emailt")
-        //     })
-        //     .catch((error) => {
-        //         showErrorPopUp(getProfileErrorMessage(error));
-        //         console.error(`Hiba uzenet: ${error.code}, Hiba kod: ${error.errorMessage}`);
-        //     });
         sendPasswordReset(user.email)
     });
     document.getElementById("signOutButton")?.addEventListener("click", () => {
-        // signOut(auth).then(() => {
-        //     showInfoPopUp("Sikeresen kijelentkeztél.");
-        //     console.log("Sikeresen kijelentkezett a felhasznalo.")
-        // }).catch((error) => {
-        //     showErrorPopUp(getProfileErrorMessage(error));
-        //     console.error(`Hiba uzenet: ${error.code}, Hiba kod: ${error.errorMessage}`);
-        // });
         signOutUser();
     });
     document.getElementById("deleteProfileButton")?.addEventListener("click", async () => {
-        // try {
-        //     const currentUser = auth.currentUser;
-        //     if (!currentUser) {
-        //         showErrorPopUp("A fiók törléséhez előbb jelentkezz be újra.");
-        //         return;
-        //     };
-        //     await deleteDoc(doc(db, "users", userPayload.userID));
-        //     await deleteUser(currentUser)
-        //     showInfoPopUp("A fiókodat sikeresen töröltük.");
-        // } catch (err) {
-        //     showErrorPopUp(getProfileErrorMessage(err));
-        //     console.error(err);
-        // }'
         deleteCurrentUserAccount();
     });
 };
-
-// const getUser = async function (auth: Auth): Promise<UserPayload> {
-//     return new Promise((resolve, reject) => {
-//         try {
-//             onAuthStateChanged(auth, async (user) => {
-//                 if (user) {
-//                     const docRef = doc(db, "users", user.uid);
-//                     const docSnap = await getDoc(docRef);
-//                     if (docSnap.exists()) {
-//                         if (user.emailVerified) {
-//                             resolve(docSnap.data() as UserPayload);
-//                         };
-//                     };
-//                 };
-//             });
-//         } catch (err: any) {
-//             reject(err);
-//             throw new Error(err);
-//         }
-//     })
-// };
 
 const getProfileErrorMessage = function (error: unknown): string {
     const errorCode = typeof error === "object" && error !== null && "code" in error

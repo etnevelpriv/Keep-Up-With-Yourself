@@ -76,14 +76,6 @@ export const loginWithGoogle = function () {
         });
 };
 export const getCurrentUser = function () {
-    // try {
-    //     const currentUser = auth.currentUser;
-    //     if (currentUser) {
-    //         return currentUser;
-    //     };
-    // } catch (err: any) {
-    //     throw new Error(err);
-    // };
         return new Promise((resolve, reject) => {
             try {
                 onAuthStateChanged(auth, async (user) => {
@@ -141,12 +133,10 @@ export const sendEmailVerificationToUser = function (user: any) {
     };
     sendEmailVerification(user, actionCodeSettings)
         .then(() => {
+            showInfoPopUp("Kiküldtünk egy visszaigazoló emailt. Kérjük hitelesítsd a fiókodat.")
             console.log(`Email verifikacio elkuldve`)
         }).catch((err: any) => {
-            const errorMessageDiv = document.getElementById("errorMessage");
-            if (errorMessageDiv) {
-                errorMessageDiv.textContent = 'Hiba történt a visszaigazoló e-mail küldése során.';
-            }
+            showErrorPopUp("Hiba történt a visszaigazoló e-mail küldése során")
             throw new Error(err);
         });
 };
@@ -157,7 +147,6 @@ export const deleteCurrentUserAccount = async function () {
             showInfoPopUp("A fiók törléséhez előbb jelentkezz be újra.");
             return;
         };
-        await deleteUserDocumentFromDatabase(currentUser.uid)
         await deleteUser(currentUser)
         showInfoPopUp("A fiókodat sikeresen töröltük.");
     } catch (err) {
