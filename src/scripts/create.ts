@@ -3,6 +3,7 @@ import "../styles/create.css";
 import "./header.ts";
 import "../styles/loggedInUserNav.css";
 import { Task } from "../models/Task.ts";
+import { showErrorPopUp, showInfoPopUp } from "../utils/popup.ts";
 import { getCurrentUser } from "../services/auth/auth.service.ts";
 import { updateUserDocumentInDatabase } from "../services/user/user.service.ts";
 
@@ -23,25 +24,15 @@ const init = async function () {
             (document.getElementById("createForm") as HTMLFormElement).reset();
             updateImportanceText();
             syncTaskTypeFields();
-            showMessage("info", "A feladat sikeresen létrejött.");
+            showInfoPopUp("A feladat sikeresen létrejött.");
         } catch (err: any) {
-            showMessage("error", err.message || "Nem sikerült létrehozni a feladatot.");
+            showErrorPopUp(err.message || "Nem sikerült létrehozni a feladatot.");
         };
     });
     document.getElementById("taskImportanceInput")?.addEventListener("input", updateImportanceText);
     document.getElementById('taskNewTypeInput')?.addEventListener("change", () => {
         syncTaskTypeFields();
     });
-};
-
-const showMessage = function (type: "error" | "info", message: string) {
-    const messageElement = document.getElementById(type === "error" ? "errorMessage" : "infoMessage");
-    if (messageElement) {
-        messageElement.textContent = "";
-        window.setTimeout(() => {
-            messageElement.textContent = message;
-        }, 0);
-    };
 };
 
 const updateImportanceText = function () {

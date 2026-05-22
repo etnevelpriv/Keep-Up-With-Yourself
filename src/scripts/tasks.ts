@@ -3,6 +3,7 @@ import "../styles/tasks.css";
 import "./header.ts";
 import "../styles/loggedInUserNav.css";
 import { Task } from "../models/Task.ts";
+import { showErrorPopUp, showInfoPopUp } from "../utils/popup.ts";
 import { getCurrentUser } from "../services/auth/auth.service.ts";
 import { updateUserDocumentInDatabase } from "../services/user/user.service.ts";
 
@@ -198,9 +199,9 @@ const createTaskCardsInDOM = async function (tasks: TaskViewItem[], user: any) {
                         updateImportanceText();
                         syncTaskTypeFields();
                         renderTasks(user);
-                        showMessage("info", "A feladat sikeresen módosult.");
+                        showInfoPopUp("A feladat sikeresen módosult.");
                     } catch (err: any) {
-                        showMessage("error", err.message || "Nem sikerült módosítani a feladatot.");
+                        showErrorPopUp(err.message || "Nem sikerült módosítani a feladatot.");
                     };
                 };
             };
@@ -221,9 +222,9 @@ const createTaskCardsInDOM = async function (tasks: TaskViewItem[], user: any) {
                     task.taskUpdatedAt = new Date();
                     await updateTaskInDB(task, user, taskItem.originalIndex);
                     renderTasks(user);
-                    showMessage("info", "A feladat állapota frissült.");
+                    showInfoPopUp("A feladat állapota frissült.");
                 } catch (err: any) {
-                    showMessage("error", err.message || "Nem sikerült frissíteni a feladatot.");
+                    showErrorPopUp(err.message || "Nem sikerült frissíteni a feladatot.");
                 };
             });
 
@@ -236,9 +237,9 @@ const createTaskCardsInDOM = async function (tasks: TaskViewItem[], user: any) {
                     task.taskUpdatedAt = new Date();
                     await updateTaskInDB(task, user, taskItem.originalIndex);
                     renderTasks(user);
-                    showMessage("info", "A feladat teljesítettként lett jelölve.");
+                    showInfoPopUp("A feladat teljesítettként lett jelölve.");
                 } catch (err: any) {
-                    showMessage("error", err.message || "Nem sikerült frissíteni a feladatot.");
+                    showErrorPopUp(err.message || "Nem sikerült frissíteni a feladatot.");
                 };
             });
         };
@@ -288,7 +289,7 @@ const setupTaskControls = function (user: any) {
             sortSelect.value = "none";
         };
         renderTasks(user);
-        showMessage("info", "A szűrők törölve lettek.");
+        showInfoPopUp("A szűrők törölve lettek.");
     });
 };
 
@@ -489,16 +490,6 @@ const updateTaskInDB = async function (task: Task, user: any, index: number) {
         tasks: user.tasks
     });
 };
-const showMessage = function (type: "error" | "info", message: string) {
-    const messageElement = document.getElementById(type === "error" ? "errorMessage" : "infoMessage");
-    if (messageElement) {
-        messageElement.textContent = "";
-        window.setTimeout(() => {
-            messageElement.textContent = message;
-        }, 0);
-    };
-};
-
 const syncTaskTypeFields = function () {
     const taskNewTypeInput = document.getElementById('taskNewTypeInput') as HTMLInputElement | null;
     const newType = document.getElementById('newType');

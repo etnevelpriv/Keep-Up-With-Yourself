@@ -2,6 +2,7 @@ import "../styles/base.css";
 import "../styles/profile.css";
 import "./header.ts";
 import "../styles/loggedInUserNav.css";
+import { showErrorPopUp } from "../utils/popup.ts";
 
 import { getAuth } from "firebase/auth";
 // import type { Auth } from "firebase/auth";
@@ -42,21 +43,21 @@ const init = async function () {
         // const auth = getAuth();
         // sendPasswordResetEmail(auth, user.email)
         //     .then(() => {
-        //         showProfileMessage("infoMessage", "Elküldtük a jelszó-visszaállítási e-mailt, ha a fiókhoz tartozik ez az e-mail cím.");
+        //         showInfoPopUp("Elküldtük a jelszó-visszaállítási e-mailt, ha a fiókhoz tartozik ez az e-mail cím.");
         //         console.log("forgotPassSendButton megnyomva, ha az email letezik a felhasznalok koztt, kikuldjuk az emailt")
         //     })
         //     .catch((error) => {
-        //         showProfileMessage("errorMessage", getProfileErrorMessage(error));
+        //         showErrorPopUp(getProfileErrorMessage(error));
         //         console.error(`Hiba uzenet: ${error.code}, Hiba kod: ${error.errorMessage}`);
         //     });
         sendPasswordReset(user.email)
     });
     document.getElementById("signOutButton")?.addEventListener("click", () => {
         // signOut(auth).then(() => {
-        //     showProfileMessage("infoMessage", "Sikeresen kijelentkeztél.");
+        //     showInfoPopUp("Sikeresen kijelentkeztél.");
         //     console.log("Sikeresen kijelentkezett a felhasznalo.")
         // }).catch((error) => {
-        //     showProfileMessage("errorMessage", getProfileErrorMessage(error));
+        //     showErrorPopUp(getProfileErrorMessage(error));
         //     console.error(`Hiba uzenet: ${error.code}, Hiba kod: ${error.errorMessage}`);
         // });
         signOutUser();
@@ -65,14 +66,14 @@ const init = async function () {
         // try {
         //     const currentUser = auth.currentUser;
         //     if (!currentUser) {
-        //         showProfileMessage("errorMessage", "A fiók törléséhez előbb jelentkezz be újra.");
+        //         showErrorPopUp("A fiók törléséhez előbb jelentkezz be újra.");
         //         return;
         //     };
         //     await deleteDoc(doc(db, "users", userPayload.userID));
         //     await deleteUser(currentUser)
-        //     showProfileMessage("infoMessage", "A fiókodat sikeresen töröltük.");
+        //     showInfoPopUp("A fiókodat sikeresen töröltük.");
         // } catch (err) {
-        //     showProfileMessage("errorMessage", getProfileErrorMessage(err));
+        //     showErrorPopUp(getProfileErrorMessage(err));
         //     console.error(err);
         // }'
         deleteCurrentUserAccount();
@@ -99,20 +100,6 @@ const init = async function () {
 //         }
 //     })
 // };
-
-const showProfileMessage = function (messageId: "errorMessage" | "infoMessage", message: string) {
-    const messageElement = document.getElementById(messageId);
-    const otherMessageId = messageId === "errorMessage" ? "infoMessage" : "errorMessage";
-    const otherMessageElement = document.getElementById(otherMessageId);
-
-    if (otherMessageElement) {
-        otherMessageElement.textContent = "";
-    };
-
-    if (messageElement) {
-        messageElement.textContent = message;
-    };
-};
 
 const getProfileErrorMessage = function (error: unknown): string {
     const errorCode = typeof error === "object" && error !== null && "code" in error
@@ -147,7 +134,7 @@ const showUserDataInDOM = function (user: User) {
 
 document.addEventListener("DOMContentLoaded", () => {
     init().catch((error) => {
-        showProfileMessage("errorMessage", getProfileErrorMessage(error));
+        showErrorPopUp(getProfileErrorMessage(error));
         console.error(error);
     });
 });

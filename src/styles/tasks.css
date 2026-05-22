@@ -713,82 +713,6 @@ main::after {
     font-size: clamp(var(--gap4), 2.5vw, var(--gap5));
 }
 
-.error-message,
-.info-message {
-    display: none;
-    margin: 0;
-}
-
-.auth-message {
-    position: fixed;
-    right: var(--gap5);
-    width: min(100% - 32px, 480px);
-    display: none;
-    grid-template-columns: 1fr auto;
-    gap: var(--gap3);
-    align-items: start;
-    padding: var(--gap4);
-    border: var(--border-normal);
-    background: var(--white);
-    box-shadow: var(--shadow-large-dark);
-    z-index: 1100;
-}
-
-.auth-message.is-visible {
-    display: grid;
-}
-
-.auth-message.is-visible .error-message,
-.auth-message.is-visible .info-message {
-    display: block;
-}
-
-.auth-message-error {
-    top: var(--gap5);
-    background: var(--primary-color);
-}
-
-.auth-message-info {
-    bottom: var(--gap5);
-    background: var(--green);
-}
-
-.auth-message p {
-    max-width: none;
-    font-size: var(--gap4);
-    font-weight: 900;
-    line-height: 1.25;
-}
-
-.message-close-button {
-    display: inline-grid;
-    place-items: center;
-    min-width: var(--gap8);
-    min-height: var(--gap8);
-    width: var(--gap8);
-    height: var(--gap8);
-    padding: 0;
-    border: var(--border-normal);
-    background: var(--white);
-    color: var(--black);
-    box-shadow: var(--shadow-small-dark);
-    cursor: pointer;
-    font-size: var(--gap5);
-    font-weight: 900;
-    line-height: 1;
-    transition: all 120ms linear;
-}
-
-.message-close-button:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: var(--shadow-medium-dark);
-}
-
-.message-close-button:active {
-    transform: translate(4px, 4px);
-    box-shadow: none;
-}
-
 .hide {
     display: none !important;
 }
@@ -900,19 +824,6 @@ main::after {
         grid-column: auto;
     }
 
-    .auth-message {
-        right: var(--gap3);
-        width: calc(100% - var(--gap6));
-        box-shadow: var(--shadow-medium-dark);
-    }
-
-    .auth-message-error {
-        top: var(--gap3);
-    }
-
-    .auth-message-info {
-        bottom: var(--gap3);
-    }
 }
 
 @media (prefers-reduced-motion: reduce) {
