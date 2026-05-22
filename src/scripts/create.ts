@@ -29,7 +29,8 @@ const init = async function () {
             syncTaskTypeFields();
             showInfoPopUp("A feladat sikeresen létrejött.");
         } catch (err: any) {
-            showErrorPopUp(err.message || "Nem sikerült létrehozni a feladatot.");
+            showErrorPopUp(err);
+            throw new Error(err)
         };
     });
     document.getElementById("taskImportanceInput")?.addEventListener("input", updateImportanceText);

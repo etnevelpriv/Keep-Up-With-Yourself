@@ -34,6 +34,7 @@ export class Task implements TaskInterface {
         this.taskCompletedAt = taskCompletedAt;
         this.TaskCreatedAt = TaskCreatedAt;
         this.taskUpdatedAt = taskUpdatedAt;
+
     };
     toString() {
         return (`Nev: ${this.taskName}, Leiras:${this.taskDesc}, Hatarido:${this.taskDeadline}, Fontossag:${this.taskImportance}, Tipus:${this.taskTypeName}, Statusz:${this.taskStatus}, Keszult:${this.TaskCreatedAt}, Frissitve:${this.taskUpdatedAt}, Befejezve:${this.taskCompletedAt}`);
@@ -79,6 +80,7 @@ export class Task implements TaskInterface {
     };
     // Megkertem az ai-t hogy sanitizeolja
     private sanitizeText(text: string) {
+
         if (typeof text !== "string") {
             throw new Error("Ahol a szöveget kell megadni, ott szöveg legyen megadva. Valamelyik adat érvénytelen.")
         };

@@ -181,7 +181,8 @@ const createTaskCardsInDOM = async function (tasks: TaskViewItem[], user: any) {
                         renderTasks(user);
                         showInfoPopUp("A feladat sikeresen módosult.");
                     } catch (err: any) {
-                        showErrorPopUp(err.message || "Nem sikerült módosítani a feladatot.");
+                        showErrorPopUp(err);
+                        throw new Error(err)
                     };
                 };
             };
@@ -204,7 +205,8 @@ const createTaskCardsInDOM = async function (tasks: TaskViewItem[], user: any) {
                     renderTasks(user);
                     showInfoPopUp("A feladat állapota frissült.");
                 } catch (err: any) {
-                    showErrorPopUp(err.message || "Nem sikerült frissíteni a feladatot.");
+                    showErrorPopUp("Nem sikerült frissíteni a feladatot.");
+                    throw new Error(err)
                 };
             });
 
@@ -219,7 +221,8 @@ const createTaskCardsInDOM = async function (tasks: TaskViewItem[], user: any) {
                     renderTasks(user);
                     showInfoPopUp("A feladat teljesítettként lett jelölve.");
                 } catch (err: any) {
-                    showErrorPopUp(err.message || "Nem sikerült frissíteni a feladatot.");
+                    showErrorPopUp("Nem sikerült frissíteni a feladatot.");
+                    throw new Error(err)
                 };
             });
         };
