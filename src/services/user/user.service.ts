@@ -10,20 +10,7 @@ export const syncUserVerificationStatus = async function (uid: string) {
 
 export const createUserDocumentInDatabase = async function (uid: string, email: string, name: string, createdAt: Date, verified: boolean) {
     try {
-        const defaultTaskTypes = [
-            {
-                taskTypeName: "Tanulás",
-                taskType_isSystem: true
-            },
-            {
-                taskTypeName: "Munka",
-                taskType_isSystem: true
-            },
-            {
-                taskTypeName: "Takarítás",
-                taskType_isSystem: true
-            },
-        ];
+        const defaultTaskTypes = ["Tanulás","Munka","Takarítás"];
         const emptyArr: [] = [];
 
         await setDoc(doc(db, "users", uid), {

@@ -7,6 +7,7 @@ import { showErrorPopUp, showInfoPopUp } from "../utils/popup.ts";
 import { getCurrentUser } from "../services/auth/auth.service.ts";
 import { updateUserDocumentInDatabase } from "../services/user/user.service.ts";
 import { createTask } from "../services/task/task.service.ts";
+import { getTaskTypes, uploadTaskType } from "../services/taskType/taskType.service.ts";
 
 const init = async function () {
     const user = await getCurrentUser();
@@ -86,21 +87,12 @@ const getFormElements = function (user: any) {
     let taskTypeName = null
     if (taskNewType) {
         taskTypeName = (document.getElementById('taskTypeNameInput') as HTMLFormElement).value;
-        saveTaskTypeToDB(taskTypeName, user)
+        uploadTaskType(user, taskTypeName);
     } else {
         taskTypeName = (document.getElementById('taskTypeNameSelect') as HTMLFormElement).value;
     }
     return [taskName, taskDesc, taskDeadline, taskImportance, taskTypeName]
 };
-
-const getTaskTypes = function (user: any) {
-    const tasksTypes = user.taskTypes
-    const arr: string[] = []
-    tasksTypes.forEach((tasksType: any) => {
-        arr.push(tasksType.taskTypeName)
-    });
-    return (arr);
-}
 
 const createSelectOptions = function (arr: string[]) {
     const select = document.getElementById("taskTypeNameSelect") as HTMLElement;
@@ -111,25 +103,6 @@ const createSelectOptions = function (arr: string[]) {
         select.appendChild(option);
     });
 };
-
-const saveTaskTypeToDB = async function (taskType: string, user: any) {
-    if (taskType !== 'Takarítás' && taskType !== 'Munka' && taskType !== 'Tanulás') {
-        const payload = {
-            taskTypeName: taskType,
-            taskType_isSystem: false
-        }
-        // Tudtam, hogy elobb atkell tenni setbe, majd vissza, de en nem igy csinaltam volna, a chatbarat ezt ajanlotta es jol mukodik, szoval itt hagyom
-        user.taskTypes = [...new Set([...user.taskTypes, payload])];
-        const currentUser = await getCurrentUser();
-        if (!currentUser) {
-            return;
-        }
-
-        await updateUserDocumentInDatabase(currentUser.userID, {
-            taskTypes: user.taskTypes
-        });
-    }
-}
 
 const createTaskInDB = async function (task: Task, user: any) {
     const taskPayload = {
