@@ -59,31 +59,7 @@ const setupAuthMessages = function () {
     });
 };
 
-const setupForgotPasswordModal = function () {
-    const modal = document.getElementById("forgotPassModal");
-    if (!modal) return;
-
-    if (!modal.querySelector(".modal-close-button")) {
-        const closeButton = document.createElement("button");
-        closeButton.type = "button";
-        closeButton.className = "modal-close-button";
-        closeButton.textContent = "x";
-        closeButton.setAttribute("aria-label", "Modal bezárása");
-        closeButton.addEventListener("click", () => {
-            modal.classList.add("hide");
-        });
-        modal.prepend(closeButton);
-    };
-
-    document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") {
-            modal.classList.add("hide");
-        };
-    });
-};
-
 setupAuthMessages();
-setupForgotPasswordModal();
 // Idaig
 
 // const auth = getAuth();

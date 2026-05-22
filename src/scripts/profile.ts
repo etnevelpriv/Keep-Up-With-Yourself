@@ -4,10 +4,12 @@ import "./header.ts";
 import "../styles/loggedInUserNav.css";
 
 import { getAuth, onAuthStateChanged, signOut, sendPasswordResetEmail, deleteUser } from "firebase/auth";
-import type { Auth } from "firebase/auth";
-import { doc, getDoc, deleteDoc } from "firebase/firestore";
-import { db } from "./firebase.ts"
+// import type { Auth } from "firebase/auth";
+// import { doc, getDoc, deleteDoc } from "firebase/firestore";
+// import { db } from "./firebase.ts"
 import { User } from "../models/User.ts";
+import { getUserDocumentFromDatabase } from "../services/user/user.service.ts";
+import { deleteCurrentUserAccount, getCurrentUser, sendPasswordReset, signOutUser } from "../services/auth/auth.service.ts";
 
 type UserPayload = {
     userID: string;
@@ -21,72 +23,73 @@ type UserPayload = {
 
 const init = async function () {
     const auth = getAuth();
-    const userPayload = await getUser(auth);
+    const userPayload = getUserDocumentFromDatabase(getCurrentUser());
     console.log(userPayload)
     const user: User = new User(userPayload.userName, undefined, userPayload.userEmail, new Date(userPayload.userCreatedAt.seconds * 1000), userPayload.userVerified)
     console.log(user.toString());
     showUserDataInDOM(user);
 
     document.getElementById("changePasswordButton")?.addEventListener("click", () => {
-        const auth = getAuth();
-        sendPasswordResetEmail(auth, user.email)
-            .then(() => {
-                showProfileMessage("infoMessage", "Elküldtük a jelszó-visszaállítási e-mailt, ha a fiókhoz tartozik ez az e-mail cím.");
-                console.log("forgotPassSendButton megnyomva, ha az email letezik a felhasznalok koztt, kikuldjuk az emailt")
-            })
-            .catch((error) => {
-                showProfileMessage("errorMessage", getProfileErrorMessage(error));
-                console.error(`Hiba uzenet: ${error.code}, Hiba kod: ${error.errorMessage}`);
-            });
-
+        // const auth = getAuth();
+        // sendPasswordResetEmail(auth, user.email)
+        //     .then(() => {
+        //         showProfileMessage("infoMessage", "Elküldtük a jelszó-visszaállítási e-mailt, ha a fiókhoz tartozik ez az e-mail cím.");
+        //         console.log("forgotPassSendButton megnyomva, ha az email letezik a felhasznalok koztt, kikuldjuk az emailt")
+        //     })
+        //     .catch((error) => {
+        //         showProfileMessage("errorMessage", getProfileErrorMessage(error));
+        //         console.error(`Hiba uzenet: ${error.code}, Hiba kod: ${error.errorMessage}`);
+        //     });
+        sendPasswordReset(user.email)
     });
     document.getElementById("signOutButton")?.addEventListener("click", () => {
-        signOut(auth).then(() => {
-            showProfileMessage("infoMessage", "Sikeresen kijelentkeztél.");
-            console.log("Sikeresen kijelentkezett a felhasznalo.")
-        }).catch((error) => {
-            showProfileMessage("errorMessage", getProfileErrorMessage(error));
-            console.error(`Hiba uzenet: ${error.code}, Hiba kod: ${error.errorMessage}`);
-        });
+        // signOut(auth).then(() => {
+        //     showProfileMessage("infoMessage", "Sikeresen kijelentkeztél.");
+        //     console.log("Sikeresen kijelentkezett a felhasznalo.")
+        // }).catch((error) => {
+        //     showProfileMessage("errorMessage", getProfileErrorMessage(error));
+        //     console.error(`Hiba uzenet: ${error.code}, Hiba kod: ${error.errorMessage}`);
+        // });
+        signOutUser();
     });
     document.getElementById("deleteProfileButton")?.addEventListener("click", async () => {
-
-        try {
-            const currentUser = auth.currentUser;
-            if (!currentUser) {
-                showProfileMessage("errorMessage", "A fiók törléséhez előbb jelentkezz be újra.");
-                return;
-            };
-            await deleteDoc(doc(db, "users", userPayload.userID));
-            await deleteUser(currentUser)
-            showProfileMessage("infoMessage", "A fiókodat sikeresen töröltük.");
-        } catch (err) {
-            showProfileMessage("errorMessage", getProfileErrorMessage(err));
-            console.error(err);
-        }
+        // try {
+        //     const currentUser = auth.currentUser;
+        //     if (!currentUser) {
+        //         showProfileMessage("errorMessage", "A fiók törléséhez előbb jelentkezz be újra.");
+        //         return;
+        //     };
+        //     await deleteDoc(doc(db, "users", userPayload.userID));
+        //     await deleteUser(currentUser)
+        //     showProfileMessage("infoMessage", "A fiókodat sikeresen töröltük.");
+        // } catch (err) {
+        //     showProfileMessage("errorMessage", getProfileErrorMessage(err));
+        //     console.error(err);
+        // }'
+        deleteCurrentUserAccount();
     });
 };
 
-const getUser = async function (auth: Auth): Promise<UserPayload> {
-    return new Promise((resolve, reject) => {
-        try {
-            onAuthStateChanged(auth, async (user) => {
-                if (user) {
-                    const docRef = doc(db, "users", user.uid);
-                    const docSnap = await getDoc(docRef);
-                    if (docSnap.exists()) {
-                        if (user.emailVerified) {
-                            resolve(docSnap.data() as UserPayload);
-                        };
-                    };
-                };
-            });
-        } catch (err: any) {
-            reject(err);
-            throw new Error(err);
-        }
-    })
-};
+// const getUser = async function (auth: Auth): Promise<UserPayload> {
+//     return new Promise((resolve, reject) => {
+//         try {
+//             onAuthStateChanged(auth, async (user) => {
+//                 if (user) {
+//                     const docRef = doc(db, "users", user.uid);
+//                     const docSnap = await getDoc(docRef);
+//                     if (docSnap.exists()) {
+//                         if (user.emailVerified) {
+//                             resolve(docSnap.data() as UserPayload);
+//                         };
+//                     };
+//                 };
+//             });
+//         } catch (err: any) {
+//             reject(err);
+//             throw new Error(err);
+//         }
+//     })
+// };
 
 const showProfileMessage = function (messageId: "errorMessage" | "infoMessage", message: string) {
     const messageElement = document.getElementById(messageId);

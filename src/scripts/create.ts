@@ -6,10 +6,12 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase.ts"
 import { Task } from "../models/Task.ts";
+import { getCurrentUser } from "../services/auth/auth.service.ts";
+import { updateUserDocumentInDatabase } from "../services/user/user.service.ts";
 
 const init = async function () {
     const auth = getAuth();
-    const user = await getUser(auth);
+    const user = getCurrentUser();
     const taskTypesNames = getTaskTypes(user)
     createSelectOptions(taskTypesNames);
     updateImportanceText();
@@ -118,26 +120,26 @@ const createSelectOptions = function (arr: string[]) {
     });
 };
 
-const getUser = async function (auth: any) {
-    return new Promise((resolve, reject) => {
-        try {
-            onAuthStateChanged(auth, async (user) => {
-                if (user) {
-                    const docRef = doc(db, "users", user.uid);
-                    const docSnap = await getDoc(docRef);
-                    if (docSnap.exists()) {
-                        if (user.emailVerified) {
-                            resolve(docSnap.data());
-                        };
-                    };
-                };
-            });
-        } catch (err: any) {
-            reject(err);
-            throw new Error(err);
-        }
-    })
-};
+// const getUser = async function (auth: any) {
+//     return new Promise((resolve, reject) => {
+//         try {
+//             onAuthStateChanged(auth, async (user) => {
+//                 if (user) {
+//                     const docRef = doc(db, "users", user.uid);
+//                     const docSnap = await getDoc(docRef);
+//                     if (docSnap.exists()) {
+//                         if (user.emailVerified) {
+//                             resolve(docSnap.data());
+//                         };
+//                     };
+//                 };
+//             });
+//         } catch (err: any) {
+//             reject(err);
+//             throw new Error(err);
+//         }
+//     })
+// };
 
 const saveTaskTypeToDB = async function (taskType: string, user: any) {
     if (taskType !== 'Takarítás' && taskType !== 'Munka' && taskType !== 'Tanulás') {
@@ -148,19 +150,23 @@ const saveTaskTypeToDB = async function (taskType: string, user: any) {
         // Tudtam, hogy elobb atkell tenni setbe, majd vissza, de en nem igy csinaltam volna, a chatbarat ezt ajanlotta es jol mukodik, szoval itt hagyom
         user.taskTypes = [...new Set([...user.taskTypes, payload])];
 
-        try {
-            const auth = getAuth();
-            const currentUser = auth.currentUser;
-            if (currentUser) {
-                const userDocRef = doc(db, "users", currentUser.uid);
-                await updateDoc(userDocRef, {
-                    taskTypes: user.taskTypes
-                });
-                console.log("Minden szupi");
-            }
-        } catch (err: any) {
-            throw new Error(err);
-        }
+        // try {
+        //     const auth = getAuth();
+        //     const currentUser = auth.currentUser;
+        //     if (currentUser) {
+        //         const userDocRef = doc(db, "users", currentUser.uid);
+        //         await updateDoc(userDocRef, {
+        //             taskTypes: user.taskTypes
+        //         });
+        //         console.log("Minden szupi");
+        //     }
+        // } catch (err: any) {
+        //     throw new Error(err);
+        // }
+        const currentUser = getCurrentUser();
+        await updateUserDocumentInDatabase(currentUser?.uid, {
+            taskTypes: user.taskTypes
+        });
     }
 }
 
@@ -178,20 +184,24 @@ const createTaskInDB = async function (task: Task, user: any) {
     };
 
     user.tasks.push(taskPayload);
-    console.log(user);
-    try {
-        const auth = getAuth();
-        const currentUser = auth.currentUser;
-        if (currentUser) {
-            const userDocRef = doc(db, "users", currentUser.uid);
-            await updateDoc(userDocRef, {
-                tasks: user.tasks
-            });
-            console.log("Minden szupi");
-        }
-    } catch (err: any) {
-        throw new Error(err);
-    }
+    // console.log(user);
+    // try {
+    //     const auth = getAuth();
+    //     const currentUser = auth.currentUser;
+    //     if (currentUser) {
+    //         const userDocRef = doc(db, "users", currentUser.uid);
+    //         await updateDoc(userDocRef, {
+    //             tasks: user.tasks
+    //         });
+    //         console.log("Minden szupi");
+    //     }
+    // } catch (err: any) {
+    //     throw new Error(err);
+    // }
+    const currentUser = getCurrentUser();
+    await updateUserDocumentInDatabase(currentUser?.uid, {
+        tasks: user.tasks
+    });
 };
 
 document.addEventListener("DOMContentLoaded", init);

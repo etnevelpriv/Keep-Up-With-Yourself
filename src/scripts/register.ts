@@ -1,6 +1,6 @@
 import "../styles/auth.css";
 import { User } from "../models/User.ts";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+// import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { registerWithEmail } from "../services/auth/auth.service.ts";
 import { loginWithGoogle } from "../services/auth/auth.service.ts";
 
