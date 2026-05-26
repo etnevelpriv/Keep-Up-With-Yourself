@@ -115,7 +115,35 @@ input:focus-visible {
     box-shadow: var(--shadow-medium-dark);
 }
 
+.password-input-wrapper {
+    position: relative;
+}
 
+.password-input-wrapper input {
+    padding-right: var(--gap11);
+}
+
+.password-visibility-toggle {
+    position: absolute;
+    top: 50%;
+    right: var(--gap3);
+    width: var(--gap8);
+    height: var(--gap8);
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    transform: translateY(-50%);
+}
+
+.password-visibility-toggle:hover,
+.password-visibility-toggle:active {
+    transform: translateY(-50%);
+    box-shadow: none;
+}
+
+.password-visibility-toggle i {
+    font-size: var(--gap4);
+}
 
 button,
 body>a {
