@@ -10,16 +10,16 @@ afterAllSetup()
 describe("User Repository (service klon) Integration teszt", () => {
     test("User dokumentum lerehozasa es lekerese", async () => {
         const user = createTestUser();
-        const email = "lekeresteszt@gmail.com";
+        const email = "userlekeresteszt@gmail.com";
         const uid = `${crypto.randomUUID()}`
         const authenticatedDb = getAuthenticatedDb(uid, email, user.verified)
         await createUser(authenticatedDb as any, uid, email, user.name, user.createdAt, user.verified);
         const dbUser = await getUser(authenticatedDb as any, uid);
         expect(dbUser).not.toBe(false);
     });
-    test("User dokumentum letrehozasa, modositasa es olvasasa", async () => {
+    test("User dokumentum letrehozasa, modositasa es lekerese", async () => {
         const user = createTestUser();
-        const email = "modositasteszt@gmail.com";
+        const email = "usermodositasteszt@gmail.com";
         const uid = `${crypto.randomUUID()}`
         const authenticatedDb = getAuthenticatedDb(uid, email, user.verified)
         await createUser(authenticatedDb as any, uid, email, user.name, user.createdAt, user.verified);
@@ -32,7 +32,7 @@ describe("User Repository (service klon) Integration teszt", () => {
     });
     test("User dokumentum letrehozasa es torlese", async () => {
         const user = createTestUser();
-        const email = "torlesteszt@gmail.com";
+        const email = "usertorlesteszt@gmail.com";
         const uid = `${crypto.randomUUID()}`
         const authenticatedDb = getAuthenticatedDb(uid, email, user.verified)
         await createUser(authenticatedDb as any, uid, email, user.name, user.createdAt, user.verified);
