@@ -13,8 +13,7 @@ service cloud.firestore {
         && request.resource.data.userName.size() > 0
         && request.resource.data.userCreatedAt is timestamp
         && request.resource.data.userVerified is bool
-        && request.resource.data.taskTypes is list
-        && request.resource.data.tasks is list;
+        && request.resource.data.taskTypes is list;
 
       allow read: if request.auth != null
         && request.auth.uid == userID;
@@ -27,5 +26,23 @@ service cloud.firestore {
       allow delete: if request.auth != null
         && request.auth.uid == userID;
       }
+
+    match /users/{userID}/tasks/{taskID} {
+
+      allow create: if request.auth != null
+        && request.auth.uid == userID
+        && request.resource.data.taskName is string
+        && request.resource.data.taskDesc is string
+        && request.resource.data.taskDeadline is timestamp
+        && request.resource.data.taskImportance is number
+        && request.resource.data.taskTypeName is string
+        && request.resource.data.taskStatus in ["Folyamatban", "Lejárt", "Teljesített"]
+        && (request.resource.data.taskCompletedAt == null || request.resource.data.taskCompletedAt is timestamp)
+        && request.resource.data.taskCreatedAt is timestamp
+        && request.resource.data.taskUpdatedAt is timestamp;
+
+      allow read, update, delete: if request.auth != null
+        && request.auth.uid == userID;
+    }
   }
 }

@@ -5,7 +5,6 @@ import "../styles/loggedInUserNav.css";
 import { Task } from "../models/Task.ts";
 import { showErrorPopUp, showInfoPopUp } from "../utils/popup.ts";
 import { getCurrentUser } from "../services/auth/auth.service.ts";
-import { updateUserDocumentInDatabase } from "../services/user/user.service.ts";
 import { createTask } from "../services/task/task.service.ts";
 import { getTaskTypes, uploadTaskType } from "../services/taskType/taskType.service.ts";
 
@@ -117,7 +116,7 @@ const createTaskInDB = async function (task: Task, user: any) {
         taskUpdatedAt: task.taskUpdatedAt
     };
 
-    createTask(user, taskPayload);
+    await createTask(user.userID, taskPayload);
 };
 
 document.addEventListener("DOMContentLoaded", init);

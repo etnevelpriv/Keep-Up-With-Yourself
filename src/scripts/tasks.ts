@@ -5,28 +5,33 @@ import "../styles/loggedInUserNav.css";
 import { Task } from "../models/Task.ts";
 import { showErrorPopUp, showInfoPopUp } from "../utils/popup.ts";
 import { getCurrentUser } from "../services/auth/auth.service.ts";
-import { updateUserDocumentInDatabase } from "../services/user/user.service.ts";
 import { getTasks, updateTask } from "../services/task/task.service.ts";
 import { getTaskTypes, uploadTaskType } from "../services/taskType/taskType.service.ts";
 
 type TaskViewItem = {
     task: Task;
-    originalIndex: number;
+    taskId: string;
 };
 
 let taskViewItems: TaskViewItem[] = [];
 
 const init = async function () {
-    const user = await getCurrentUser();
+    const user = await getCurrentUser() as any;
+    if (!user) {
+        return;
+    }
     console.log(user)
-    const arr = getTasks(user)
-    const tasks: Task[] = turnArrIntoTasks(arr);
-    taskViewItems = tasks.map((task, originalIndex) => ({ task, originalIndex }));
+    const arr = await getTasks(user.userID)
+    taskViewItems = arr.map((element: any) => ({
+        task: createTaskFromDocument(element),
+        taskId: element.id
+    }));
+    const tasks: Task[] = taskViewItems.map((taskViewItem) => taskViewItem.task);
     const taskTypesNames = getTaskTypes(user)
     createSelectOptions(taskTypesNames);
     console.log(tasks)
     setupTaskControls(user);
-    renderTasks(user);
+    await renderTasks(user);
     setupModifyModal();
     updateImportanceText();
     syncTaskTypeFields();
@@ -46,17 +51,49 @@ const createSelectOptions = function (arr: string[]) {
     });
 };
 
-const turnArrIntoTasks = function (arr: any[]) {
-    const arrOfTasks: Task[] = [];
-    arr.forEach((element: any) => {
-        console.log(element.taskCreatedAt)
-        if (element.taskCompletedAt == null) {
-            arrOfTasks.push(new Task(element.taskName, element.taskDesc, new Date(element.taskDeadline.seconds * 1000), element.taskImportance, element.taskTypeName, element.taskStatus, null, new Date(element.taskCreatedAt.seconds * 1000), new Date(element.taskUpdatedAt.seconds * 1000)))
-        } else {
-            arrOfTasks.push(new Task(element.taskName, element.taskDesc, new Date(element.taskDeadline.seconds * 1000), element.taskImportance, element.taskTypeName, element.taskStatus, new Date(element.taskCompletedAt.seconds * 1000), new Date(element.taskCreatedAt.seconds * 1000), new Date(element.taskUpdatedAt.seconds * 1000)))
+const createTaskFromDocument = function (element: any) {
+    console.log(element.taskCreatedAt)
+
+    const normalizeDate = function (value: any) {
+        if (value == null) {
+            return null;
         }
-    });
-    return arrOfTasks;
+
+        if (value instanceof Date) {
+            return value;
+        }
+
+        if (typeof value?.toDate === "function") {
+            return value.toDate();
+        }
+
+        if (typeof value?.seconds === "number") {
+            return new Date(value.seconds * 1000);
+        }
+
+        return new Date(value);
+    };
+
+    const taskDeadline = normalizeDate(element.taskDeadline);
+    const taskCreatedAt = normalizeDate(element.taskCreatedAt);
+    const taskUpdatedAt = normalizeDate(element.taskUpdatedAt);
+    const taskCompletedAt = normalizeDate(element.taskCompletedAt);
+
+    if (!taskDeadline || !taskCreatedAt || !taskUpdatedAt) {
+        throw new Error("A feladat időbélyegei hiányoznak vagy érvénytelenek.");
+    }
+
+    return new Task(
+        element.taskName,
+        element.taskDesc,
+        taskDeadline,
+        element.taskImportance,
+        element.taskTypeName,
+        element.taskStatus,
+        taskCompletedAt,
+        taskCreatedAt,
+        taskUpdatedAt
+    );
 };
 
 const createTaskCardsInDOM = async function (tasks: TaskViewItem[], user: any) {
@@ -84,12 +121,12 @@ const createTaskCardsInDOM = async function (tasks: TaskViewItem[], user: any) {
         if ((task.taskDeadline.getTime() < (new Date().getTime())) && task.taskStatus != "Teljesített") {
             task.taskStatus = "Lejárt";
             task.taskUpdatedAt = new Date();
-            await updateTaskInDB(task, user, taskItem.originalIndex);
+            await updateTaskInDB(task, user.userID, taskItem.taskId);
         };
 
         const card = document.createElement("div");
         card.classList.add("task-card");
-        card.id = `${taskItem.originalIndex}`;
+        card.id = `${taskItem.taskId}`;
         card.dataset.taskStatus = task.taskStatus;
         card.dataset.taskImportance = `${task.taskImportance}`;
 
@@ -157,7 +194,7 @@ const createTaskCardsInDOM = async function (tasks: TaskViewItem[], user: any) {
                         console.log(formElements);
                         const newTask = new Task(formElements[0], formElements[1], new Date(formElements[2]), Number(formElements[3]), formElements[4], task.taskStatus, task.taskCompletedAt, task.taskCreatedAt, new Date())
                         console.log(newTask);
-                        await updateTaskInDB(newTask, user, taskItem.originalIndex);
+                        await updateTaskInDB(newTask, user.userID, taskItem.taskId);
                         taskItem.task = newTask;
                         const form = document.getElementById("modifyForm") as HTMLFormElement
                         form.classList.remove("show")
@@ -188,7 +225,7 @@ const createTaskCardsInDOM = async function (tasks: TaskViewItem[], user: any) {
                     }
                     task.taskCompletedAt = null;
                     task.taskUpdatedAt = new Date();
-                    await updateTaskInDB(task, user, taskItem.originalIndex);
+                    await updateTaskInDB(task, user.userID, taskItem.taskId);
                     renderTasks(user);
                     showInfoPopUp("A feladat állapota frissült.");
                 } catch (err: any) {
@@ -204,7 +241,7 @@ const createTaskCardsInDOM = async function (tasks: TaskViewItem[], user: any) {
                     task.taskStatus = "Teljesített";
                     task.taskCompletedAt = new Date();
                     task.taskUpdatedAt = new Date();
-                    await updateTaskInDB(task, user, taskItem.originalIndex);
+                    await updateTaskInDB(task, user.userID, taskItem.taskId);
                     renderTasks(user);
                     showInfoPopUp("A feladat teljesítettként lett jelölve.");
                 } catch (err: any) {
@@ -226,9 +263,9 @@ const createTaskCardsInDOM = async function (tasks: TaskViewItem[], user: any) {
     });
 };
 
-const renderTasks = function (user: any) {
+const renderTasks = async function (user: any) {
     const visibleTasks = getFilteredAndSortedTasks();
-    createTaskCardsInDOM(visibleTasks, user);
+    await createTaskCardsInDOM(visibleTasks, user);
     updateTasksSummary(visibleTasks.length, taskViewItems.length);
 };
 
@@ -258,7 +295,7 @@ const setupTaskControls = function (user: any) {
         if (sortSelect) {
             sortSelect.value = "none";
         };
-        renderTasks(user);
+        void renderTasks(user);
         showInfoPopUp("A szűrők törölve lettek.");
     });
 };
@@ -292,7 +329,7 @@ const getFilteredAndSortedTasks = function () {
             return secondTask.task.taskName.localeCompare(firstTask.task.taskName, "hu", { sensitivity: "base" });
         };
 
-        return firstTask.originalIndex - secondTask.originalIndex;
+        return taskViewItems.indexOf(firstTask) - taskViewItems.indexOf(secondTask);
     });
 };
 
@@ -390,7 +427,7 @@ const getFormElements = function (user: any): [string, string, string, string, s
 };
 
 
-const updateTaskInDB = async function (task: Task, user: any, index: number) {
+const updateTaskInDB = async function (task: Task, uid: string, taskId: string) {
     const taskPayload = {
         taskName: task.taskName,
         taskDesc: task.taskDesc,
@@ -403,17 +440,7 @@ const updateTaskInDB = async function (task: Task, user: any, index: number) {
         taskUpdatedAt: task.taskUpdatedAt
     };
 
-    // user.tasks[index] = taskPayload
-    // const currentUser = await getCurrentUser();
-    // if (!currentUser) {
-    //     return;
-    // }
-
-    // await updateUserDocumentInDatabase(currentUser.userID, {
-    //     tasks: user.tasks
-    // });
-    // updateTask(user, taskPayload, index);
-    updateTask(user, taskPayload, index)
+    await updateTask(uid, taskId, taskPayload)
 
 };
 const syncTaskTypeFields = function () {

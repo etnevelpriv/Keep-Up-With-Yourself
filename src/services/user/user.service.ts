@@ -1,7 +1,6 @@
 import { doc, getDoc, updateDoc, setDoc, deleteDoc } from "firebase/firestore";
 import { db } from "../../scripts/firebase.ts"
 import { showErrorPopUp } from "../../utils/popup.ts"
-import { createTask } from "../task/task.service.ts";
 
 export const syncUserVerificationStatus = async function (uid: string) {
     await updateDoc(doc(db, "users", uid), {
@@ -12,7 +11,6 @@ export const syncUserVerificationStatus = async function (uid: string) {
 export const createUserDocumentInDatabase = async function (uid: string, email: string, name: string, createdAt: Date, verified: boolean) {
     try {
         const defaultTaskTypes = ["Tanulás","Munka","Takarítás"];
-        const emptyArr: [] = [];
 
         await setDoc(doc(db, "users", uid), {
             userID: uid,
@@ -23,7 +21,6 @@ export const createUserDocumentInDatabase = async function (uid: string, email: 
             taskTypes: defaultTaskTypes
         });
         console.log("Uj dokumentum letrehozva az adatbazisban");
-        createTask(uid, "")
     } catch (err: any) {
         showErrorPopUp("Hiba történt az adatbázisba való mentés folyamán.");
         throw new Error(err)

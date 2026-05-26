@@ -12,36 +12,29 @@ export const updateExpiredTasks = onSchedule("every 24 hours", async () => {
   const userSnap = await db.collection("users").get();
 
   const updates = userSnap.docs.map(async (userDoc) => {
-    const data = userDoc.data();
-    const tasks = data.tasks ?? [];
-
     let changed = false;
 
-    const updatedTasks = tasks.map((task: any) => {
+    const tasksSnap = await userDoc.ref.collection("tasks")
+      .where("taskStatus", "==", "Folyamatban")
+      .get();
+
+    await Promise.all(tasksSnap.docs.map(async (taskDoc) => {
+      const task = taskDoc.data();
       const deadline = task.taskDeadline;
+      const deadlineMillis = typeof deadline?.toMillis === "function"
+        ? deadline.toMillis()
+        : null;
 
-      if (
-        deadline?.toMillis &&
-        deadline.toMillis() < now.toMillis() &&
-        task.taskStatus === "Folyamatban"
-      ) {
+      if (deadlineMillis != null && deadlineMillis < now.toMillis()) {
         changed = true;
-
-        return {
-          ...task,
+        await taskDoc.ref.update({
           taskStatus: "Lejárt",
           taskUpdatedAt: now,
-        };
+        });
       }
-
-      return task;
-    });
+    }));
 
     if (changed) {
-      await userDoc.ref.update({
-        tasks: updatedTasks,
-      });
-
       logger.info(`Expired tasks updated for user: ${userDoc.id}`);
     }
   });
