@@ -1,10 +1,12 @@
 import "../styles/auth.css";
 import { loginWithEmail, loginWithGoogle, sendPasswordReset } from "../services/auth/auth.service";
+import { setupPasswordVisibilityToggle } from "../utils/passwordVisibilityToggle";
 
 const init = function () {
     console.log("Betoltodott a register.ts")
     const form: HTMLElement = document.getElementById("loginForm") as HTMLElement;
     form.addEventListener("submit", sendLoginForm);
+    setupPasswordVisibilityToggle();
     setupForgotPasswordModal();
     document.getElementById("googleButton")?.addEventListener("click", () => {
         loginWithGoogle();

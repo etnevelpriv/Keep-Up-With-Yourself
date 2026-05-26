@@ -2,11 +2,13 @@ import "../styles/auth.css";
 import { User } from "../models/User.ts";
 import { registerWithEmail } from "../services/auth/auth.service.ts";
 import { loginWithGoogle } from "../services/auth/auth.service.ts";
+import { setupPasswordVisibilityToggle } from "../utils/passwordVisibilityToggle.ts";
 
 const init = function () {
     console.log("Betoltodott a register.ts")
     const form: HTMLElement = document.getElementById("registerForm") as HTMLElement;
     form.addEventListener("submit", sendRegisterForm);
+    setupPasswordVisibilityToggle();
 
     document.getElementById("googleButton")?.addEventListener("click", () => {
         loginWithGoogle();
