@@ -7,7 +7,7 @@ beforeAllSetup()
 beforeEachSetup()
 afterAllSetup()
 
-describe("User Service Integration teszt", () => {
+describe("User Repository (service klon) Integration teszt", () => {
     test("User dokumentum lerehozasa es lekerese", async () => {
         const user = createTestUser();
         const uid = "TEST_USER_ID"

@@ -1,4 +1,4 @@
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
 import type { Firestore } from "firebase/firestore";
 
 export const createUser = async function (db: Firestore, uid: string, email: string, name: string, createdAt: Date, verified: boolean) {
@@ -14,7 +14,7 @@ export const createUser = async function (db: Firestore, uid: string, email: str
     });
 };
 
-export const getUser = async function(db:Firestore, uid:string) {
+export const getUser = async function (db: Firestore, uid: string) {
     const docRef = doc(db, "users", uid);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
@@ -22,4 +22,9 @@ export const getUser = async function(db:Firestore, uid:string) {
     } else {
         return false;
     };
+};
+
+export const updateUser = async function (db: Firestore, uid: string, data: any) {
+    const userDocRef = doc(db, "users", uid);
+    await updateDoc(userDocRef, data);
 };
