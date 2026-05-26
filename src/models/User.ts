@@ -1,4 +1,5 @@
 import type { UserInterface } from "../interfaces/UserInterface.ts";
+import { validateCreateDate, validateUserEmail, validateUserName, validateUserPassword, validateUserVerified } from "../services/auth/auth.validator.ts";
 
 export class User implements UserInterface {
     name: string;
@@ -8,6 +9,12 @@ export class User implements UserInterface {
     verified: boolean;
 
     constructor(name: string, password: string | undefined, email: string, createdAt: Date, verified: boolean) {
+        validateUserName(name);
+        validateUserEmail(email);
+        validateUserPassword(password);
+        validateCreateDate(createdAt);
+        validateUserVerified(verified);
+
         this.name = name;
         this.password = password;
         this.email = email;
