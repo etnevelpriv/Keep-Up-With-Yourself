@@ -46,7 +46,15 @@ const init = async function () {
         signOutUser();
     });
     document.getElementById("deleteProfileButton")?.addEventListener("click", async () => {
-        deleteCurrentUserAccount();
+        const modal = document.getElementById("warningModal");
+        modal?.classList.add("show");
+        document.getElementById("dontDeleteProfileButton")?.addEventListener("click", () => {
+            modal?.classList.remove("show");
+            return;
+        });
+        document.getElementById("sureDeleteProfileButton")?.addEventListener("click", () => {
+            deleteCurrentUserAccount();
+        });
     });
 };
 
