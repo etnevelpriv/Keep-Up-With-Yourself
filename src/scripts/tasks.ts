@@ -5,7 +5,7 @@ import "../styles/loggedInUserNav.css";
 import { Task } from "../models/Task.ts";
 import { showErrorPopUp, showInfoPopUp } from "../utils/popup.ts";
 import { getCurrentUser } from "../services/auth/auth.service.ts";
-import { getTasks, updateTask } from "../services/task/task.service.ts";
+import { deleteTask, getTasks, updateTask } from "../services/task/task.service.ts";
 import { getTaskTypes, uploadTaskType } from "../services/taskType/taskType.service.ts";
 
 type TaskViewItem = {
@@ -14,12 +14,15 @@ type TaskViewItem = {
 };
 
 let taskViewItems: TaskViewItem[] = [];
+let currentUser: any = null;
+let selectedTaskItem: TaskViewItem | null = null;
 
 const init = async function () {
     const user = await getCurrentUser() as any;
     if (!user) {
         return;
     }
+    currentUser = user;
     console.log(user)
     const arr = await getTasks(user.userID)
     taskViewItems = arr.map((element: any) => ({
@@ -39,6 +42,7 @@ const init = async function () {
     document.getElementById('taskNewTypeInput')?.addEventListener("change", () => {
         syncTaskTypeFields();
     });
+
 };
 
 const createSelectOptions = function (arr: string[]) {
@@ -164,6 +168,7 @@ const createTaskCardsInDOM = async function (tasks: TaskViewItem[], user: any) {
         button.classList.add("show-modal")
         button.textContent = "Feladat módosítása";
         button.addEventListener("click", () => {
+            selectedTaskItem = taskItem;
             const form = document.getElementById("modifyForm");
             const modal = document.getElementById("modifyModal");
             if (form) {
@@ -354,7 +359,8 @@ const setupModifyModal = function () {
     const modal = document.getElementById("modifyModal");
     const form = document.getElementById("modifyForm") as HTMLFormElement | null;
     const closeButton = modal?.querySelector(".modal-head span") as HTMLElement | null;
-    if (!modal || !form || !closeButton) return;
+    const deleteButton = document.getElementById("deleteTaskButton") as HTMLButtonElement | null;
+    if (!modal || !form || !closeButton || !deleteButton) return;
 
     closeButton.textContent = "x";
     closeButton.setAttribute("role", "button");
@@ -365,6 +371,27 @@ const setupModifyModal = function () {
         form.classList.remove("show");
         modal.classList.remove("show");
     };
+
+    deleteButton.addEventListener("click", async () => {
+        if (!currentUser || !selectedTaskItem) {
+            showErrorPopUp("Nem található a törlendő feladat.");
+            return;
+        }
+
+        try {
+            await deleteTask(currentUser.userID, selectedTaskItem.taskId);
+            taskViewItems = taskViewItems.filter((taskItem) => taskItem.taskId !== selectedTaskItem?.taskId);
+            closeModal();
+            form.reset();
+            updateImportanceText();
+            syncTaskTypeFields();
+            await renderTasks(currentUser);
+            showInfoPopUp("A feladat sikeresen törölve lett.");
+        } catch (err: any) {
+            showErrorPopUp("Nem sikerült törölni a feladatot.");
+            throw new Error(err);
+        }
+    });
 
     closeButton.addEventListener("click", closeModal);
     closeButton.addEventListener("keydown", (event) => {

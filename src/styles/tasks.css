@@ -216,7 +216,8 @@ main::after {
 
 #resetTaskFilters,
 .task-card button,
-.modify-form input[type="submit"] {
+.modify-form input[type="submit"],
+#deleteTaskButton {
     min-height: var(--gap9);
     padding: var(--gap3) var(--gap4);
     border: var(--border-normal);
@@ -238,14 +239,16 @@ main::after {
 
 #resetTaskFilters:hover,
 .task-card button:hover,
-.modify-form input[type="submit"]:hover {
+.modify-form input[type="submit"]:hover,
+#deleteTaskButton:hover {
     transform: translate(-3px, -3px) rotate(-1deg);
     box-shadow: var(--shadow-medium-dark);
 }
 
 #resetTaskFilters:active,
 .task-card button:active,
-.modify-form input[type="submit"]:active {
+.modify-form input[type="submit"]:active,
+#deleteTaskButton:active {
     transform: translate(4px, 4px);
     box-shadow: none;
 }
@@ -713,6 +716,15 @@ main::after {
     font-size: clamp(var(--gap4), 2.5vw, var(--gap5));
 }
 
+#deleteTaskButton {
+    grid-column: 1 / -1;
+    min-height: var(--gap10);
+    background: var(--secondary-color);
+    color: var(--black);
+    box-shadow: var(--shadow-medium-dark);
+    font-size: clamp(var(--gap4), 2.5vw, var(--gap5));
+}
+
 .hide {
     display: none !important;
 }
@@ -820,7 +832,8 @@ main::after {
 
     .form-element:nth-child(2),
     .form-element:nth-child(4),
-    .modify-form input[type="submit"] {
+    .modify-form input[type="submit"],
+    #deleteTaskButton {
         grid-column: auto;
     }
 
