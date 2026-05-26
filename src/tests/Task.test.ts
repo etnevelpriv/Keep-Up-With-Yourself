@@ -1,12 +1,12 @@
 import { expect, test, describe } from 'vitest'
-import { createTestTask } from './testUtils';
+import { createTestTask } from './taskTestSetup';
 
 describe("VALID Task class tesztelese", () => {
     test("Valid adatokkal letrehozni a taskot. Mindent ellenorizni", () => {
         const testTask = createTestTask({
             taskDesc: "TESZT_DESCRIPTION_Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur accusantium pariatur minus tenetur, quos velit illo officiis magnam autem cupiditate temporibus sed ex provident, voluptates quaerat doloribus. Sapiente, sunt repellendus.",
             taskDeadline: new Date("2026-09-09"),
-            TaskCreatedAt: new Date("2026-01-02"),
+            taskCreatedAt: new Date("2026-01-02"),
             taskUpdatedAt: new Date("2026-02-03"),
         });
         expect(testTask.taskName).toBe('TESZT_NEV');
@@ -16,7 +16,7 @@ describe("VALID Task class tesztelese", () => {
         expect(testTask.taskTypeName).toBe('TESZT_TASKTYPENAME');
         expect(testTask.taskStatus).toBe('Folyamatban');
         expect(testTask.taskCompletedAt).toBe(null);
-        expect(testTask.TaskCreatedAt.getTime()).toBe(new Date("2026-01-02").getTime());
+        expect(testTask.taskCreatedAt.getTime()).toBe(new Date("2026-01-02").getTime());
         expect(testTask.taskUpdatedAt.getTime()).toBe(new Date("2026-02-03").getTime());
     });
     test("Valid adatokkal letrehozni a taskot, ahol taskCompletedAt == null", () => {
@@ -134,7 +134,7 @@ describe("VALID Task class tesztelese", () => {
         const sameMoment = new Date("2026-01-10T10:00:00.000Z");
         const testTask = createTestTask({
             taskDeadline: sameMoment,
-            TaskCreatedAt: new Date(sameMoment.getTime()),
+            taskCreatedAt: new Date(sameMoment.getTime()),
             taskUpdatedAt: new Date("2026-01-10T10:30:00.000Z")
         });
         expect(testTask.taskDeadline.getTime()).toBe(sameMoment.getTime());
@@ -143,10 +143,10 @@ describe("VALID Task class tesztelese", () => {
         const createdAt = new Date("2026-01-11T08:00:00.000Z");
         const updatedAt = new Date("2026-01-11T09:00:00.000Z");
         const testTask = createTestTask({
-            TaskCreatedAt: new Date(createdAt.getTime()),
+            taskCreatedAt: new Date(createdAt.getTime()),
             taskUpdatedAt: new Date(updatedAt.getTime())
         });
-        expect(testTask.TaskCreatedAt.getTime()).toBe(createdAt.getTime());
+        expect(testTask.taskCreatedAt.getTime()).toBe(createdAt.getTime());
         expect(testTask.taskUpdatedAt.getTime()).toBe(updatedAt.getTime());
     });
     test("Valid adatokkal letrehozni a taskot, ahol taskCompletedAt ugyanaz az idopont, mint a frissites", () => {
@@ -178,7 +178,7 @@ describe("VALID Task class tesztelese", () => {
             taskTypeName: "TESZT_TYPE",
             taskStatus: "Teljesített",
             taskCompletedAt: new Date("2026-05-08T08:08:08.000Z"),
-            TaskCreatedAt: new Date("2026-05-01T01:01:01.000Z"),
+            taskCreatedAt: new Date("2026-05-01T01:01:01.000Z"),
             taskUpdatedAt: new Date("2026-07-09T09:09:09.000Z")
         });
         const result = testTask.toString();
@@ -289,16 +289,16 @@ describe("INVALID Task class tesztelese", () => {
             new Error('Az állapot érvénytelen.'),
         );
     });
-    test("Invalid adattal/adatokkal letrehozni a taskot, ahol TaskCreatedAt hibas Date objektum", () => {
+    test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskCreatedAt hibas Date objektum", () => {
         expect(() => createTestTask({
-            TaskCreatedAt: new Date("invalid-date")
+            taskCreatedAt: new Date("invalid-date")
         })).toThrow(
             new Error('A létrehozás dátuma érvénytelen.'),
         );
     });
-    test("Invalid adattal/adatokkal letrehozni a taskot, ahol TaskCreatedAt jovobeli datum", () => {
+    test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskCreatedAt jovobeli datum", () => {
         expect(() => createTestTask({
-            TaskCreatedAt: new Date("2099-01-01T00:00:00.000Z")
+            taskCreatedAt: new Date("2099-01-01T00:00:00.000Z")
         })).toThrow(
             new Error('A létrehozás dátuma érvénytelen.'),
         );
@@ -312,7 +312,7 @@ describe("INVALID Task class tesztelese", () => {
     });
     test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskDeadline korabbi mint a letrehozas ideje", () => {
         expect(() => createTestTask({
-            TaskCreatedAt: new Date("2026-05-10T00:00:00.000Z"),
+            taskCreatedAt: new Date("2026-05-10T00:00:00.000Z"),
             taskDeadline: new Date("2026-05-09T00:00:00.000Z")
         })).toThrow(
             new Error('A határidő érvénytelen.'),

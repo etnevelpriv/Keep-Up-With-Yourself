@@ -288,7 +288,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - Auth rate limiting [Levente] (nincs kész)
 - favicon beallitasa [Levente] (nincs kesz)
 - admin oldal letrehozasa [Levente] (nincs kesz)
-- lehessen torolni taskTypeot [Levente] (nincs kesz)
+- User class unit tesztelese [Levente] (nincs kesz)
 
 ---
 Repo klonozasa: git clone https://github.com/etnevelpriv/Keep-Up-With-Yourself.git

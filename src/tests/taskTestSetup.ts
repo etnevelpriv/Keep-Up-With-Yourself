@@ -16,7 +16,7 @@ export function createTestTask(overrides?: Partial<TaskInterface>): Task {
         taskTypeName: "TESZT_TASKTYPENAME",
         taskStatus: "Folyamatban",
         taskCompletedAt: null,
-        TaskCreatedAt: defaultCreated,
+        taskCreatedAt: defaultCreated,
         taskUpdatedAt: defaultUpdated,
     };
 
@@ -30,7 +30,7 @@ export function createTestTask(overrides?: Partial<TaskInterface>): Task {
         data.taskTypeName,
         data.taskStatus,
         data.taskCompletedAt,
-        data.TaskCreatedAt,
+        data.taskCreatedAt,
         data.taskUpdatedAt
     );
 }

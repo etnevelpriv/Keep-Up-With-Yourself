@@ -46,12 +46,12 @@ export const validateTaskUpdatedAt = function (taskUpdatedAt: Date) {
 export const taskDataValidationProcess = function (name:string, desc:string, deadline:Date, importance:number, typeName:string, status:string, completedAt:Date | null, createdAt:Date, updatedAt:Date) {
     validateTaskName(name);
     validateTaskDescription(desc);
+    validateTaskCreatedAt(createdAt);
     validateTaskDeadline(deadline, createdAt);
     validateTaskImportance(importance);
     validateTaskTaskType(typeName);
     validateTaskStatus(status);
     validateTaskCompletedAt(completedAt);
-    validateTaskCreatedAt(createdAt);
     validateTaskUpdatedAt(updatedAt);
 };
 export const sanitizeText = function (text: string) {
