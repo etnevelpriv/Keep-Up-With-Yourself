@@ -273,7 +273,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - README professzionális átírás. [Levente] (nincs kesz)
 - Manual test docs. [Kristóf] (kesz)
 - Firestore rules test. [Levente] (nincs kesz)
-- CRUD unit/integration tesztek. [Levente] (nincs kesz)
+- CRUD unit/integration tesztek. [Levente] (kesz)
 - Error/loading/empty state-ek. [Levente] (nincs kesz)
 - Email templatek.[Marcell] (kesz)
 - Log collection, külön documentumok az auth logoknak és a task logoknak. [Levente] (nincs kesz)

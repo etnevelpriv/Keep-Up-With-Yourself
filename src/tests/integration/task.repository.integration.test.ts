@@ -60,7 +60,7 @@ describe("INVALID Task Repository (service klon) Integration teszt", () => {
     test("INVALID taskCreated mezot nem lehet modositani", async () => {
         const user = createTestUser();
         const task = createTestTask();
-        const email = "tasklekeresteszt@gmail.com";
+        const email = "tasktaskcreatedteszt@gmail.com";
         const uid = `${crypto.randomUUID()}`
         const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
         const tid = await createTask(authenticatedDb as any, uid, task);
@@ -69,5 +69,46 @@ describe("INVALID Task Repository (service klon) Integration teszt", () => {
                 taskCreatedAt: new Date()
             })
         )
+    });
+    test("INVALID masik user nem olvashat taskot", async () => {
+        const user = createTestUser();
+        const task = createTestTask();
+        const ownerEmail = "taskownerreadteszt@gmail.com";
+        const attackerEmail = "taskattackerreadteszt@gmail.com";
+        const ownerUid = `${crypto.randomUUID()}`
+        const attackerUid = `${crypto.randomUUID()}`
+        const ownerAuthenticatedDb = getAuthenticatedDb(ownerUid, ownerEmail, user.verified);
+        const attackerAuthenticatedDb = getAuthenticatedDb(attackerUid, attackerEmail, user.verified);
+        const tid = await createTask(ownerAuthenticatedDb as any, ownerUid, task);
+        await assertFails(
+            getTask(attackerAuthenticatedDb as any, ownerUid, tid)
+        )
+    });
+    test("INVALID masik user nem modosithat taskot", async () => {
+        const user = createTestUser();
+        const task = createTestTask();
+        const ownerEmail = "taskownerupdateteszt@gmail.com";
+        const attackerEmail = "taskattackerupdateteszt@gmail.com";
+        const ownerUid = `${crypto.randomUUID()}`
+        const attackerUid = `${crypto.randomUUID()}`
+        const ownerAuthenticatedDb = getAuthenticatedDb(ownerUid, ownerEmail, user.verified);
+        const attackerAuthenticatedDb = getAuthenticatedDb(attackerUid, attackerEmail, user.verified);
+        const tid = await createTask(ownerAuthenticatedDb as any, ownerUid, task);
+        await assertFails(
+            updateTask(attackerAuthenticatedDb as any, ownerUid, tid, {
+                taskName: "NEWNAME"
+            }))
+    });
+    test("INVALID masik user nem modosithat taskot", async () => {
+        const user = createTestUser();
+        const task = createTestTask();
+        const ownerEmail = "taskownerdeleteteszt@gmail.com";
+        const attackerEmail = "taskattackerdeleteteszt@gmail.com";
+        const ownerUid = `${crypto.randomUUID()}`
+        const attackerUid = `${crypto.randomUUID()}`
+        const ownerAuthenticatedDb = getAuthenticatedDb(ownerUid, ownerEmail, user.verified);
+        const attackerAuthenticatedDb = getAuthenticatedDb(attackerUid, attackerEmail, user.verified);
+        const tid = await createTask(ownerAuthenticatedDb as any, ownerUid, task);
+        await assertFails(deleteTask(attackerAuthenticatedDb as any, ownerUid, tid));
     });
 });
