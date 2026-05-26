@@ -1,5 +1,5 @@
 import { expect, test, describe } from 'vitest'
-import createTestUser from '../modelsTests/userTestSetup'
+import createTestUser from './setup/userTestIntegrationSetup'
 import { createUser, getUser, updateUser, deleteUser } from '../../repositories/user.repository';
 import { getAuthenticatedDb } from './setup/userTestDb';
 import { afterAllSetup, beforeAllSetup, beforeEachSetup } from './setup/firebaseTestSetup';

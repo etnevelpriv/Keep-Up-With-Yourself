@@ -1,6 +1,6 @@
 import { expect, test, describe } from 'vitest'
-import createTestUser from '../modelsTests/userTestSetup'
-import createTestTask from '../modelsTests/taskTestSetup';
+import createTestUser from './setup/userTestIntegrationSetup'
+import createTestTask from './setup/taskTestIntegrationSetup';
 import { createTask, deleteTask, getTask, updateTask } from '../../repositories/task.repository';
 import { getAuthenticatedDb } from './setup/userTestDb';
 import { afterAllSetup, beforeAllSetup, beforeEachSetup } from './setup/firebaseTestSetup';
@@ -110,5 +110,27 @@ describe("INVALID Task Repository (service klon) Integration teszt", () => {
         const attackerAuthenticatedDb = getAuthenticatedDb(attackerUid, attackerEmail, user.verified);
         const tid = await createTask(ownerAuthenticatedDb as any, ownerUid, task);
         await assertFails(deleteTask(attackerAuthenticatedDb as any, ownerUid, tid));
+    });
+    test("INVALID teljesitett task completedAt nelkul", async () => {
+        const user = createTestUser();
+        const task = createTestTask();
+        const email = "taskownerdeleteteszt@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
+        const tid = await createTask(authenticatedDb as any, uid, task);
+        await assertFails(
+            updateTask(authenticatedDb as any, uid, tid, {
+                taskStatus: "Teljesített"
+            }))
+    });
+    test("INVALID taskImportance 5 feletti ertekkel", async () => {
+        const user = createTestUser();
+        const task = createTestTask({
+            taskImportance:6
+        });
+        const email = "taskownerdeleteteszt@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
+        await assertFails(createTask(authenticatedDb as any, uid, task))
     });
 });

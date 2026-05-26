@@ -1,0 +1,23 @@
+import type { UserInterface } from "../../../interfaces/UserInterface.ts";
+
+export function createTestUser(overrides?: Partial<UserInterface>) {
+    const defaults: UserInterface = {
+        name: "TESZT USER NAME",
+        password: "Password123!",
+        email: "tesztuseremail@gmail.com",
+        createdAt: new Date(2025, 5, 5),
+        verified: true,
+    };
+
+    const data: UserInterface = { ...defaults, ...(overrides || {}) } as UserInterface;
+
+    return {
+        name:data.name,
+        password:data.password,
+        email:data.email,
+        createdAt:data.createdAt,
+        verified:data.verified
+    };
+}
+
+export default createTestUser;
