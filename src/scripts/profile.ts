@@ -9,7 +9,6 @@ import { getAuth } from "firebase/auth";
 // import { doc, getDoc, deleteDoc } from "firebase/firestore";
 // import { db } from "./firebase.ts"
 import { User } from "../models/User.ts";
-import { getUserDocumentFromDatabase } from "../services/user/user.service.ts";
 import { deleteCurrentUserAccount, getCurrentUser, sendPasswordReset, signOutUser } from "../services/auth/auth.service.ts";
 
 type UserPayload = {
