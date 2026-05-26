@@ -7,20 +7,22 @@ beforeAllSetup()
 beforeEachSetup()
 afterAllSetup()
 
-describe("User Repository (service klon) Integration teszt", {sequential: true}, () => {
+describe("User Repository (service klon) Integration teszt", () => {
     test("User dokumentum lerehozasa es lekerese", async () => {
         const user = createTestUser();
-        const uid = "TEST_USER_ID_READ"
-        const authenticatedDb = getAuthenticatedDb(uid, user.email, user.verified)
-        await createUser(authenticatedDb as any, uid, user.email, user.name, user.createdAt, user.verified);
+        const email = "lekeresteszt@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, user.verified)
+        await createUser(authenticatedDb as any, uid, email, user.name, user.createdAt, user.verified);
         const dbUser = await getUser(authenticatedDb as any, uid);
         expect(dbUser).not.toBe(false);
     });
     test("User dokumentum letrehozasa, modositasa es olvasasa", async () => {
         const user = createTestUser();
-        const uid = "TEST_USER_ID_UPDATE"
-        const authenticatedDb = getAuthenticatedDb(uid, user.email, user.verified)
-        await createUser(authenticatedDb as any, uid, user.email, user.name, user.createdAt, user.verified);
+        const email = "modositasteszt@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, user.verified)
+        await createUser(authenticatedDb as any, uid, email, user.name, user.createdAt, user.verified);
         await updateUser(authenticatedDb as any, uid, {
             userName: "updatedUserName"
         })
@@ -30,9 +32,10 @@ describe("User Repository (service klon) Integration teszt", {sequential: true},
     });
     test("User dokumentum letrehozasa es torlese", async () => {
         const user = createTestUser();
-        const uid = "TEST_USER_ID_DELETE"
-        const authenticatedDb = getAuthenticatedDb(uid, user.email, user.verified)
-        await createUser(authenticatedDb as any, uid, user.email, user.name, user.createdAt, user.verified);
+        const email = "torlesteszt@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, user.verified)
+        await createUser(authenticatedDb as any, uid, email, user.name, user.createdAt, user.verified);
         const dbUser = await getUser(authenticatedDb as any, uid);
         expect(dbUser).not.toBe(false);
         await deleteUser(authenticatedDb as any, uid);
