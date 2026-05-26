@@ -25,7 +25,7 @@ export const validateUserPassword = function (password: string | undefined) {
     };
 };
 export const validateUserName = function (name: string) {
-    if (typeof name !== "string" || name.trim() === "" || name.length < 3 || name.length > 30) {
+    if (typeof name !== "string" || name.trim() === "" || name.length < 1 || name.length > 30) {
         const message = `A név nincs megfelelően megadva: ${name}`;
         throw new Error(message);
     };

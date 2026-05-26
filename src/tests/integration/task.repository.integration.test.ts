@@ -3,7 +3,7 @@ import createTestUser from './setup/userTestIntegrationSetup'
 import createTestTask from './setup/taskTestIntegrationSetup';
 import { createTask, deleteTask, getTask, updateTask } from '../../repositories/task.repository';
 import { getAuthenticatedDb } from './setup/userTestDb';
-import { afterAllSetup, beforeAllSetup, beforeEachSetup } from './setup/firebaseTestSetup';
+import { afterAllSetup, beforeAllSetup, beforeEachSetup, testEnv } from './setup/firebaseTestSetup';
 import { assertFails } from '@firebase/rules-unit-testing';
 import { addDoc, collection } from "firebase/firestore";
 beforeAllSetup()
@@ -58,6 +58,58 @@ describe("VALID Task Repository (service klon) Integration teszt", () => {
 });
 
 describe("INVALID Task Repository (service klon) Integration teszt", () => {
+    test("INVALID taskName tul rovid nem mentheto", async () => {
+        const user = createTestUser();
+        const task = createTestTask({
+            taskName: "AB"
+        });
+        const email = "tasktulrovidnevteszt@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
+        await assertFails(createTask(authenticatedDb as any, uid, task));
+    });
+    test("INVALID teljesitett nelkul nem lehet taskCompletedAt erteket menteni", async () => {
+        const user = createTestUser();
+        const task = createTestTask({
+            taskStatus: "Folyamatban",
+            taskCompletedAt: new Date()
+        });
+        const email = "taskcompletedatstatuszteszt@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
+        await assertFails(createTask(authenticatedDb as any, uid, task));
+    });
+    test("INVALID plusz mezo nem maradhat task dokumentumban", async () => {
+        const user = createTestUser();
+        const task = createTestTask();
+        const email = "taskextramezoteszt@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
+        await assertFails(
+            addDoc(
+                collection(authenticatedDb as any, "users", uid, "tasks"),
+                {
+                    ...task,
+                    extraField: true
+                }
+            )
+        );
+    });
+    test("INVALID masik user nem hozhat letre taskot", async () => {
+        const user = createTestUser();
+        const task = createTestTask();
+        const attackerEmail = "taskattackercreateteszt@gmail.com";
+        const ownerUid = `${crypto.randomUUID()}`
+        const attackerUid = `${crypto.randomUUID()}`
+        const attackerAuthenticatedDb = getAuthenticatedDb(attackerUid, attackerEmail, user.verified);
+        await assertFails(createTask(attackerAuthenticatedDb as any, ownerUid, task));
+    });
+    test("INVALID nem autentikalt felhasznalo nem hozhat letre taskot", async () => {
+        const task = createTestTask();
+        const uid = `${crypto.randomUUID()}`
+        const unauthenticatedDb = testEnv.unauthenticatedContext().firestore();
+        await assertFails(createTask(unauthenticatedDb as any, uid, task));
+    });
     test("INVALID taskCreated mezot nem lehet modositani", async () => {
         const user = createTestUser();
         const task = createTestTask();

@@ -2,7 +2,7 @@ import { expect, test, describe } from 'vitest'
 import createTestUser from './setup/userTestIntegrationSetup'
 import { createUser, getUser, updateUser, deleteUser } from '../../repositories/user.repository';
 import { getAuthenticatedDb } from './setup/userTestDb';
-import { afterAllSetup, beforeAllSetup, beforeEachSetup } from './setup/firebaseTestSetup';
+import { afterAllSetup, beforeAllSetup, beforeEachSetup, testEnv } from './setup/firebaseTestSetup';
 import { assertFails } from '@firebase/rules-unit-testing';
 beforeAllSetup()
 beforeEachSetup()
@@ -45,6 +45,42 @@ describe("VALID User Repository (service klon) Integration teszt", () => {
     });
 });
 describe("INVALID User Repository (service klon) Integration teszt", () => {
+    test("INVALID userCreatedAt nem lehet jovoben", async () => {
+        const user = createTestUser({
+            createdAt: new Date(Date.now() + 1000 * 60 * 60)
+        });
+        const email = "userfuturecreatedatteszt@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
+        await assertFails(createUser(authenticatedDb as any, uid, email, user.name, user.createdAt, user.verified));
+    });
+    test("INVALID user taskTypes mezot ervenytelen tipussal nem lehet menteni", async () => {
+        const user = createTestUser();
+        const email = "usertasktypeshibateszt@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
+        await createUser(authenticatedDb as any, uid, email, user.name, user.createdAt, user.verified);
+        await assertFails(updateUser(authenticatedDb as any, uid, {
+            taskTypes: "nemLista" as any
+        }));
+    });
+    test("INVALID plusz mezo nem maradhat user dokumentumban", async () => {
+        const user = createTestUser();
+        const email = "userextramezoteszt@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
+        await createUser(authenticatedDb as any, uid, email, user.name, user.createdAt, user.verified);
+        await assertFails(updateUser(authenticatedDb as any, uid, {
+            extraField: true
+        } as any));
+    });
+    test("INVALID nem autentikalt felhasznalo nem hozhat letre user dokumentumot", async () => {
+        const user = createTestUser();
+        const email = "userauthnincsteszt@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const unauthenticatedDb = testEnv.unauthenticatedContext().firestore();
+        await assertFails(createUser(unauthenticatedDb as any, uid, email, user.name, user.createdAt, user.verified));
+    });
     test("INVALID mas user nem olvashat user dokumentumot", async () => {
         const user = createTestUser();
         const ownerEmail = "userownerreadteszt@gmail.com";
