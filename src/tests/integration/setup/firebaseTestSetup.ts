@@ -5,7 +5,11 @@ let testEnv: RulesTestEnvironment;
 
 beforeAll(async () => {
     testEnv = await initializeTestEnvironment({
-        projectId: "keepupwithyourself-test"
+        projectId: "keepupwithyourself-test",
+        firestore: {
+            host: "127.0.0.1",
+            port: 8080
+        }
     });
     console.log("firebase tesztkornyezet inicializalva");
 });
