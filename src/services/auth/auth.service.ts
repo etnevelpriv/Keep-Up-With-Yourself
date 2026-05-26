@@ -1,7 +1,7 @@
 import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, sendPasswordResetEmail, sendEmailVerification, createUserWithEmailAndPassword, signOut, deleteUser, onAuthStateChanged } from "firebase/auth";
 import { User } from "../../models/User.ts";
 import { showInfoPopUp, showErrorPopUp } from "../../utils/popup.ts"
-import { createUserDocumentInDatabase, getUserDocumentFromDatabase } from "../user/user.service.ts"
+import { createUserDocumentInDatabase, deleteUserDocumentFromDatabase, getUserDocumentFromDatabase } from "../user/user.service.ts"
 import { validateLoginInput, validateRegisterInput } from "./auth.validator.ts";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../scripts/firebase.ts";
@@ -147,6 +147,7 @@ export const deleteCurrentUserAccount = async function () {
             showInfoPopUp("A fiók törléséhez előbb jelentkezz be újra.");
             return;
         };
+        await deleteUserDocumentFromDatabase(currentUser.uid);
         await deleteUser(currentUser)
         showInfoPopUp("A fiókodat sikeresen töröltük.");
     } catch (err) {
