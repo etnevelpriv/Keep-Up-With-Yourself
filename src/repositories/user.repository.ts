@@ -28,3 +28,7 @@ export const updateUser = async function (db: Firestore, uid: string, data: any)
     const userDocRef = doc(db, "users", uid);
     await updateDoc(userDocRef, data);
 };
+
+export const deleteUser = async function (db: Firestore, uid: string) {
+    await deleteDoc(doc(db, "users", uid));
+};
