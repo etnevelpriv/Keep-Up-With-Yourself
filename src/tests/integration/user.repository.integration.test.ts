@@ -1,13 +1,13 @@
 import { expect, test, describe } from 'vitest'
 import createTestUser from '../modelsTests/userTestSetup'
 import { createUser, getUser, updateUser, deleteUser } from '../../repositories/user.repository';
-import { getAuthenticatedDb } from './setup/testDb';
+import { getAuthenticatedDb } from './setup/userTestDb';
 import { afterAllSetup, beforeAllSetup, beforeEachSetup } from './setup/firebaseTestSetup';
 beforeAllSetup()
 beforeEachSetup()
 afterAllSetup()
 
-describe("User Repository (service klon) Integration teszt", () => {
+describe("User Repository (service klon) Integration teszt", {sequential: true}, () => {
     test("User dokumentum lerehozasa es lekerese", async () => {
         const user = createTestUser();
         const uid = "TEST_USER_ID_READ"
