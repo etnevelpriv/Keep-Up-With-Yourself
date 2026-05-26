@@ -71,13 +71,20 @@ describe("INVALID User Repository (service klon) Integration teszt", () => {
     });
     test("INVALID mas user nem torolhet user dokumentumot", async () => {
         const user = createTestUser();
-        const ownerEmail = "userownerupdateteszt@gmail.com";
-        const attackerEmail = "userattackerupdateteszt@gmail.com";
+        const ownerEmail = "userownerdeleteteszt@gmail.com";
+        const attackerEmail = "userattackerdeleteteteszt@gmail.com";
         const ownerUid = `${crypto.randomUUID()}`
         const attackerUid = `${crypto.randomUUID()}`
         const ownerAuthenticatedDb = getAuthenticatedDb(ownerUid, ownerEmail, user.verified);
         const attackerAuthenticatedDb = getAuthenticatedDb(attackerUid, attackerEmail, user.verified);
         await createUser(ownerAuthenticatedDb as any, ownerUid, ownerEmail, user.name, user.createdAt, user.verified);
         await assertFails(deleteUser(attackerAuthenticatedDb as any, ownerUid));
+    });
+    test("INVALID userVerified nem egyezik az auth tokennel", async () => {
+        const user = createTestUser();
+        const email = "userverifiedteszt@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const athenticatedDb = getAuthenticatedDb(uid, email, false);
+        await assertFails(createUser(athenticatedDb as any, uid, email, user.name, user.createdAt, true));
     });
 });
