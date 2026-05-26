@@ -104,19 +104,7 @@ const createSelectOptions = function (arr: string[]) {
 };
 
 const createTaskInDB = async function (task: Task, user: any) {
-    const taskPayload = {
-        taskName: task.taskName,
-        taskDesc: task.taskDesc,
-        taskDeadline: task.taskDeadline,
-        taskImportance: task.taskImportance,
-        taskTypeName: task.taskTypeName,
-        taskStatus: task.taskStatus,
-        taskCompletedAt: task.taskCompletedAt,
-        taskCreatedAt: task.taskCreatedAt,
-        taskUpdatedAt: task.taskUpdatedAt
-    };
-
-    await createTask(user.userID, taskPayload);
+    await createTask(user.userID, task);
 };
 
 document.addEventListener("DOMContentLoaded", init);

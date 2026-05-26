@@ -9,8 +9,18 @@ const getTaskDocumentRef = function (db:Firestore, uid: string, tid: string) {
     return doc(db, "users", uid, "tasks", tid);
 };
 
-export const createTask = async function (db:Firestore,uid: string, taskData: any) {
-    const taskDocRef = await addDoc(getTasksCollectionRef(db, uid), taskData);
+export const createTask = async function (db:Firestore,uid: string, task: any) {
+    const taskDocRef = await addDoc(getTasksCollectionRef(db, uid), {
+        taskName: task.taskName,
+        taskDesc: task.taskDesc,
+        taskDeadline: task.taskDeadline,
+        taskImportance: task.taskImportance,
+        taskTypeName: task.taskTypeName,
+        taskStatus: task.taskStatus,
+        taskCompletedAt: task.taskCompletedAt,
+        taskCreatedAt: task.taskCreatedAt,
+        taskUpdatedAt: task.taskUpdatedAt
+    });
     return taskDocRef.id;
 };
 

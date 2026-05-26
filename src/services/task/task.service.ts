@@ -9,8 +9,18 @@ const getTaskDocumentRef = function (uid: string, tid: string) {
     return doc(db, "users", uid, "tasks", tid);
 };
 
-export const createTask = async function (uid: string, taskData: any) {
-    const taskDocRef = await addDoc(getTasksCollectionRef(uid), taskData);
+export const createTask = async function (uid: string, task: any) {
+    const taskDocRef = await addDoc(getTasksCollectionRef(uid), {
+        taskName: task.taskName,
+        taskDesc: task.taskDesc,
+        taskDeadline: task.taskDeadline,
+        taskImportance: task.taskImportance,
+        taskTypeName: task.taskTypeName,
+        taskStatus: task.taskStatus,
+        taskCompletedAt: task.taskCompletedAt,
+        taskCreatedAt: task.taskCreatedAt,
+        taskUpdatedAt: task.taskUpdatedAt
+    });
     console.log("Task hozzáadva");
     return taskDocRef.id;
 };
