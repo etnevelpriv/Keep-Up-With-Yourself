@@ -15,7 +15,12 @@
     <form action="submit" id="registerForm">
         <input type="text" placeholder="Példa István" name="name" id="nameInput">
         <input type="email" placeholder="pelda@keepupwithyourself.hu" name="email" id="emailInput">
-        <input type="password" placeholder="PéldaJelszó123." name="password" id="passwordInput">
+        <div class="password-input-wrapper">
+            <input type="password" placeholder="PéldaJelszó123." name="password" id="passwordInput">
+            <button class="password-visibility-toggle">
+                <i class="fa-solid fa-eye"></i>
+            </button>
+        </div>
         <ul class="form-password-requirements">
             <li class="form-password-requirement">8-16 karakter</li>
             <li class="form-password-requirement">Min. 1 kis karakter (a-z)</li>
@@ -25,7 +30,8 @@
         </ul>
         <button id="registerButton" type="submit">Regisztráció</button>
     </form>
-    <button class="google-button" id="googleButton" type="button"><i class="fa-brands fa-google"></i>Regisztráció Google-lel</button>
+    <button class="google-button" id="googleButton" type="button"><i class="fa-brands fa-google"></i>Regisztráció
+        Google-lel</button>
     <a href="/pages/login.html">Már van fiókom</a>
 </body>
 

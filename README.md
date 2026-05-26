@@ -266,7 +266,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - Firestore rules mezőszintű validációval. [Levente] (kesz)
 - Projekt prezentációja (projekt bemutatása fejlesztői/üzleti/user szempontbol, abrak, diagrammok, swot analizis, projekt roadmap, flowchart) [Levente] (nincs kesz)
 - Task létrehozás/módosítás/törlés külön service layerben. [Levente] (kesz)
-- Fióktörlés és kijelentkezés megerősítéssel (felugró modal). [Levente] (nincs kesz)
+- Fióktörlés megerősítéssel (felugró modal). [Levente] (kesz)
 - Rate limit auth emailekre. [Levente] (nincs kesz)
 - Jogi oldalak. [Levente] (nincs kesz)
 - README professzionális átírás. [Levente] (nincs kesz)

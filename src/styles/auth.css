@@ -115,6 +115,8 @@ input:focus-visible {
     box-shadow: var(--shadow-medium-dark);
 }
 
+
+
 button,
 body>a {
     min-height: var(--gap10);
