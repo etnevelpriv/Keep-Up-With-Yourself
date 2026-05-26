@@ -1,6 +1,6 @@
 import { expect, test, describe } from 'vitest'
 import createTestUser from '../modelsTests/userTestSetup'
-import { createUser, getUser } from '../../repositories/user.repository';
+import { createUser, getUser, updateUser } from '../../repositories/user.repository';
 import { getAuthenticatedDb } from './setup/testDb';
 import { afterAllSetup, beforeAllSetup, beforeEachSetup } from './setup/firebaseTestSetup';
 beforeAllSetup()
@@ -15,5 +15,17 @@ describe("User Repository (service klon) Integration teszt", () => {
         await createUser(authenticatedDb as any, uid, user.email, user.name, user.createdAt, user.verified);
         const dbUser = await getUser(authenticatedDb as any, uid);
         expect(dbUser).not.toBe(false);
+    });
+    test("User dokumentum letrehozasa, modositasa es olvasasa", async () => {
+        const user = createTestUser();
+        const uid = "TEST_USER_ID"
+        const authenticatedDb = getAuthenticatedDb(uid, user.email, user.verified)
+        await createUser(authenticatedDb as any, uid, user.email, user.name, user.createdAt, user.verified);
+        await updateUser(authenticatedDb as any, uid, {
+            userName:"updatedUserName"
+        })
+        const dbUser = await getUser(authenticatedDb as any, uid);
+        expect(dbUser).not.toBe(false);
+        expect((dbUser as any).userName).toBe("updatedUserName");
     });
 });
