@@ -1,5 +1,5 @@
-import type { UserInterface } from "../../interfaces/UserInterface.ts";
-import { User } from "../../models/User.ts";
+import type { UserInterface } from "../../../interfaces/UserInterface.ts";
+import { User } from "../../../models/User.ts";
 
 export function createTestUser(overrides?: Partial<UserInterface>): User {
     const defaults: UserInterface = {

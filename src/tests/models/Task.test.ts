@@ -1,5 +1,5 @@
 import { expect, test, describe } from 'vitest'
-import { createTestTask } from './taskTestSetup';
+import { createTestTask } from './setup/taskTestSetup';
 
 describe("VALID Task class tesztelese", () => {
     test("Valid adatokkal letrehozni a taskot. Mindent ellenorizni", () => {

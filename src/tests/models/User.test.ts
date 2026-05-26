@@ -1,5 +1,5 @@
 import { expect, test, describe } from 'vitest'
-import createTestUser from './userTestSetup';
+import createTestUser from './setup/userTestSetup';
 
 describe("VALID User class tesztelese", () => {
     test("Valid adatokkal letrehozni a usert. Mindent ellenorizni", () => {
