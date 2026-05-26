@@ -62,7 +62,7 @@ service cloud.firestore {
       return hasValidUserFields(data)
         && data.userID is string
         && data.userEmail is string
-        && isStringInRange(data.userName, 1, 80)
+        && isStringInRange(data.userName, 1, 30)
         && data.userCreatedAt is timestamp
         && data.userCreatedAt <= request.time
         && data.userVerified is bool

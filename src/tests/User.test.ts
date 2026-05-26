@@ -22,11 +22,11 @@ describe("VALID User class tesztelese", () => {
         });
         expect(testUser.verified).toBe(false);
     });
-    test("Valid adatokkal letrehozni a usert, ahol a name egykarakteres", () => {
+    test("Valid adatokkal letrehozni a usert, ahol a name harom karakteres", () => {
         const testUser = createTestUser({
-            name: "A"
+            name: "AAA"
         });
-        expect(testUser.name).toBe('A');
+        expect(testUser.name).toBe('AAA');
     });
     test("Valid adatokkal letrehozni a usert, ahol a name tartalmaz szokozeket", () => {
         const testUser = createTestUser({
@@ -108,7 +108,7 @@ describe("VALID User class tesztelese", () => {
         expect(testUser.createdAt.getTime()).toBe(new Date("2020-01-01T00:00:00.000Z").getTime());
     });
     test("Valid adatokkal letrehozni a usert, ahol a nev hosszu, de ervenyes", () => {
-        const longName = "USER_" + "A".repeat(60);
+        const longName = "A".repeat(30);
         const testUser = createTestUser({
             name: longName
         });

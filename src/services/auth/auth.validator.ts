@@ -30,7 +30,7 @@ export const validateUserPassword = function (password: string | undefined) {
     };
 };
 export const validateUserName = function (name: string) {
-    if (typeof name !== "string" || name.trim() === "") {
+    if (typeof name !== "string" || name.trim() === "" || name.length < 3 || name.length > 30) {
         const message = `A név nincs megfelelően megadva: ${name}`;
         showErrorPopUp(message)
         throw new Error(message);
