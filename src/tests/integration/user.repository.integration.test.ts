@@ -45,15 +45,39 @@ describe("VALID User Repository (service klon) Integration teszt", () => {
     });
 });
 describe("INVALID User Repository (service klon) Integration teszt", () => {
-    test("INVALID User dokumentum lerehozasa es lekerese", async () => {
+    test("INVALID mas user nem olvashat user dokumentumot", async () => {
         const user = createTestUser();
-        const ownerEmail = "taskownerreadteszt@gmail.com";
-        const attackerEmail = "taskattackerreadteszt@gmail.com";
+        const ownerEmail = "userownerreadteszt@gmail.com";
+        const attackerEmail = "userattackerreadteszt@gmail.com";
         const ownerUid = `${crypto.randomUUID()}`
         const attackerUid = `${crypto.randomUUID()}`
         const ownerAuthenticatedDb = getAuthenticatedDb(ownerUid, ownerEmail, user.verified);
         const attackerAuthenticatedDb = getAuthenticatedDb(attackerUid, attackerEmail, user.verified);
         await createUser(ownerAuthenticatedDb as any, ownerUid, ownerEmail, user.name, user.createdAt, user.verified);
         await assertFails(getUser(attackerAuthenticatedDb as any, ownerUid));
+    });
+    test("INVALID mas user nem modosithat user dokumentumot", async () => {
+        const user = createTestUser();
+        const ownerEmail = "userownerupdateteszt@gmail.com";
+        const attackerEmail = "userattackerupdateteszt@gmail.com";
+        const ownerUid = `${crypto.randomUUID()}`
+        const attackerUid = `${crypto.randomUUID()}`
+        const ownerAuthenticatedDb = getAuthenticatedDb(ownerUid, ownerEmail, user.verified);
+        const attackerAuthenticatedDb = getAuthenticatedDb(attackerUid, attackerEmail, user.verified);
+        await createUser(ownerAuthenticatedDb as any, ownerUid, ownerEmail, user.name, user.createdAt, user.verified);
+        await assertFails(updateUser(attackerAuthenticatedDb as any, ownerUid, {
+            userName: "updatedUserName"
+        }));
+    });
+    test("INVALID mas user nem torolhet user dokumentumot", async () => {
+        const user = createTestUser();
+        const ownerEmail = "userownerupdateteszt@gmail.com";
+        const attackerEmail = "userattackerupdateteszt@gmail.com";
+        const ownerUid = `${crypto.randomUUID()}`
+        const attackerUid = `${crypto.randomUUID()}`
+        const ownerAuthenticatedDb = getAuthenticatedDb(ownerUid, ownerEmail, user.verified);
+        const attackerAuthenticatedDb = getAuthenticatedDb(attackerUid, attackerEmail, user.verified);
+        await createUser(ownerAuthenticatedDb as any, ownerUid, ownerEmail, user.name, user.createdAt, user.verified);
+        await assertFails(deleteUser(attackerAuthenticatedDb as any, ownerUid));
     });
 });
