@@ -4,13 +4,18 @@ import { initializeTestEnvironment, type RulesTestEnvironment } from "@firebase/
 let testEnv: RulesTestEnvironment;
 
 beforeAll(async () => {
-    console.log("beforeall lefutott");
+    testEnv = await initializeTestEnvironment({
+        projectId: "keepupwithyourself-test"
+    });
+    console.log("firebase tesztkornyezet inicializalva");
 });
 
 beforeEach(async () => {
-    console.log("beforech lefutott");
+    await testEnv.clearFirestore();
+    console.log("firestore kiuritve")
 });
 
 afterAll(async () => {
-    console.log("afterall lefutott");
+    await testEnv.cleanup();
+    console.log("tesztkornyezet lezarva");
 });
