@@ -11,13 +11,7 @@ export function createTestUser(overrides?: Partial<UserInterface>) {
 
     const data: UserInterface = { ...defaults, ...(overrides || {}) } as UserInterface;
 
-    return {
-        name:data.name,
-        password:data.password,
-        email:data.email,
-        createdAt:data.createdAt,
-        verified:data.verified
-    };
+    return data;
 }
 
 export default createTestUser;

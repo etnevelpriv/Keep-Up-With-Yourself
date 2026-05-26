@@ -5,6 +5,7 @@ import { createTask, deleteTask, getTask, updateTask } from '../../repositories/
 import { getAuthenticatedDb } from './setup/userTestDb';
 import { afterAllSetup, beforeAllSetup, beforeEachSetup } from './setup/firebaseTestSetup';
 import { assertFails } from '@firebase/rules-unit-testing';
+import { addDoc, collection } from "firebase/firestore";
 beforeAllSetup()
 beforeEachSetup()
 afterAllSetup()
@@ -114,7 +115,7 @@ describe("INVALID Task Repository (service klon) Integration teszt", () => {
     test("INVALID teljesitett task completedAt nelkul", async () => {
         const user = createTestUser();
         const task = createTestTask();
-        const email = "taskownerdeleteteszt@gmail.com";
+        const email = "taskcompletedatteszt@gmail.com";
         const uid = `${crypto.randomUUID()}`
         const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
         const tid = await createTask(authenticatedDb as any, uid, task);
@@ -126,11 +127,57 @@ describe("INVALID Task Repository (service klon) Integration teszt", () => {
     test("INVALID taskImportance 5 feletti ertekkel", async () => {
         const user = createTestUser();
         const task = createTestTask({
-            taskImportance:6
+            taskImportance: 6
         });
-        const email = "taskownerdeleteteszt@gmail.com";
+        const email = "tasktaskimportanceteszt@gmail.com";
         const uid = `${crypto.randomUUID()}`
         const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
         await assertFails(createTask(authenticatedDb as any, uid, task))
+    });
+    test("INVALID deadline korabbi, mint a createdAt", async () => {
+        const user = createTestUser();
+        const task = createTestTask({
+            taskDeadline: new Date(2025, 5, 4),
+            taskCreatedAt: new Date(2025, 5, 5)
+        });
+        const email = "taskdeadlineteszt@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
+        await assertFails(createTask(authenticatedDb as any, uid, task))
+    });
+    test("INVALID taskStatus nem megfelelo", async () => {
+        const user = createTestUser();
+        const task = createTestTask({
+            taskStatus: "nincsIlyen" as any
+        });
+        const email = "taskstatusteszt@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
+        await assertFails(createTask(authenticatedDb as any, uid, task))
+    });
+    test("INVALID taskUpdatedAt nem megfelelo", async () => {
+        const user = createTestUser();
+        const task = createTestTask({
+            taskUpdatedAt: new Date(2025, 10, 10)
+        });
+        const email = "taskupdatedat@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
+        await assertFails(createTask(authenticatedDb as any, uid, task))
+    });
+    test("INVALID nem letezo field", async () => {
+        const user = createTestUser();
+        const task = createTestTask({
+            nemLetezik: 10
+        } as any);
+        const email = "taskupdatedat@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
+        await assertFails(
+            addDoc(
+                collection(authenticatedDb as any, "users", uid, "tasks"),
+                task
+            )
+        );
     });
 });
