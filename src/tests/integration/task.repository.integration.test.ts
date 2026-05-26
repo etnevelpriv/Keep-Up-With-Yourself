@@ -100,7 +100,7 @@ describe("INVALID Task Repository (service klon) Integration teszt", () => {
                 taskName: "NEWNAME"
             }))
     });
-    test("INVALID masik user nem modosithat taskot", async () => {
+    test("INVALID masik user nem torohet taskot", async () => {
         const user = createTestUser();
         const task = createTestTask();
         const ownerEmail = "taskownerdeleteteszt@gmail.com";

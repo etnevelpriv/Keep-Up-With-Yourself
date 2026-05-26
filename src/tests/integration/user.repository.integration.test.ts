@@ -3,6 +3,7 @@ import createTestUser from './setup/userTestIntegrationSetup'
 import { createUser, getUser, updateUser, deleteUser } from '../../repositories/user.repository';
 import { getAuthenticatedDb } from './setup/userTestDb';
 import { afterAllSetup, beforeAllSetup, beforeEachSetup } from './setup/firebaseTestSetup';
+import { assertFails } from '@firebase/rules-unit-testing';
 beforeAllSetup()
 beforeEachSetup()
 afterAllSetup()
@@ -41,5 +42,18 @@ describe("VALID User Repository (service klon) Integration teszt", () => {
         await deleteUser(authenticatedDb as any, uid);
         const dbFalseUser = await getUser(authenticatedDb as any, uid);
         expect(dbFalseUser).toBe(false);
+    });
+});
+describe("INVALID User Repository (service klon) Integration teszt", () => {
+    test("INVALID User dokumentum lerehozasa es lekerese", async () => {
+        const user = createTestUser();
+        const ownerEmail = "taskownerreadteszt@gmail.com";
+        const attackerEmail = "taskattackerreadteszt@gmail.com";
+        const ownerUid = `${crypto.randomUUID()}`
+        const attackerUid = `${crypto.randomUUID()}`
+        const ownerAuthenticatedDb = getAuthenticatedDb(ownerUid, ownerEmail, user.verified);
+        const attackerAuthenticatedDb = getAuthenticatedDb(attackerUid, attackerEmail, user.verified);
+        await createUser(ownerAuthenticatedDb as any, ownerUid, ownerEmail, user.name, user.createdAt, user.verified);
+        await assertFails(getUser(attackerAuthenticatedDb as any, ownerUid));
     });
 });
