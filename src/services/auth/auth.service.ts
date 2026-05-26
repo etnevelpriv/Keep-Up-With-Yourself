@@ -9,7 +9,12 @@ import { db } from "../../scripts/firebase.ts";
 const auth = getAuth();
 
 export const registerWithEmail = function (name: string, email: string, password: string, createdAt: Date, verified: boolean) {
-    validateRegisterInput(name, email, password, createdAt, verified);
+    try {
+        validateRegisterInput(name, email, password, createdAt, verified);
+    } catch (error: any) {
+        showErrorPopUp(error.message);
+        throw new Error(error);
+    }
     createUserWithEmailAndPassword(auth, email, password!)
         .then(async (userCredential) => {
             const user = userCredential.user;
@@ -31,7 +36,12 @@ export const registerWithEmail = function (name: string, email: string, password
 
 };
 export const loginWithEmail = function (email: string, password: string) {
-    validateLoginInput(email, password)
+    try {
+        validateLoginInput(email, password)
+    } catch (error: any) {
+        showErrorPopUp(error.message);
+        throw new Error(error);
+    }
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             const user = userCredential.user;
@@ -67,8 +77,13 @@ export const loginWithGoogle = function () {
             const email = user.email;
             const userDocument = await getUserDocumentFromDatabase(user.uid)
             if (!userDocument) {
-                const userObj = new User(name ?? "", undefined, email ?? "", new Date(), true);
-                await createUserDocumentInDatabase(user.uid, userObj.email, userObj.name, userObj.createdAt, userObj.verified)
+                try {
+                    const userObj = new User(name ?? "", undefined, email ?? "", new Date(), true);
+                    await createUserDocumentInDatabase(user.uid, userObj.email, userObj.name, userObj.createdAt, userObj.verified)
+                } catch (error: any) {
+                    showErrorPopUp(error.message);
+                    throw error;
+                }
             };
             showInfoPopUp("Sikeres bejelentkezés, töltsd újra az oldalt a fiókod megtekintéséhez.")
         }).catch((error) => {

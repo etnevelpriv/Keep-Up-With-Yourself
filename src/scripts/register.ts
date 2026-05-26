@@ -3,6 +3,7 @@ import { User } from "../models/User.ts";
 import { registerWithEmail } from "../services/auth/auth.service.ts";
 import { loginWithGoogle } from "../services/auth/auth.service.ts";
 import { setupPasswordVisibilityToggle } from "../utils/passwordVisibilityToggle.ts";
+import { showErrorPopUp } from "../utils/popup.ts";
 
 const init = function () {
     console.log("Betoltodott a register.ts")
@@ -22,11 +23,16 @@ const sendRegisterForm = function (e: Event) {
     const name = document.getElementById("nameInput") as HTMLInputElement;
     const email = document.getElementById("emailInput") as HTMLInputElement;
     const password = document.getElementById("passwordInput") as HTMLInputElement;
-    const userObj = new User(name.value, password.value, email.value, new Date(), false);
-    console.log(userObj);
     const form = document.getElementById("registerForm") as HTMLFormElement
-    registerWithEmail(userObj.name, userObj.email, password.value, userObj.createdAt, userObj.verified)
-    form.reset()
+    try {
+        const userObj = new User(name.value, password.value, email.value, new Date(), false);
+        console.log(userObj);
+        registerWithEmail(userObj.name, userObj.email, password.value, userObj.createdAt, userObj.verified)
+        form.reset()
+    } catch (error: any) {
+        showErrorPopUp(error.message);
+        throw error;
+    }
 };
 
 document.addEventListener("DOMContentLoaded", init);

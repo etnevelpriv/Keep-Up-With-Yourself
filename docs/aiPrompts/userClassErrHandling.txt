@@ -1,0 +1,43 @@
+FAIL src/tests/User.test.ts > INVALID User class tesztelese > Invalid adattal/adatokkal letrehozni a usert, ahol name ures string
+AssertionError: expected a thrown error to be Error: A név nincs megfelelően megadva:
+
+Expected
+Received
+Error {
+"message": "A név nincs megfelelően megadva: ",
+ReferenceError {
+"message": "document is not defined",
+}
+❯ src/tests/User.test.ts:149:13
+147| expect(() => createTestUser({
+148| name: ""
+149| })).toThrow(
+| ^
+150| new Error('A név nincs megfelelően megadva: '),
+151| );
+
+A hibát a Node-alapú tesztben a User konstruktor körüli popup-kezelés okozza, ezért először a jelenlegi fájlt nézem meg, és csak utána javítom úgy, hogy a tesztekben ne legyen document-függés.
+
+A hiba pontos oka most tiszta: a User konstruktor még mindig közvetlenül próbál popupot mutatni, ami a Node tesztekben document-hibára fut. Ezt visszaveszem a modellből, és a konkrét browser call site-okba teszem át, hogy a tesztek tiszták maradjanak.
+
+A profiloldal fájlstruktúrája eltért a feltételezettől, ezért újra lekérem a pontos aktuális tartalmat, és csak a szükséges sorokat módosítom. A cél ugyanaz marad: a modell tiszta legyen, a popup pedig a browser-oldali hívásnál jelenjen meg.
+
+Most of the remaining work is mechanical now: remove the last UI side effect from the model and add guarded constructor calls in the browser entrypoints that actually own the user-facing feedback. After that I’ll run a narrow TypeScript check on the touched files.
+
+Edited
+User.ts+5-11
+Edited
+register.ts+10-4
+Edited
+profile.ts+7-1
+Edited
+auth.service.ts+7-2
+Checking profile imports
+
+I need to validate the profile imports; they might be okay now. However, I'm not sure if the profile import function showErrorPopUp already exists, so I need to check the User.ts compilation. I'm considering how to get the errors on the touched files to confirm everything is working properly. It feels a bit complex, but I'm committed to getting it right!
+
+Az áthelyezés kész. Most csak azt ellenőrzöm, hogy a módosított browser entrypointok és a modell együtt tisztán fordulnak-e, és hogy a tesztben már nem jön elő a document-hiba.
+
+A User modellből kivettem a popup mellékhatást, így a konstruktor most már csak validál és dob. A felhasználói visszajelzés a browser oldali hívási pontokra került: register.ts:1, profile.ts:1 és az OAuth-s útvonalnál auth.service.ts:1. A tiszta validátor maradt a User.ts:1 mögött, ezért a Node-alapú User.test.ts:1 már nem fut document-hibára.
+
+Ellenőriztem a módosított fájlokat, és nincs bennük TypeScript hiba.

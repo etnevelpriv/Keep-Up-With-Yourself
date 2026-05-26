@@ -1,0 +1,107 @@
+User: irj 30 tesztelest valid es invalid adatokkal is a user class tesztelesehez kovetnve a task class tesztelesenek a peldajat es felepiteset
+
+GitHub Copilot: Átnézem a meglévő `Task`-teszt felépítését és a `User` osztályt, hogy ugyanarra a mintára tudjak 30 valid/invalid esetet írni.
+
+Read [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/tests/Task.test.ts#1-1), lines 1 to 260
+
+Read [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/tests/userTestSetup.ts)
+
+Read [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/models/User.ts)
+
+Read memory [](file:///c%3A/Users/Admin/AppData/Roaming/Code/User/workspaceStorage/fbd3571cd63e88200221fd9760617e59/GitHub.copilot-chat/memory-tool/memories/repo/task-subcollection.md)
+
+Read [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/interfaces/UserInterface.ts)
+
+Most azt ellenőrzöm, van-e a felhasználóhoz külön validációs réteg, mert attól függ, hogy az "invalid" tesztek elvárhatnak-e kivételt a jelenlegi `User` osztályon.
+
+Searched for regex `validate.*User|User validator|user.validator|A név nincs megfelelően megadva|A jelszó nem felel meg|A létrehozás dátuma nincs megfelelően megadva` (`**/src/**`), 16 results
+
+Read [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/tests/Task.test.ts#260-260), lines 260 to 328
+
+Read [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/tests/taskTestSetup.ts)
+
+Megvan a döntő kapaszkodó: a felhasználóhoz van külön validátor. Most azt nézem meg, pontosan milyen szabályokra és hibaüzenetekre kell a teszteket felépíteni.
+
+Read [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/services/auth/auth.validator.ts)
+
+Read [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/tests/User.test.ts)
+
+Azt ellenőrzöm még, hogy a `Task` osztály mennyire validál a konstruktorban. Ha ugyanaz a minta, akkor a `User`-nél is ugyanarra érdemes ráállni, különben az "invalid" tesztek csak formailag lennének azok.
+
+Read [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/models/Task.ts)
+
+Searched for regex `new User\(|validateRegisterInput\(|validateLoginInput\(` (`**/src/**`), 6 results
+
+Most már elég a helyi hipotézis: a `User` jelenleg nem validál, ezért az invalid tesztekhez vagy a modellt kell hozzáigazítani, vagy csak tárolási jellegű teszteket lehetne írni. A következő lépésben megnézem a teszt parancsot, majd egy kicsi, de végleges javítást készítek.
+
+Read [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/scripts/register.ts)
+
+Read [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/services/auth/auth.service.ts)
+
+Read [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/package.json)
+
+Most már jön a tényleges módosítás: a `User` konstruktora megkapja ugyanazt a validációs gerincet, és a tesztfájlban 30, a `Task`-mintát követő valid/invalid esetet írok hozzá.
+
+Apply Patch
+
+A módosítás most két fájlt érint; elsőre a patch-formátum hibás volt, ezt javítva küldöm újra ugyanazt a konkrét változtatást.
+
+Generating patch (22 lines) in [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/models/User.ts)
+
+
+```
+
+```
+A tesztfájlt most teljesen átírom a `Task`-mintára: két `describe` blokk, sok külön valid eset, és egy táblázatos invalid blokk, hogy a 30 eset tisztán meglegyen.
+
+Generating patch (191 lines) in [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/tests/User.test.ts)
+
+
+```
+
+```
+A számot most pontosítom 30-ra: két kevésbé fontos valid esetet és két invalid sort kiveszek, hogy a végső készlet tényleg 20 + 10 legyen.
+
+Generating patch (49 lines) in [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/tests/User.test.ts)
+
+
+```
+
+```
+Most fut a célzott ellenőrzés a módosított tesztfájlra, hogy gyorsan kiderüljön, van-e még pontosítás az elvárt hibaüzenetekben vagy a validációban.
+
+Ran terminal command: npm test -- --run src/tests/User.test.ts
+
+Made changes.
+
+User: describe("INVALID User class tesztelese", () => {
+    test.each([
+        ["name ures string", { name: "" }, 'A név nincs megfelelően megadva: '],
+        ["name nem string", { name: 10 as any }, 'A név nincs megfelelően megadva: 10'],
+        ["email ures string", { email: "" }, 'Az e-mail cím nincs megfelelően megadva: '],
+        ["email hibas formatum", { email: "tesztuseremailgmail.com" }, 'Az e-mail cím nincs megfelelően megadva: tesztuseremailgmail.com'],
+        ["email nem string", { email: 10 as any }, 'Az e-mail cím nincs megfelelően megadva: 10'],
+        ["password ures string", { password: "" }, 'A jelszó nincs megfelelően megadva: '],
+        ["password tul rovid", { password: "Aa1!b" }, 'A jelszó nem felel meg a követelményeknek.'],
+        ["password hianyzo specialis karakter", { password: "Aa1bcdef" }, 'A jelszó nem felel meg a követelményeknek.'],
+        ["createdAt hibas Date objektum", { createdAt: new Date("invalid-date") }, 'A létrehozás dátuma nincs megfelelően megadva: Invalid Date'],
+        ["verified nem boolean", { verified: "true" as any }, 'Az ellenőrzöttség nincs megfelelően megadva: true'],
+    ])("Invalid adattal/adatokkal letrehozni a usert, ahol %s", (_label, overrides, expectedMessage) => {
+        expect(() => createTestUser(overrides)).toThrow(new Error(expectedMessage));
+    });
+});
+ ezeket szedd szet kulon tesztekre, nem each-el, hanem mint a valid teszteknel
+
+GitHub Copilot: Az invalid blokkot most külön tesztekre bontom, hogy ugyanazt a kézi szerkezetet kapd, mint a valid részben, és ne maradjon `test.each`.
+
+Generating patch (89 lines) in [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/tests/User.test.ts)
+
+
+```
+
+```
+A szerkezet már kész; most egy célzott Vitest futtatás kell, hogy kiderüljön, minden várható kivétel és érték tényleg passzol-e.
+
+Ran terminal command: npm test -- --run src/tests/User.test.ts
+
+Made changes.

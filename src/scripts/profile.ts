@@ -34,7 +34,13 @@ const init = async function () {
         return;
     }
 
-    const user: User = new User(userPayload.userName, undefined, userPayload.userEmail, new Date(userPayload.userCreatedAt.seconds * 1000), userPayload.userVerified)
+    let user: User;
+    try {
+        user = new User(userPayload.userName, undefined, userPayload.userEmail, new Date(userPayload.userCreatedAt.seconds * 1000), userPayload.userVerified);
+    } catch (error: any) {
+        showErrorPopUp(error.message);
+        throw error;
+    }
     console.log(user.toString());
     showUserDataInDOM(user);
 

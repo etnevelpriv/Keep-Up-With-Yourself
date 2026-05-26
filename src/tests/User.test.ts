@@ -143,18 +143,74 @@ describe("VALID User class tesztelese", () => {
 });
 
 describe("INVALID User class tesztelese", () => {
-    test.each([
-        ["name ures string", { name: "" }, 'A név nincs megfelelően megadva: '],
-        ["name nem string", { name: 10 as any }, 'A név nincs megfelelően megadva: 10'],
-        ["email ures string", { email: "" }, 'Az e-mail cím nincs megfelelően megadva: '],
-        ["email hibas formatum", { email: "tesztuseremailgmail.com" }, 'Az e-mail cím nincs megfelelően megadva: tesztuseremailgmail.com'],
-        ["email nem string", { email: 10 as any }, 'Az e-mail cím nincs megfelelően megadva: 10'],
-        ["password ures string", { password: "" }, 'A jelszó nincs megfelelően megadva: '],
-        ["password tul rovid", { password: "Aa1!b" }, 'A jelszó nem felel meg a követelményeknek.'],
-        ["password hianyzo specialis karakter", { password: "Aa1bcdef" }, 'A jelszó nem felel meg a követelményeknek.'],
-        ["createdAt hibas Date objektum", { createdAt: new Date("invalid-date") }, 'A létrehozás dátuma nincs megfelelően megadva: Invalid Date'],
-        ["verified nem boolean", { verified: "true" as any }, 'Az ellenőrzöttség nincs megfelelően megadva: true'],
-    ])("Invalid adattal/adatokkal letrehozni a usert, ahol %s", (_label, overrides, expectedMessage) => {
-        expect(() => createTestUser(overrides)).toThrow(new Error(expectedMessage));
+    test("Invalid adattal/adatokkal letrehozni a usert, ahol name ures string", () => {
+        expect(() => createTestUser({
+            name: ""
+        })).toThrow(
+            new Error('A név nincs megfelelően megadva: '),
+        );
+    });
+    test("Invalid adattal/adatokkal letrehozni a usert, ahol name nem string", () => {
+        expect(() => createTestUser({
+            name: 10 as any
+        })).toThrow(
+            new Error('A név nincs megfelelően megadva: 10'),
+        );
+    });
+    test("Invalid adattal/adatokkal letrehozni a usert, ahol email ures string", () => {
+        expect(() => createTestUser({
+            email: ""
+        })).toThrow(
+            new Error('Az e-mail cím nincs megfelelően megadva: '),
+        );
+    });
+    test("Invalid adattal/adatokkal letrehozni a usert, ahol email hibas formatum", () => {
+        expect(() => createTestUser({
+            email: "tesztuseremailgmail.com"
+        })).toThrow(
+            new Error('Az e-mail cím nincs megfelelően megadva: tesztuseremailgmail.com'),
+        );
+    });
+    test("Invalid adattal/adatokkal letrehozni a usert, ahol email nem string", () => {
+        expect(() => createTestUser({
+            email: 10 as any
+        })).toThrow(
+            new Error('Az e-mail cím nincs megfelelően megadva: 10'),
+        );
+    });
+    test("Invalid adattal/adatokkal letrehozni a usert, ahol password ures string", () => {
+        expect(() => createTestUser({
+            password: ""
+        })).toThrow(
+            new Error('A jelszó nincs megfelelően megadva: '),
+        );
+    });
+    test("Invalid adattal/adatokkal letrehozni a usert, ahol password tul rovid", () => {
+        expect(() => createTestUser({
+            password: "Aa1!b"
+        })).toThrow(
+            new Error('A jelszó nem felel meg a követelményeknek.'),
+        );
+    });
+    test("Invalid adattal/adatokkal letrehozni a usert, ahol password hianyzo specialis karakter", () => {
+        expect(() => createTestUser({
+            password: "Aa1bcdef"
+        })).toThrow(
+            new Error('A jelszó nem felel meg a követelményeknek.'),
+        );
+    });
+    test("Invalid adattal/adatokkal letrehozni a usert, ahol createdAt hibas Date objektum", () => {
+        expect(() => createTestUser({
+            createdAt: new Date("invalid-date")
+        })).toThrow(
+            new Error('A létrehozás dátuma nincs megfelelően megadva: Invalid Date'),
+        );
+    });
+    test("Invalid adattal/adatokkal letrehozni a usert, ahol verified nem boolean", () => {
+        expect(() => createTestUser({
+            verified: "true" as any
+        })).toThrow(
+            new Error('Az ellenőrzöttség nincs megfelelően megadva: true'),
+        );
     });
 });
