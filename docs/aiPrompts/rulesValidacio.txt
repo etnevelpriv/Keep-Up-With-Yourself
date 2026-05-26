@@ -1,0 +1,42 @@
+
+Firestore rules mezőszintű validációval. Ezt hogyan valositsam meg? Szerintem eleg validacio van, de nem biztos
+
+Átnézem a jelenlegi Firestore szabályokat és a repo-memóriában lévő jegyzeteket, hogy meg tudjam mondani, van-e már mezőszintű validáció, vagy hiányzik valami konkrétan.
+
+Most a taskok adatmodelljét nézem meg, mert a szabályoknál a mezőszintű validáció csak akkor jó, ha pontosan tudjuk, milyen mezők lehetnek és mit szabad módosítani update során.
+
+Ellenőrzöm még a user dokumentum mezőit is, mert a jelenlegi szabályokban a create/update mezőket csak részben védik, és lehet, hogy van már olyan mező, amit nem is kellene a dokumentumon tartani.
+
+A user- és taskType-szolgáltatást is megnézem, mert a rules akkor lesznek jók, ha a szerveroldali mezők megfelelnek a kliens által ténylegesen írt struktúrának.
+
+A jelenlegi firestore.rules már tartalmaz alap validációt, de ez még nem tekinthető teljes mezőszintű védelemnek. Most főleg típusellenőrzés van, viszont nincs meg az, hogy pontosan csak az elvárt mezők létezhetnek, és update-nél sem ellenőrzöd rendesen, mi változhat.
+
+Röviden: ami most hiányzik, az főleg ez:
+
+nincs key whitelist, tehát extra mezőket is be lehet írni;
+a task update teljesen nyitott, gyakorlatilag bármit módosíthat;
+nincs logikai validáció, például hogy a deadline ne legyen korábbi a createdAt-nál, vagy hogy a status és a completedAt együtt konzisztens legyen;
+a user dokumentumnál sincs meg a mezők teljes körű ellenőrzése update esetén.
+A jó minta az, hogy csinálsz külön helper függvényeket a rules-ban, például:
+
+validUserCreate
+validUserUpdate
+validTaskCreate
+validTaskUpdate
+Ezekben használsz olyan ellenőrzéseket, mint:
+
+request.resource.data.keys().hasOnly([...])
+request.resource.data.keys().hasAll([...])
+request.resource.data.field is string / is timestamp / is number
+request.resource.data.field.size() > 0
+request.resource.data.field in [...]
+request.resource.data.field == resource.data.field, ha nem szabad változtatni
+A te esetedben a legfontosabb szabályok nagyjából ezek lennének:
+
+user create: csak a pontos user mezők lehetnek bent;
+user update: userID és userEmail maradjon változatlan, verified csak akkor módosuljon, ha tényleg te akarod;
+task create: csak a pontos task mezők lehetnek bent;
+task update: legyen külön ellenőrzés, hogy mely mezők változhatnak, és a status/ completedAt összhangban legyen.
+Ha akarod, meg tudom írni neked konkrétan a teljes, kész Firestore rules verziót a mostani adatmodellhez, úgy hogy a firestore.rules azonnal használható legyen.
+
+GPT-5.4 mini • 0.3x

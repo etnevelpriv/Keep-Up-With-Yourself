@@ -262,8 +262,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 
 - Service layer létrehozása [Levente] (kesz)
 - Popup utils letrehozasa [Levente] (kesz)
-- users/{uid}/tasks/{taskId} subcollection. [Levente] (nincs kesz)
-- users/{uid}/taskTypes/{typeId} subcollection. [Levente] (nincs kesz)
+- users/{uid}/tasks/{taskId} subcollection. [Levente] (kesz)
 - Firestore rules mezőszintű validációval. [Levente] (nincs kesz)
 - Projekt prezentációja (projekt bemutatása fejlesztői/üzleti/user szempontbol, abrak, diagrammok, swot analizis, projekt roadmap, flowchart) [Levente] (nincs kesz)
 - Task létrehozás/módosítás/törlés külön service layerben. [Levente] (kesz)

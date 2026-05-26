@@ -3,25 +3,90 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
+    function isStringInRange(value, minLength, maxLength) {
+      return value is string
+        && value.size() >= minLength
+        && value.size() <= maxLength;
+    }
+
+    function hasValidUserFields(data) {
+      return data.keys().hasOnly([
+        "userID",
+        "userEmail",
+        "userName",
+        "userCreatedAt",
+        "userVerified",
+        "taskTypes"
+      ]);
+    }
+
+    function hasValidTaskFields(data) {
+      return data.keys().hasOnly([
+        "taskName",
+        "taskDesc",
+        "taskDeadline",
+        "taskImportance",
+        "taskTypeName",
+        "taskStatus",
+        "taskCompletedAt",
+        "taskCreatedAt",
+        "taskUpdatedAt"
+      ]);
+    }
+
+    function isValidTaskState(data) {
+      return data.taskStatus in ["Folyamatban", "Lejárt", "Teljesített"]
+        && (
+          (data.taskStatus == "Teljesített" && data.taskCompletedAt is timestamp)
+          || (data.taskStatus != "Teljesített" && data.taskCompletedAt == null)
+        );
+    }
+
+    function isValidTaskDocument(data) {
+      return hasValidTaskFields(data)
+        && isStringInRange(data.taskName, 3, 50)
+        && isStringInRange(data.taskDesc, 0, 300)
+        && data.taskDeadline is timestamp
+        && data.taskImportance is number
+        && data.taskImportance >= 1
+        && data.taskImportance <= 5
+        && isStringInRange(data.taskTypeName, 1, 40)
+        && data.taskCreatedAt is timestamp
+        && data.taskUpdatedAt is timestamp
+        && data.taskDeadline >= data.taskCreatedAt
+        && data.taskUpdatedAt >= data.taskCreatedAt
+        && isValidTaskState(data);
+    }
+
+    function isValidUserDocument(data) {
+      return hasValidUserFields(data)
+        && data.userID is string
+        && data.userEmail is string
+        && isStringInRange(data.userName, 1, 80)
+        && data.userCreatedAt is timestamp
+        && data.userCreatedAt <= request.time
+        && data.userVerified is bool
+        && data.userVerified == request.auth.token.email_verified
+        && data.taskTypes is list;
+    }
+
     match /users/{userID} {
 
       allow create: if request.auth != null
         && request.auth.uid == userID
+        && isValidUserDocument(request.resource.data)
         && request.resource.data.userID == request.auth.uid
-        && request.resource.data.userEmail == request.auth.token.email
-        && request.resource.data.userName is string
-        && request.resource.data.userName.size() > 0
-        && request.resource.data.userCreatedAt is timestamp
-        && request.resource.data.userVerified is bool
-        && request.resource.data.taskTypes is list;
+        && request.resource.data.userEmail == request.auth.token.email;
 
       allow read: if request.auth != null
         && request.auth.uid == userID;
 
       allow update: if request.auth != null
         && request.auth.uid == userID
+        && isValidUserDocument(request.resource.data)
         && request.resource.data.userID == resource.data.userID
-        && request.resource.data.userEmail == resource.data.userEmail;
+        && request.resource.data.userEmail == resource.data.userEmail
+        && request.resource.data.userCreatedAt == resource.data.userCreatedAt;
 
       allow delete: if request.auth != null
         && request.auth.uid == userID;
@@ -31,17 +96,17 @@ service cloud.firestore {
 
       allow create: if request.auth != null
         && request.auth.uid == userID
-        && request.resource.data.taskName is string
-        && request.resource.data.taskDesc is string
-        && request.resource.data.taskDeadline is timestamp
-        && request.resource.data.taskImportance is number
-        && request.resource.data.taskTypeName is string
-        && request.resource.data.taskStatus in ["Folyamatban", "Lejárt", "Teljesített"]
-        && (request.resource.data.taskCompletedAt == null || request.resource.data.taskCompletedAt is timestamp)
-        && request.resource.data.taskCreatedAt is timestamp
-        && request.resource.data.taskUpdatedAt is timestamp;
+        && isValidTaskDocument(request.resource.data);
 
-      allow read, update, delete: if request.auth != null
+      allow update: if request.auth != null
+        && request.auth.uid == userID
+        && isValidTaskDocument(request.resource.data)
+        && request.resource.data.taskCreatedAt == resource.data.taskCreatedAt;
+
+      allow read: if request.auth != null
+        && request.auth.uid == userID;
+
+      allow delete: if request.auth != null
         && request.auth.uid == userID;
     }
   }
