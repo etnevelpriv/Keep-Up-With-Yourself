@@ -258,7 +258,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - Domain berlese [Levente] (kesz)  
 - DNS konfiguralasa [Levente] (kesz)
 
-## 8. MVP deploy utáni teendők (14 / 29)
+## 8. MVP deploy utáni teendők (15 / 29)
 
 - Service layer létrehozása [Levente] (kesz)
 - Popup utils letrehozasa [Levente] (kesz)
@@ -274,7 +274,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - Password visibility toggle font awesome ikonnal. [Levente] (kesz)
 - Jelszavak több karaktert is tartalmassanak [Levente] (kesz)
 - User class unit tesztelese [Levente] (kesz)
-- Auth unit teszt [Levente] (nincs kesz)
+- Auth unit teszt [Levente] (kesz)
 - Projekt prezentációja (projekt bemutatása fejlesztői/üzleti/user szempontbol, abrak, diagrammok, swot analizis, projekt roadmap, flowchart) [Levente] (nincs kesz)
 - Rate limit auth emailekre. [Levente] (nincs kesz)
 - Jogi oldalak. [Levente] (nincs kesz)
