@@ -7,8 +7,8 @@ beforeAllSetup()
 beforeEachSetup()
 afterAllSetup()
 
-describe("User Repository (service klon) Integration teszt", () => {
-    test("User dokumentum lerehozasa es lekerese", async () => {
+describe("VALID User Repository (service klon) Integration teszt", () => {
+    test("VALID User dokumentum lerehozasa es lekerese", async () => {
         const user = createTestUser();
         const email = "userlekeresteszt@gmail.com";
         const uid = `${crypto.randomUUID()}`
@@ -17,7 +17,7 @@ describe("User Repository (service klon) Integration teszt", () => {
         const dbUser = await getUser(authenticatedDb as any, uid);
         expect(dbUser).not.toBe(false);
     });
-    test("User dokumentum letrehozasa, modositasa es lekerese", async () => {
+    test("VALID User dokumentum letrehozasa, modositasa es lekerese", async () => {
         const user = createTestUser();
         const email = "usermodositasteszt@gmail.com";
         const uid = `${crypto.randomUUID()}`
@@ -30,7 +30,7 @@ describe("User Repository (service klon) Integration teszt", () => {
         expect(dbUser).not.toBe(false);
         expect((dbUser as any).userName).toBe("updatedUserName");
     });
-    test("User dokumentum letrehozasa es torlese", async () => {
+    test("VALID User dokumentum letrehozasa es torlese", async () => {
         const user = createTestUser();
         const email = "usertorlesteszt@gmail.com";
         const uid = `${crypto.randomUUID()}`
