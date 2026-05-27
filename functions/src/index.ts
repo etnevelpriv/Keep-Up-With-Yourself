@@ -21,9 +21,9 @@ export const updateExpiredTasks = onSchedule("every 24 hours", async () => {
     await Promise.all(tasksSnap.docs.map(async (taskDoc) => {
       const task = taskDoc.data();
       const deadline = task.taskDeadline;
-      const deadlineMillis = typeof deadline?.toMillis === "function"
-        ? deadline.toMillis()
-        : null;
+      const deadlineMillis =
+        typeof deadline?.toMillis === "function" ?
+          deadline.toMillis() : null;
 
       if (deadlineMillis != null && deadlineMillis < now.toMillis()) {
         changed = true;
