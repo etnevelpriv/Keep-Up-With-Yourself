@@ -8,12 +8,12 @@ export const getTaskTypes = function (user: any) {
     });
     return (arr);
 };
-export const getNormalizedTaskTypes = function (uid: string) {
+// export const getNormalizedTaskTypes = function (uid: string) {
 
-}
+// }
 export const uploadTaskType = async function (user: any, taskType: string) {
     user.taskTypes.push(taskType);
-    const currentUser = await getCurrentUser();
+    const currentUser:any = await getCurrentUser();
     if (!currentUser) {
         return;
     };
