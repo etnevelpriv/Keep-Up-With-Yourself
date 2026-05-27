@@ -10,7 +10,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "test": "vitest"
+    "test": "vitest run",
+    "test:emulator": "firebase emulators:exec --only firestore \"npm test\""
   },
   "devDependencies": {
     "@firebase/rules-unit-testing": "^5.0.1",
