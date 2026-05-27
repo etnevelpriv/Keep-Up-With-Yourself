@@ -14,8 +14,12 @@
     </header>
     <form action="submit" id="loginForm">
         <input type="email" placeholder="pelda@keepupwithyourself.hu" name="email" id="emailInput">
-        <input type="password" placeholder="PéldaJelszó123." name="password" id="passwordInput">
-        <button id="loginButton" type="submit">Bejelentkezés</button>
+        <div class="password-input-wrapper">
+            <input type="password" placeholder="PéldaJelszó123." name="password" id="passwordInput">
+            <button class="password-visibility-toggle" id="passwordVisibilityToggle" type="button">
+                <i id="passwordIcon" class="fa-solid fa-eye"></i>
+            </button>
+        </div>        <button id="loginButton" type="submit">Bejelentkezés</button>
     </form>
     <button class="google-button" id="googleButton" type="button"><i class="fa-brands fa-google"></i>Bejelentkezés Google-lel</button>
     <button class="forgot-pass-button" id="forgotPassButton" type="button">Elfelejtett jelszó</button>
