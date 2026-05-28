@@ -7,12 +7,11 @@ import type { Firestore } from "firebase/firestore";
 
 const auth = getAuth();
 
-export const registerWithEmail = async function (db: Firestore, name: string, email: string, password: string) {
-    const userObj = new User(name, password, email, new Date(), false);
-    validateRegisterInput(userObj.name, userObj.email, password, userObj.createdAt, userObj.verified);
+export const registerWithEmail = async function (db: Firestore, name: string, email: string, password: string, createdAt: Date, verified: boolean) {
+    validateRegisterInput(name, email, password, createdAt, verified);
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
-    await createUserDocumentInDatabase(db, user.uid, userObj.email, userObj.name, userObj.createdAt, userObj.verified);
+    await createUserDocumentInDatabase(db, user.uid, email, name, createdAt, verified);
     await sendEmailVerificationToUser(user);
 };
 export const loginWithEmail = async function (email: string, password: string) {
@@ -60,7 +59,7 @@ export const sendEmailVerificationToUser = async function (user: any) {
     };
     await sendEmailVerification(user, actionCodeSettings);
 };
-export const deleteCurrentUserAccount = async function (db: Firestore) {
+export const deleteCurrentUserAccount = async function (db:Firestore) {
     const currentUser = auth.currentUser;
     if (!currentUser) {
         return;

@@ -27,7 +27,8 @@ const sendRegisterForm = async function (e: Event) {
     const password = document.getElementById("passwordInput") as HTMLInputElement;
     const form = document.getElementById("registerForm") as HTMLFormElement
     try {
-        await registerWithEmail(db, name.value, email.value, password.value);
+        const userObj = new User(name.value, password.value, email.value, new Date(), false);
+        await registerWithEmail(db, userObj.name, userObj.email, password.value, userObj.createdAt, userObj.verified);
         showInfoPopUp("Sikeres regisztráció, elküldünk egy visszaigazoló emailt.")
         form.reset()
     } catch (error) {
