@@ -1,39 +1,38 @@
 import "../styles/auth.css";
 import { User } from "../models/User.ts";
-import { registerWithEmail } from "../services/auth/auth.service.ts";
-import { loginWithGoogle } from "../services/auth/auth.service.ts";
+import { registerWithEmail, loginWithGoogle } from "../services/auth/auth.service.ts";
 import { setupPasswordVisibilityToggle } from "../utils/passwordVisibilityToggle.ts";
 import { db } from "./firebase.ts";
-import { showErrorPopUp, showInfoPopUp } from "../utils/popup.ts";
+import { handleUiError } from "../utils/errors/handleUiError.ts";
+import { showInfoPopUp } from "../utils/popup.ts";
 
 const init = function () {
-    console.log("Betoltodott a register.ts")
     const form: HTMLElement = document.getElementById("registerForm") as HTMLElement;
     form.addEventListener("submit", sendRegisterForm);
     setupPasswordVisibilityToggle();
-
-    document.getElementById("googleButton")?.addEventListener("click", () => {
-        loginWithGoogle();
-
+    document.getElementById("googleButton")?.addEventListener("click", async () => {
+        try {
+            await loginWithGoogle(db);
+            showInfoPopUp("Sikeres Google bejelentkezés. Töltsd újra az oldalt a fiókod megtekintéséhez");
+        } catch (error) {
+            handleUiError(error);
+        };
     });
 };
 
-const sendRegisterForm = function (e: Event) {
+const sendRegisterForm = async function (e: Event) {
     e.preventDefault();
-    console.log("Regisztralas gombra kattintva")
     const name = document.getElementById("nameInput") as HTMLInputElement;
     const email = document.getElementById("emailInput") as HTMLInputElement;
     const password = document.getElementById("passwordInput") as HTMLInputElement;
     const form = document.getElementById("registerForm") as HTMLFormElement
     try {
-        const userObj = new User(name.value, password.value, email.value, new Date(), false);
-        console.log(userObj);
-        registerWithEmail(userObj.name, userObj.email, password.value, userObj.createdAt, userObj.verified)
+        await registerWithEmail(db, name.value, email.value, password.value);
+        showInfoPopUp("Sikeres regisztráció, elküldünk egy visszaigazoló emailt.")
         form.reset()
-    } catch (error: any) {
-        showErrorPopUp(error.message);
-        throw error;
-    }
+    } catch (error) {
+        handleUiError(error)
+    };
 };
 
 document.addEventListener("DOMContentLoaded", init);
