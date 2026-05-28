@@ -2,10 +2,10 @@ import type { AppErrorInterface } from "../interfaces/AppErrorInterface.ts";
 
 export class AppError extends Error implements AppErrorInterface {
     code:string;
-    constructor (code:string, message:string) {
-        super(message);
-        this.name = "AppError";
+    constructor (code:string) {
+        super(code);
         this.code = code;
+        this.name = "AppError";
         Object.setPrototypeOf(this, AppError.prototype);
     };
 };

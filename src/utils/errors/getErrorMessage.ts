@@ -1,9 +1,13 @@
-import { AppError } from "../../models/AppError";
-import { errorMessages } from "./errorMessages";
+import { AppError } from "../../models/AppError.ts";
+import { errorMessages } from "./errorMessages.ts";
 
 export const getErrorMessage = function (error:unknown) {
     if (error instanceof AppError) {
-        return errorMessages[error.code]
+        if (errorMessages[error.code]) {
+            return errorMessages[error.code];
+        } else {
+            return errorMessages["unknown"];
+        };
     };
     return errorMessages["unknown"];
 }
