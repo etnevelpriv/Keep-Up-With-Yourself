@@ -3,7 +3,8 @@ import { User } from "../models/User.ts";
 import { registerWithEmail } from "../services/auth/auth.service.ts";
 import { loginWithGoogle } from "../services/auth/auth.service.ts";
 import { setupPasswordVisibilityToggle } from "../utils/passwordVisibilityToggle.ts";
-import { showErrorPopUp } from "../utils/popup.ts";
+import { db } from "./firebase.ts";
+import { showErrorPopUp, showInfoPopUp } from "../utils/popup.ts";
 
 const init = function () {
     console.log("Betoltodott a register.ts")
