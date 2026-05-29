@@ -1,6 +1,7 @@
 import "../styles/auth.css";
 import { loginWithEmail, loginWithGoogle, sendPasswordReset } from "../services/auth/auth.service";
 import { setupPasswordVisibilityToggle } from "../utils/passwordVisibilityToggle";
+import { db } from "./firebase.ts";
 
 const init = function () {
     console.log("Betoltodott a register.ts")
@@ -8,8 +9,8 @@ const init = function () {
     form.addEventListener("submit", sendLoginForm);
     setupPasswordVisibilityToggle();
     setupForgotPasswordModal();
-    document.getElementById("googleButton")?.addEventListener("click", () => {
-        loginWithGoogle();
+    document.getElementById("googleButton")?.addEventListener("click", async () => {
+        await loginWithGoogle(db);
     });
 
     document.getElementById("forgotPassButton")?.addEventListener("click", () => {
@@ -18,20 +19,19 @@ const init = function () {
 
     });
 
-    document.getElementById("forgotPassSendButton")?.addEventListener("click", () => {
+    document.getElementById("forgotPassSendButton")?.addEventListener("click", async () => {
         const emailInput = document.getElementById("forgotPassEmailInput") as HTMLInputElement | null;
         const email = emailInput?.value ?? "";
-        sendPasswordReset(email);
-
+        await sendPasswordReset(email);
     });
 };
 
-const sendLoginForm = function (e: Event) {
+const sendLoginForm = async function (e: Event) {
     e.preventDefault();
     console.log("Bejelentkezes gombra kattintva")
     const email = document.getElementById("emailInput") as HTMLFormElement;
     const password = document.getElementById("passwordInput") as HTMLFormElement;
-    loginWithEmail(email.value, password.value);
+    await loginWithEmail(email.value, password.value);
 };
 
 const setupForgotPasswordModal = function () {

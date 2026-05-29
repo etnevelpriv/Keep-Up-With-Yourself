@@ -1,21 +1,18 @@
 import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, sendPasswordResetEmail, sendEmailVerification, createUserWithEmailAndPassword, signOut, deleteUser } from "firebase/auth";
 import { User } from "../../models/User.ts";
 import { createUserDocumentInDatabase, deleteUserDocumentFromDatabase, getUserDocumentFromDatabase } from "../user/user.service.ts"
-import { validateLoginInput, validateRegisterInput } from "../user/user.validator.ts";
 import { doc, getDoc } from "firebase/firestore";
 import type { Firestore } from "firebase/firestore";
 
 const auth = getAuth();
 
 export const registerWithEmail = async function (db: Firestore, name: string, email: string, password: string, createdAt: Date, verified: boolean) {
-    validateRegisterInput(name, email, password, createdAt, verified);
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
     await createUserDocumentInDatabase(db, user.uid, email, name, createdAt, verified);
     await sendEmailVerificationToUser(user);
 };
 export const loginWithEmail = async function (email: string, password: string) {
-    validateLoginInput(email, password)
     await signInWithEmailAndPassword(auth, email, password);
 };
 export const loginWithGoogle = async function (db: Firestore) {

@@ -38,7 +38,7 @@ export const validateUserVerified = function (verified: boolean) {
         throw new AppError("validation/invalid-verified");
     }
 };
-export const validateRegisterInput = function (name: string, email: string, password: string, createdAt: Date, verified: boolean) {
+export const validateRegisterInput = function (name: string, email: string, password: string | undefined, createdAt: Date, verified: boolean) {
     validateUserEmail(email);
     validateUserName(name);
     validateUserPassword(password);

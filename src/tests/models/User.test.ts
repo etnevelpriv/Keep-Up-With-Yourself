@@ -146,71 +146,51 @@ describe("INVALID User class tesztelese", () => {
     test("Invalid adattal/adatokkal letrehozni a usert, ahol name ures string", () => {
         expect(() => createTestUser({
             name: ""
-        })).toThrow(
-            new Error('A név nincs megfelelően megadva: '),
-        );
+        })).toThrow("validation/invalid-name");
     });
     test("Invalid adattal/adatokkal letrehozni a usert, ahol name nem string", () => {
         expect(() => createTestUser({
             name: 10 as any
-        })).toThrow(
-            new Error('A név nincs megfelelően megadva: 10'),
-        );
+        })).toThrow("validation/invalid-name");
     });
     test("Invalid adattal/adatokkal letrehozni a usert, ahol email ures string", () => {
         expect(() => createTestUser({
             email: ""
-        })).toThrow(
-            new Error('Az e-mail cím nincs megfelelően megadva: '),
-        );
+        })).toThrow("validation/invalid-email");
     });
     test("Invalid adattal/adatokkal letrehozni a usert, ahol email hibas formatum", () => {
         expect(() => createTestUser({
             email: "tesztuseremailgmail.com"
-        })).toThrow(
-            new Error('Az e-mail cím nincs megfelelően megadva: tesztuseremailgmail.com'),
-        );
+        })).toThrow("validation/invalid-email");
     });
     test("Invalid adattal/adatokkal letrehozni a usert, ahol email nem string", () => {
         expect(() => createTestUser({
             email: 10 as any
-        })).toThrow(
-            new Error('Az e-mail cím nincs megfelelően megadva: 10'),
-        );
+        })).toThrow("validation/invalid-email");
     });
     test("Invalid adattal/adatokkal letrehozni a usert, ahol password ures string", () => {
         expect(() => createTestUser({
             password: ""
-        })).toThrow(
-            new Error('A jelszó nincs megfelelően megadva: '),
-        );
+        })).toThrow("validation/invalid-password");
     });
     test("Invalid adattal/adatokkal letrehozni a usert, ahol password tul rovid", () => {
         expect(() => createTestUser({
             password: "Aa1!b"
-        })).toThrow(
-            new Error('A jelszó nem felel meg a követelményeknek.'),
-        );
+        })).toThrow("validation/invalid-password-requirements");
     });
     test("Invalid adattal/adatokkal letrehozni a usert, ahol password hianyzo specialis karakter", () => {
         expect(() => createTestUser({
             password: "Aa1bcdef"
-        })).toThrow(
-            new Error('A jelszó nem felel meg a követelményeknek.'),
-        );
+        })).toThrow("validation/invalid-password-requirements");
     });
     test("Invalid adattal/adatokkal letrehozni a usert, ahol createdAt hibas Date objektum", () => {
         expect(() => createTestUser({
             createdAt: new Date("invalid-date")
-        })).toThrow(
-            new Error('A létrehozás dátuma nincs megfelelően megadva: Invalid Date'),
-        );
+        })).toThrow("validation/invalid-createDate");
     });
     test("Invalid adattal/adatokkal letrehozni a usert, ahol verified nem boolean", () => {
         expect(() => createTestUser({
             verified: "true" as any
-        })).toThrow(
-            new Error('Az ellenőrzöttség nincs megfelelően megadva: true'),
-        );
+        })).toThrow("validation/invalid-verified");
     });
 });

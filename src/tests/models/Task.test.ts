@@ -224,7 +224,7 @@ describe("INVALID Task class tesztelese", () => {
     test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskDesc tul hosszu", () => {
         expect(() => createTestTask({
             taskDesc: "D".repeat(301)
-        })).toThrow("fdf");
+        })).toThrow("validation/invalid-task-description");
     });
     test("Invalid adattal/adatokkal letrehozni a taskot, adattal/adatokkal letrehozni a taskot, ahol taskTypeName taskTypeName ures string", () => {
         expect(() => createTestTask({
