@@ -1,7 +1,7 @@
 import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, sendPasswordResetEmail, sendEmailVerification, createUserWithEmailAndPassword, signOut, deleteUser } from "firebase/auth";
 import { User } from "../../models/User.ts";
 import { createUserDocumentInDatabase, deleteUserDocumentFromDatabase, getUserDocumentFromDatabase } from "../user/user.service.ts"
-import { validateLoginInput, validateRegisterInput } from "./auth.validator.ts";
+import { validateLoginInput, validateRegisterInput } from "../user/user.validator.ts";
 import { doc, getDoc } from "firebase/firestore";
 import type { Firestore } from "firebase/firestore";
 

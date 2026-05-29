@@ -194,135 +194,97 @@ describe("INVALID Task class tesztelese", () => {
     test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskName egy ures string", () => {
         expect(() => createTestTask({
             taskName: ""
-        })).toThrow(
-            new Error('A feladat neve érvénytelen.'),
-        );
+        })).toThrow("validation/invalid-task-name");
     });
     test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskName nem string", () => {
         expect(() => createTestTask({
             taskName : 10 as any
-        })).toThrow(
-            new Error('Ahol a szöveget kell megadni, ott szöveg legyen megadva. Valamelyik adat érvénytelen.'),
-        );
+        })).toThrow("validation/invalid-text-type");
     });
     test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskName == `   `", () => {
         expect(() => createTestTask({
             taskName: "   "
-        })).toThrow(
-            new Error('A feladat neve érvénytelen.'),
-        );
+        })).toThrow("validation/invalid-task-name");
     });
     test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskDesc nem string", () => {
         expect(() => createTestTask({
             taskDesc: 3 as any
-        })).toThrow(
-            new Error('Ahol a szöveget kell megadni, ott szöveg legyen megadva. Valamelyik adat érvénytelen.'),
-        );
+        })).toThrow("validation/invalid-text-type");
     });
     test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskName tul rovid", () => {
         expect(() => createTestTask({
             taskName: "Ab"
-        })).toThrow(
-            new Error('A feladat neve érvénytelen.'),
-        );
+        })).toThrow("validation/invalid-task-name");
     });
     test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskName tul hosszu", () => {
         expect(() => createTestTask({
             taskName: "A".repeat(51)
-        })).toThrow(
-            new Error('A feladat neve érvénytelen.'),
-        );
+        })).toThrow("validation/invalid-task-name");
     });
     test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskDesc tul hosszu", () => {
         expect(() => createTestTask({
             taskDesc: "D".repeat(301)
-        })).toThrow(
-            new Error('A leírás érvénytelen.'),
-        );
+        })).toThrow("fdf");
     });
-    test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskTypeName ures string", () => {
+    test("Invalid adattal/adatokkal letrehozni a taskot, adattal/adatokkal letrehozni a taskot, ahol taskTypeName taskTypeName ures string", () => {
         expect(() => createTestTask({
             taskTypeName: ""
-        })).toThrow(
-            new Error('A típus érvénytelen.'),
-        );
+        })).toThrow("validation/invalid-task-taskType");
     });
     test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskTypeName tul hosszu", () => {
         expect(() => createTestTask({
             taskTypeName: "T".repeat(41)
-        })).toThrow(
-            new Error('A típus érvénytelen.'),
-        );
+        })).toThrow("validation/invalid-task-taskType");
     });
     test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskImportance nulla", () => {
         expect(() => createTestTask({
             taskImportance: 0
-        })).toThrow(
-            new Error('A fontosság 1 és 5 közé essen.'),
-        );
+        })).toThrow("validation/invalid-task-importance");
     });
     test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskImportance tul magas", () => {
         expect(() => createTestTask({
             taskImportance: 6
-        })).toThrow(
-            new Error('A fontosság 1 és 5 közé essen.'),
-        );
+        })).toThrow("validation/invalid-task-importance");
     });
     test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskImportance nem szam", () => {
         expect(() => createTestTask({
             taskImportance: Number.NaN
-        })).toThrow(
-            new Error('A fontosság 1 és 5 közé essen.'),
-        );
+        })).toThrow("validation/invalid-task-importance");
     });
     test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskStatus kisbetus", () => {
         expect(() => createTestTask({
             taskStatus: "folyamatban" as any
-        })).toThrow(
-            new Error('Az állapot érvénytelen.'),
-        );
+        })).toThrow("validation/invalid-task-status");
     });
     test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskStatus ures string", () => {
         expect(() => createTestTask({
             taskStatus: "" as any
-        })).toThrow(
-            new Error('Az állapot érvénytelen.'),
-        );
+        })).toThrow("validation/invalid-task-status");
     });
     test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskCreatedAt hibas Date objektum", () => {
         expect(() => createTestTask({
             taskCreatedAt: new Date("invalid-date")
-        })).toThrow(
-            new Error('A létrehozás dátuma érvénytelen.'),
-        );
+        })).toThrow("validation/invalid-task-createdAt");
     });
     test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskCreatedAt jovobeli datum", () => {
         expect(() => createTestTask({
             taskCreatedAt: new Date("2099-01-01T00:00:00.000Z")
-        })).toThrow(
-            new Error('A létrehozás dátuma érvénytelen.'),
-        );
+        })).toThrow("validation/invalid-task-createdAt");
     });
     test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskDeadline hibas Date objektum", () => {
         expect(() => createTestTask({
             taskDeadline: new Date("invalid-date")
-        })).toThrow(
-            new Error('A határidő érvénytelen.'),
-        );
+        })).toThrow("validation/invalid-task-deadline");
     });
     test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskDeadline korabbi mint a letrehozas ideje", () => {
         expect(() => createTestTask({
             taskCreatedAt: new Date("2026-05-10T00:00:00.000Z"),
             taskDeadline: new Date("2026-05-09T00:00:00.000Z")
-        })).toThrow(
-            new Error('A határidő érvénytelen.'),
-        );
+        })).toThrow("validation/invalid-task-deadline");
     });
     test("Invalid adattal/adatokkal letrehozni a taskot, ahol taskCompletedAt hibas Date objektum", () => {
         expect(() => createTestTask({
             taskCompletedAt: new Date("invalid-date")
-        })).toThrow(
-            new Error('A befejezés dátuma érvénytelen.'),
-        );
+        })).toThrow("validation/invalid-task-completedAt");
     });
 });

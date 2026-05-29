@@ -1,11 +1,11 @@
 import { expect, test, describe } from 'vitest'
 import createTestUser from './setup/userTestIntegrationSetup'
 import createTestTask from './setup/taskTestIntegrationSetup';
-import { createTask, deleteTask, getTask, updateTask } from '../../repositories/task.repository';
 import { getAuthenticatedDb } from './setup/userTestDb';
 import { afterAllSetup, beforeAllSetup, beforeEachSetup, testEnv } from './setup/firebaseTestSetup';
 import { assertFails } from '@firebase/rules-unit-testing';
 import { addDoc, collection } from "firebase/firestore";
+import { createTask, deleteTask, getTask, updateTask } from '../../services/task/task.service';
 beforeAllSetup()
 beforeEachSetup()
 afterAllSetup()

@@ -1,9 +1,9 @@
 import { expect, test, describe } from 'vitest'
 import createTestUser from './setup/userTestIntegrationSetup'
-import { createUser, getUser, updateUser, deleteUser } from '../../repositories/user.repository';
 import { getAuthenticatedDb } from './setup/userTestDb';
 import { afterAllSetup, beforeAllSetup, beforeEachSetup, testEnv } from './setup/firebaseTestSetup';
 import { assertFails } from '@firebase/rules-unit-testing';
+import { createUserDocumentInDatabase, updateUserDocumentInDatabase, getUserDocumentFromDatabase, deleteUserDocumentFromDatabase } from '../../services/user/user.service';
 beforeAllSetup()
 beforeEachSetup()
 afterAllSetup()
@@ -14,8 +14,8 @@ describe("VALID User Repository (service klon) Integration teszt", () => {
         const email = "userlekeresteszt@gmail.com";
         const uid = `${crypto.randomUUID()}`
         const authenticatedDb = getAuthenticatedDb(uid, email, user.verified)
-        await createUser(authenticatedDb as any, uid, email, user.name, user.createdAt, user.verified);
-        const dbUser = await getUser(authenticatedDb as any, uid);
+        await createUserDocumentInDatabase(authenticatedDb as any, uid, email, user.name, user.createdAt, user.verified);
+        const dbUser = await getUserDocumentFromDatabase(authenticatedDb as any, uid);
         expect(dbUser).not.toBe(false);
     });
     test("VALID User dokumentum letrehozasa, modositasa es lekerese", async () => {
@@ -23,11 +23,11 @@ describe("VALID User Repository (service klon) Integration teszt", () => {
         const email = "usermodositasteszt@gmail.com";
         const uid = `${crypto.randomUUID()}`
         const authenticatedDb = getAuthenticatedDb(uid, email, user.verified)
-        await createUser(authenticatedDb as any, uid, email, user.name, user.createdAt, user.verified);
-        await updateUser(authenticatedDb as any, uid, {
+        await createUserDocumentInDatabase(authenticatedDb as any, uid, email, user.name, user.createdAt, user.verified);
+        await updateUserDocumentInDatabase(authenticatedDb as any, uid, {
             userName: "updatedUserName"
         })
-        const dbUser = await getUser(authenticatedDb as any, uid);
+        const dbUser = await getUserDocumentFromDatabase(authenticatedDb as any, uid);
         expect(dbUser).not.toBe(false);
         expect((dbUser as any).userName).toBe("updatedUserName");
     });
@@ -36,11 +36,11 @@ describe("VALID User Repository (service klon) Integration teszt", () => {
         const email = "usertorlesteszt@gmail.com";
         const uid = `${crypto.randomUUID()}`
         const authenticatedDb = getAuthenticatedDb(uid, email, user.verified)
-        await createUser(authenticatedDb as any, uid, email, user.name, user.createdAt, user.verified);
-        const dbUser = await getUser(authenticatedDb as any, uid);
+        await createUserDocumentInDatabase(authenticatedDb as any, uid, email, user.name, user.createdAt, user.verified);
+        const dbUser = await getUserDocumentFromDatabase(authenticatedDb as any, uid);
         expect(dbUser).not.toBe(false);
-        await deleteUser(authenticatedDb as any, uid);
-        const dbFalseUser = await getUser(authenticatedDb as any, uid);
+        await deleteUserDocumentFromDatabase(authenticatedDb as any, uid);
+        const dbFalseUser = await getUserDocumentFromDatabase(authenticatedDb as any, uid);
         expect(dbFalseUser).toBe(false);
     });
 });
@@ -52,15 +52,15 @@ describe("INVALID User Repository (service klon) Integration teszt", () => {
         const email = "userfuturecreatedatteszt@gmail.com";
         const uid = `${crypto.randomUUID()}`
         const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
-        await assertFails(createUser(authenticatedDb as any, uid, email, user.name, user.createdAt, user.verified));
+        await assertFails(createUserDocumentInDatabase(authenticatedDb as any, uid, email, user.name, user.createdAt, user.verified));
     });
     test("INVALID user taskTypes mezot ervenytelen tipussal nem lehet menteni", async () => {
         const user = createTestUser();
         const email = "usertasktypeshibateszt@gmail.com";
         const uid = `${crypto.randomUUID()}`
         const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
-        await createUser(authenticatedDb as any, uid, email, user.name, user.createdAt, user.verified);
-        await assertFails(updateUser(authenticatedDb as any, uid, {
+        await createUserDocumentInDatabase(authenticatedDb as any, uid, email, user.name, user.createdAt, user.verified);
+        await assertFails(updateUserDocumentInDatabase(authenticatedDb as any, uid, {
             taskTypes: "nemLista" as any
         }));
     });
@@ -69,8 +69,8 @@ describe("INVALID User Repository (service klon) Integration teszt", () => {
         const email = "userextramezoteszt@gmail.com";
         const uid = `${crypto.randomUUID()}`
         const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
-        await createUser(authenticatedDb as any, uid, email, user.name, user.createdAt, user.verified);
-        await assertFails(updateUser(authenticatedDb as any, uid, {
+        await createUserDocumentInDatabase(authenticatedDb as any, uid, email, user.name, user.createdAt, user.verified);
+        await assertFails(updateUserDocumentInDatabase(authenticatedDb as any, uid, {
             extraField: true
         } as any));
     });
@@ -79,7 +79,7 @@ describe("INVALID User Repository (service klon) Integration teszt", () => {
         const email = "userauthnincsteszt@gmail.com";
         const uid = `${crypto.randomUUID()}`
         const unauthenticatedDb = testEnv.unauthenticatedContext().firestore();
-        await assertFails(createUser(unauthenticatedDb as any, uid, email, user.name, user.createdAt, user.verified));
+        await assertFails(createUserDocumentInDatabase(unauthenticatedDb as any, uid, email, user.name, user.createdAt, user.verified));
     });
     test("INVALID mas user nem olvashat user dokumentumot", async () => {
         const user = createTestUser();
@@ -89,8 +89,8 @@ describe("INVALID User Repository (service klon) Integration teszt", () => {
         const attackerUid = `${crypto.randomUUID()}`
         const ownerAuthenticatedDb = getAuthenticatedDb(ownerUid, ownerEmail, user.verified);
         const attackerAuthenticatedDb = getAuthenticatedDb(attackerUid, attackerEmail, user.verified);
-        await createUser(ownerAuthenticatedDb as any, ownerUid, ownerEmail, user.name, user.createdAt, user.verified);
-        await assertFails(getUser(attackerAuthenticatedDb as any, ownerUid));
+        await createUserDocumentInDatabase(ownerAuthenticatedDb as any, ownerUid, ownerEmail, user.name, user.createdAt, user.verified);
+        await assertFails(getUserDocumentFromDatabase(attackerAuthenticatedDb as any, ownerUid));
     });
     test("INVALID mas user nem modosithat user dokumentumot", async () => {
         const user = createTestUser();
@@ -100,8 +100,8 @@ describe("INVALID User Repository (service klon) Integration teszt", () => {
         const attackerUid = `${crypto.randomUUID()}`
         const ownerAuthenticatedDb = getAuthenticatedDb(ownerUid, ownerEmail, user.verified);
         const attackerAuthenticatedDb = getAuthenticatedDb(attackerUid, attackerEmail, user.verified);
-        await createUser(ownerAuthenticatedDb as any, ownerUid, ownerEmail, user.name, user.createdAt, user.verified);
-        await assertFails(updateUser(attackerAuthenticatedDb as any, ownerUid, {
+        await createUserDocumentInDatabase(ownerAuthenticatedDb as any, ownerUid, ownerEmail, user.name, user.createdAt, user.verified);
+        await assertFails(updateUserDocumentInDatabase(attackerAuthenticatedDb as any, ownerUid, {
             userName: "updatedUserName"
         }));
     });
@@ -113,14 +113,14 @@ describe("INVALID User Repository (service klon) Integration teszt", () => {
         const attackerUid = `${crypto.randomUUID()}`
         const ownerAuthenticatedDb = getAuthenticatedDb(ownerUid, ownerEmail, user.verified);
         const attackerAuthenticatedDb = getAuthenticatedDb(attackerUid, attackerEmail, user.verified);
-        await createUser(ownerAuthenticatedDb as any, ownerUid, ownerEmail, user.name, user.createdAt, user.verified);
-        await assertFails(deleteUser(attackerAuthenticatedDb as any, ownerUid));
+        await createUserDocumentInDatabase(ownerAuthenticatedDb as any, ownerUid, ownerEmail, user.name, user.createdAt, user.verified);
+        await assertFails(deleteUserDocumentFromDatabase(attackerAuthenticatedDb as any, ownerUid));
     });
     test("INVALID userVerified nem egyezik az auth tokennel", async () => {
         const user = createTestUser();
         const email = "userverifiedteszt@gmail.com";
         const uid = `${crypto.randomUUID()}`
         const athenticatedDb = getAuthenticatedDb(uid, email, false);
-        await assertFails(createUser(athenticatedDb as any, uid, email, user.name, user.createdAt, true));
+        await assertFails(createUserDocumentInDatabase(athenticatedDb as any, uid, email, user.name, user.createdAt, true));
     });
 });
