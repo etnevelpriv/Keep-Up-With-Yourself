@@ -1,6 +1,5 @@
 import "../styles/popup.css";
-
-type PopupType = "error" | "info";
+import type { PopUpInterface } from "../interfaces/PopUpInterface";
 
 const popupId = "app-popup";
 const popupMessageId = "app-popup-message";
@@ -13,14 +12,11 @@ const hidePopUp = function () {
         window.clearTimeout(hideTimer);
         hideTimer = null;
     }
-
     const popupElement = document.getElementById(popupId);
     const messageElement = document.getElementById(popupMessageId);
-
     if (messageElement) {
         messageElement.textContent = "";
     }
-
     if (popupElement) {
         popupElement.classList.remove("is-visible", "app-popup--error", "app-popup--info");
     }
@@ -28,36 +24,27 @@ const hidePopUp = function () {
 
 const ensurePopupElement = function () {
     let popupElement = document.getElementById(popupId) as HTMLDivElement | null;
-
     if (popupElement) {
         return popupElement;
-    }
-
+    };
     popupElement = document.createElement("div");
     popupElement.id = popupId;
     popupElement.className = "app-popup";
-    popupElement.setAttribute("role", "status");
-    popupElement.setAttribute("aria-live", "polite");
-
     const messageElement = document.createElement("p");
     messageElement.id = popupMessageId;
     messageElement.className = "app-popup__message";
-
     const closeButton = document.createElement("button");
     closeButton.type = "button";
     closeButton.className = "app-popup__close";
     closeButton.textContent = "x";
-    closeButton.setAttribute("aria-label", "Popup bezárása");
     closeButton.addEventListener("click", hidePopUp);
-
     popupElement.append(messageElement, closeButton);
     document.body.append(popupElement);
-
     return popupElement;
 };
 
-const showPopUp = function (type: PopupType, message: string) {
-    const trimmedMessage = message.trim();
+const showPopUp = function (options: PopUpInterface) {
+    const trimmedMessage = options.message.trim();
 
     if (!trimmedMessage) {
         hidePopUp();
@@ -69,9 +56,9 @@ const showPopUp = function (type: PopupType, message: string) {
 
     hidePopUp();
 
-    popupElement.classList.add(type === "error" ? "app-popup--error" : "app-popup--info");
-    popupElement.setAttribute("role", type === "error" ? "alert" : "status");
-    popupElement.setAttribute("aria-live", type === "error" ? "assertive" : "polite");
+    popupElement.classList.add(options.type === "error" ? "app-popup--error" : "app-popup--info");
+    popupElement.setAttribute("role", options.type === "error" ? "alert" : "status");
+    popupElement.setAttribute("aria-live", options.type === "error" ? "assertive" : "polite");
 
     if (messageElement) {
         messageElement.textContent = trimmedMessage;
@@ -84,9 +71,15 @@ const showPopUp = function (type: PopupType, message: string) {
 };
 
 export const showErrorPopUp = function (message: string) {
-    showPopUp("error", message);
+    showPopUp({
+        type: "error",
+        message,
+    });
 };
 
 export const showInfoPopUp = function (message: string) {
-    showPopUp("info", message);
+    showPopUp({
+        type: "info",
+        message
+    });
 };
