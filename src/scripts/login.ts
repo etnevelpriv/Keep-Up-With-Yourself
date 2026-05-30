@@ -42,7 +42,7 @@ const sendLoginForm = async function (e: Event) {
         const email = document.getElementById("emailInput") as HTMLInputElement;
         const password = document.getElementById("passwordInput") as HTMLInputElement;
         await loginWithEmail(email.value, password.value);
-        showInfoPopUp("A bejelentkezés sikeres, töltsd újra az oldalt.")
+        showInfoPopUp("A bejelentkezés sikeres, töltsd újra az oldalt.");
     } catch (error) {
         handleUiError(error);
     };

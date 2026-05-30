@@ -7,3 +7,4 @@ https://firebase.google.com/docs/auth/web/google-signin
 https://www.youtube.com/watch?v=PcRAmrn8NPo&t=1s
 https://firebase.google.com/docs/rules/unit-tests
 https://firebase.google.com/docs/reference/emulator-suite/rules-unit-testing/rules-unit-testing
+https://vitest.dev/guide/mocking
