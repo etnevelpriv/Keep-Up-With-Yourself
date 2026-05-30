@@ -1,0 +1,279 @@
+Pasted text(9).txt
+Document
+Ezekbol ird ki a hibakodokat es az uzeneteket. Ne az osszeset, hanem ami relevans: Skip to main content
+
+Firebase
+
+
+
+Language
+
+Documentation
+
+Firebase
+Firebase
+Docs
+Reference
+Was this helpful?
+
+Send feedbackFirebaseFirestore Framework Reference
+
+
+
+
+
+_ErrorType
+
+typealias FirestoreErrorCode.Code._ErrorType = FirestoreErrorCode
+Error codes used by Cloud Firestore.
+
+OK
+The operation completed successfully. NSError objects will never have a code with this value.
+
+Declaration
+Swift
+
+
+static var OK: FirestoreErrorCode.Code { get }
+cancelled
+The operation was cancelled (typically by the caller).
+
+Declaration
+Swift
+
+
+static var cancelled: FirestoreErrorCode.Code { get }
+unknown
+Unknown error or an error from a different error domain.
+
+Declaration
+Swift
+
+
+static var unknown: FirestoreErrorCode.Code { get }
+invalidArgument
+Client specified an invalid argument. Note that this differs from FailedPrecondition. InvalidArgument indicates arguments that are problematic regardless of the state of the system (e.g., an invalid field name).
+
+Declaration
+Swift
+
+
+static var invalidArgument: FirestoreErrorCode.Code { get }
+deadlineExceeded
+Deadline expired before operation could complete. For operations that change the state of the system, this error may be returned even if the operation has completed successfully. For example, a successful response from a server could have been delayed long enough for the deadline to expire.
+
+Declaration
+Swift
+
+
+static var deadlineExceeded: FirestoreErrorCode.Code { get }
+notFound
+Some requested document was not found.
+
+Declaration
+Swift
+
+
+static var notFound: FirestoreErrorCode.Code { get }
+alreadyExists
+Some document that we attempted to create already exists.
+
+Declaration
+Swift
+
+
+static var alreadyExists: FirestoreErrorCode.Code { get }
+permissionDenied
+The caller does not have permission to execute the specified operation.
+
+Declaration
+Swift
+
+
+static var permissionDenied: FirestoreErrorCode.Code { get }
+resourceExhausted
+Some resource has been exhausted, perhaps a per-user quota, or perhaps the entire file system is out of space.
+
+Declaration
+Swift
+
+
+static var resourceExhausted: FirestoreErrorCode.Code { get }
+failedPrecondition
+Operation was rejected because the system is not in a state required for the operation's execution.
+
+Declaration
+Swift
+
+
+static var failedPrecondition: FirestoreErrorCode.Code { get }
+aborted
+The operation was aborted, typically due to a concurrency issue like transaction aborts, etc.
+
+Declaration
+Swift
+
+
+static var aborted: FirestoreErrorCode.Code { get }
+outOfRange
+Operation was attempted past the valid range.
+
+Declaration
+Swift
+
+
+static var outOfRange: FirestoreErrorCode.Code { get }
+unimplemented
+Operation is not implemented or not supported/enabled.
+
+Declaration
+Swift
+
+
+static var unimplemented: FirestoreErrorCode.Code { get }
+internal
+Internal errors. Means some invariants expected by underlying system has been broken. If you see one of these errors, something is very broken.
+
+Declaration
+Swift
+
+
+static var internal: FirestoreErrorCode.Code { get }
+unavailable
+The service is currently unavailable. This is a most likely a transient condition and may be corrected by retrying with a backoff.
+
+Declaration
+Swift
+
+
+static var unavailable: FirestoreErrorCode.Code { get }
+dataLoss
+Unrecoverable data loss or corruption.
+
+Declaration
+Swift
+
+
+static var dataLoss: FirestoreErrorCode.Code { get }
+unauthenticated
+The request does not have valid authentication credentials for the operation.
+
+Declaration
+Swift
+
+
+static var unauthenticated: FirestoreErrorCode.Code { get }
+Was this helpful?
+
+Send feedback
+Except as otherwise noted, the content of this page is licensed under the Creative Commons Attribution 4.0 License, and code samples are licensed under the Apache 2.0 License. For details, see the Google Developers Site Policies. Java is a registered trademark of Oracle and/or its affiliates.
+
+Last updated 2026-05-28 UTC.
+
+Learn
+Developer guides
+SDK & API reference
+Samples
+Libraries
+GitHub
+Stay connected
+Check out the blog
+Find us on Reddit
+Follow on X
+Subscribe on YouTube
+Attend an event
+Support
+Contact support
+Stack Overflow
+Google group
+Release notes
+Brand guidelines
+FAQs
+Google Developers
+Android
+Chrome
+Firebase
+Google Cloud Platform
+All products
+Terms
+Privacy
+
+Language
+
+A te projektedhez a következő Firebase hibák relevánsak.
+
+Firebase Auth
+"auth/email-already-in-use":
+    "Ezzel az e-mail címmel már létezik felhasználói fiók.",
+
+"auth/invalid-credential":
+    "Helytelen e-mail cím vagy jelszó.",
+
+"auth/invalid-email":
+    "A megadott e-mail cím érvénytelen.",
+
+"auth/invalid-password":
+    "A megadott jelszó érvénytelen.",
+
+"auth/too-many-requests":
+    "Túl sok sikertelen próbálkozás történt. Próbáld újra később.",
+
+"auth/user-disabled":
+    "A felhasználói fiók le van tiltva.",
+
+"auth/user-not-found":
+    "Nem található felhasználó ezzel az e-mail címmel.",
+
+"auth/operation-not-allowed":
+    "Ez a bejelentkezési mód nincs engedélyezve.",
+
+"auth/network-request-failed":
+    "Hálózati hiba történt. Ellenőrizd az internetkapcsolatot.",
+
+Ezek fedik le:
+
+regisztráció
+email/password login
+google login
+jelszó-visszaállítás
+
+A többi Auth hiba főleg admin SDK vagy backend specifikus.
+
+Firestore
+"permission-denied":
+    "Nincs jogosultságod ehhez a művelethez.",
+
+"unauthenticated":
+    "A művelethez be kell jelentkezned.",
+
+"not-found":
+    "A keresett adat nem található.",
+
+"already-exists":
+    "Az adat már létezik.",
+
+"invalid-argument":
+    "Érvénytelen adat lett elküldve.",
+
+"failed-precondition":
+    "A művelet előfeltétele nem teljesül.",
+
+"resource-exhausted":
+    "A rendszer erőforrás-korlátba ütközött.",
+
+"cancelled":
+    "A művelet megszakadt.",
+
+"deadline-exceeded":
+    "A művelet időtúllépés miatt megszakadt.",
+
+"unavailable":
+    "A szolgáltatás jelenleg nem érhető el.",
+
+"internal":
+    "Belső rendszerhiba történt.",
+
+"unknown":
+    "Ismeretlen hiba történt."
+
+Ezek a Firestore hivatalos hibakódjai közül a gyakorlatban leggyakrabban előfordulók. A többi (data-loss, out-of-range, aborted, stb.) ritkán jelenik meg egy ilyen todo/task alkalmazásnál.
