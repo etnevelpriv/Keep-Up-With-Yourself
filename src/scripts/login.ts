@@ -2,38 +2,51 @@ import "../styles/auth.css";
 import { loginWithEmail, loginWithGoogle, sendPasswordReset } from "../services/auth/auth.service";
 import { setupPasswordVisibilityToggle } from "../utils/passwordVisibilityToggle";
 import { db } from "./firebase.ts";
+import { showInfoPopUp } from "../utils/popup.ts";
+import { handleUiError } from "../utils/errors/handleUiError.ts";
 
 const init = function () {
-    console.log("Betoltodott a register.ts")
     const form: HTMLElement = document.getElementById("loginForm") as HTMLElement;
     form.addEventListener("submit", sendLoginForm);
     setupPasswordVisibilityToggle();
     setupForgotPasswordModal();
     document.getElementById("googleButton")?.addEventListener("click", async () => {
-        await loginWithGoogle(db);
+        try {
+            await loginWithGoogle(db);
+            showInfoPopUp("Sikeres Google bejelentkezés. Töltsd újra az oldalt a fiókod megtekintéséhez.");
+        } catch (error) {
+            handleUiError(error);
+        };
     });
 
     document.getElementById("forgotPassButton")?.addEventListener("click", () => {
         const modal = document.getElementById("forgotPassModal");
         modal?.classList.toggle("hide");
-
     });
 
     document.getElementById("forgotPassSendButton")?.addEventListener("click", async () => {
-        const emailInput = document.getElementById("forgotPassEmailInput") as HTMLInputElement | null;
-        const email = emailInput?.value ?? "";
-        await sendPasswordReset(email);
+        try {
+            const emailInput = document.getElementById("forgotPassEmailInput") as HTMLInputElement | null;
+            const email = emailInput?.value ?? "";
+            await sendPasswordReset(email);
+            showInfoPopUp("Ha a megadott email címmel van regisztrált fiók, akkor kiküldtük a jelszó visszaállító emailt.");
+        } catch (error) {
+            handleUiError(error);
+        };
     });
 };
 
 const sendLoginForm = async function (e: Event) {
     e.preventDefault();
-    console.log("Bejelentkezes gombra kattintva")
-    const email = document.getElementById("emailInput") as HTMLFormElement;
-    const password = document.getElementById("passwordInput") as HTMLFormElement;
-    await loginWithEmail(email.value, password.value);
+    try {
+        const email = document.getElementById("emailInput") as HTMLInputElement;
+        const password = document.getElementById("passwordInput") as HTMLInputElement;
+        await loginWithEmail(email.value, password.value);
+        showInfoPopUp("A bejelentkezés sikeres, töltsd újra az oldalt.")
+    } catch (error) {
+        handleUiError(error);
+    };
 };
-
 const setupForgotPasswordModal = function () {
     const modal = document.getElementById("forgotPassModal");
     if (!modal) return;
