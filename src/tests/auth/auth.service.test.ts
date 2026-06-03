@@ -28,8 +28,8 @@ describe("VALID Auth Service Mock Teszt", () => {
         } as UserCredential);
         vi.mocked(createUserDocumentInDatabase).mockResolvedValue(undefined);
         vi.mocked(sendEmailVerification).mockResolvedValue(undefined);
-        await registerWithEmail(db, "TesztUser", "teszt@gmail.hu", "Jelszo123!", date, false);
 
+        await registerWithEmail(db, "TesztUser", "teszt@gmail.hu", "Jelszo123!", date, false);
         expect(createUserWithEmailAndPassword).toHaveBeenCalledWith({ teszt: "teszt" }, "teszt@gmail.hu", "Jelszo123!");
         expect(createUserDocumentInDatabase).toHaveBeenCalledWith(db, "TESZT_UID", "teszt@gmail.hu", "TesztUser", date, false);
         expect(sendEmailVerification).toHaveBeenCalledWith(
@@ -45,7 +45,7 @@ describe("INVALID Auth Service Mock Teszt", () => {
     beforeEach(() => {
         vi.clearAllMocks();
     });
-    test("INVALID registerWithEmail teszt", async () => {
+    test("INVALID registerWithEmail teszt, ahol a createUserWithEmailAndPassword elbukik", async () => {
         const db: Firestore = {} as Firestore;
         const date: Date = new Date();
         vi.mocked(createUserWithEmailAndPassword).mockRejectedValue(new Error("Firebase register hiba"));
@@ -53,6 +53,23 @@ describe("INVALID Auth Service Mock Teszt", () => {
         await expect(registerWithEmail(db, "TesztUser", "teszt@gmail.hu", "Jelszo123!", date, false)).rejects.toThrow("Firebase register hiba");
         expect(createUserWithEmailAndPassword).toHaveBeenCalledWith({ teszt: "teszt" }, "teszt@gmail.hu", "Jelszo123!");
         expect(createUserDocumentInDatabase).not.toHaveBeenCalled();
+        expect(sendEmailVerification).not.toHaveBeenCalled();
+    });
+    test("VALID registerWithEmail teszt", async () => {
+        const db: Firestore = {} as Firestore;
+        const date: Date = new Date();
+        const firebaseUser = {
+            uid: "TESZT_UID"
+        };
+        vi.mocked(createUserWithEmailAndPassword).mockResolvedValue({
+            user: firebaseUser
+        } as UserCredential);
+        vi.mocked(createUserDocumentInDatabase).mockRejectedValue(new Error("Firestore create hiba"))
+        vi.mocked(sendEmailVerification).mockResolvedValue(undefined);
+
+        await expect(registerWithEmail(db, "TesztUser", "teszt@gmail.hu", "Jelszo123!", date, false)).rejects.toThrow ("Firestore create hiba");
+        expect(createUserWithEmailAndPassword).toHaveBeenCalledWith({ teszt: "teszt" }, "teszt@gmail.hu", "Jelszo123!");
+        expect(createUserDocumentInDatabase).toHaveBeenCalledWith(db, "TESZT_UID", "teszt@gmail.hu", "TesztUser", date, false);
         expect(sendEmailVerification).not.toHaveBeenCalled();
     });
 });
