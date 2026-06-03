@@ -14,7 +14,7 @@ vi.mock("../../services/user/user.service.ts", () => ({
 }));
 
 describe("VALID Auth Service Mock Teszt", () => {
-    test("VALID registerWith email teszt", async () => {
+    test("VALID registerWithEmail teszt", async () => {
         const db: Firestore = {} as Firestore;
         const date: Date = new Date();
         const firebaseUser = {
@@ -38,4 +38,14 @@ describe("VALID Auth Service Mock Teszt", () => {
         );
     });
 });
+describe("INVALID Auth Service Mock Teszt", () => {
+    test("INVALID registerWithEmail teszt", async () => {
+        const db: Firestore = {} as Firestore;
+        const date: Date = new Date();
+        vi.mocked(createUserWithEmailAndPassword).mockRejectedValue(new Error("Firebase register hiba"));
 
+        await expect(registerWithEmail(db, "TesztUser", "teszt@gmail.hu", "Jelszo123!", date, false)).rejects.toThrow("Firebase register hiba");
+        expect(createUserWithEmailAndPassword).not.toHaveBeenCalledWith();
+        expect(createUserDocumentInDatabase).not.toHaveBeenCalledWith();
+    });
+});
