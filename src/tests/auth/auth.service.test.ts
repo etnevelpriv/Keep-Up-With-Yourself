@@ -1,13 +1,14 @@
 import { expect, test, describe, vi, beforeEach } from 'vitest';
-import { createUserWithEmailAndPassword, sendEmailVerification, type UserCredential } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, type UserCredential } from "firebase/auth";
 import { createUserDocumentInDatabase } from '../../services/user/user.service';
-import { registerWithEmail } from '../../services/auth/auth.service';
+import { loginWithEmail, registerWithEmail } from '../../services/auth/auth.service';
 import type { Firestore } from "firebase/firestore";
 
 vi.mock("firebase/auth", () => ({
     createUserWithEmailAndPassword: vi.fn(),
     sendEmailVerification: vi.fn(),
-    getAuth: vi.fn(() => { return { teszt: "teszt" } })
+    getAuth: vi.fn(() => { return { teszt: "teszt" } }),
+    signInWithEmailAndPassword: vi.fn()
 }));
 vi.mock("../../services/user/user.service.ts", () => ({
     createUserDocumentInDatabase: vi.fn()
@@ -39,6 +40,11 @@ describe("VALID Auth Service Mock Teszt", () => {
             }
         );
     });
+    test("VALID loginWithEmail teszt", async () => {
+        await loginWithEmail("teszt@gmail.hu", "Jelszo123");
+        expect(signInWithEmailAndPassword).toHaveBeenCalledWith({ teszt: "teszt" }, "teszt@gmail.hu", "Jelszo123");
+    });
+
 });
 describe("INVALID Auth Service Mock Teszt", () => {
     beforeEach(() => {
