@@ -1,7 +1,7 @@
 import { expect, test, describe, vi, beforeEach } from 'vitest';
 import { createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, signInWithPopup, type UserCredential, signOut, deleteUser, sendPasswordResetEmail } from "firebase/auth";
 import { createUserDocumentInDatabase, getUserDocumentFromDatabase, deleteUserDocumentFromDatabase } from '../../services/user/user.service';
-import { loginWithEmail, loginWithGoogle, registerWithEmail } from '../../services/auth/auth.service';
+import { loginWithEmail, loginWithGoogle, registerWithEmail, sendPasswordReset } from '../../services/auth/auth.service';
 import type { Firestore } from "firebase/firestore";
 
 vi.mock("firebase/auth", () => ({
@@ -89,6 +89,11 @@ describe("VALID Auth Service Mock Teszt", () => {
         expect(signInWithPopup).toHaveBeenCalled();
         expect(getUserDocumentFromDatabase).toHaveBeenCalledWith(db, firebaseUser.uid);
         expect(createUserDocumentInDatabase).toHaveBeenCalledWith(db, firebaseUser.uid, firebaseUser.email, firebaseUser.displayName, expect.any(Date), true);
+    });
+    test("VALID sendPasswordReset teszt))", async () => {
+        vi.mocked(sendPasswordResetEmail).mockResolvedValue(undefined);
+        await sendPasswordReset("tesztemail@gmail.com");
+        expect(sendPasswordResetEmail).toHaveBeenCalledWith(expect.objectContaining({teszt:"teszt"}), "tesztemail@gmail.com");
     });
 });
 describe("INVALID Auth Service Mock Teszt", () => {
