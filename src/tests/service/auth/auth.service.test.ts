@@ -24,7 +24,7 @@ vi.mock("firebase/auth", () => ({
     signInWithPopup: vi.fn(),
     signInWithEmailAndPassword: vi.fn(),
 }));
-vi.mock("../../services/user/user.service.ts", () => ({
+vi.mock("../../../services/user/user.service.ts", () => ({
     createUserDocumentInDatabase: vi.fn(),
     getUserDocumentFromDatabase: vi.fn(),
     deleteUserDocumentFromDatabase: vi.fn(),
