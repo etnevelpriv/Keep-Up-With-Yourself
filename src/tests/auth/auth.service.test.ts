@@ -1,7 +1,7 @@
 import { expect, test, describe, vi, beforeEach } from 'vitest';
 import { createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, signInWithPopup, type UserCredential, signOut, deleteUser, sendPasswordResetEmail } from "firebase/auth";
 import { createUserDocumentInDatabase, getUserDocumentFromDatabase, deleteUserDocumentFromDatabase } from '../../services/user/user.service';
-import { loginWithEmail, loginWithGoogle, registerWithEmail, sendPasswordReset } from '../../services/auth/auth.service';
+import { loginWithEmail, loginWithGoogle, registerWithEmail, sendPasswordReset, signOutUser } from '../../services/auth/auth.service';
 import type { Firestore } from "firebase/firestore";
 
 vi.mock("firebase/auth", () => ({
@@ -93,7 +93,12 @@ describe("VALID Auth Service Mock Teszt", () => {
     test("VALID sendPasswordReset teszt))", async () => {
         vi.mocked(sendPasswordResetEmail).mockResolvedValue(undefined);
         await sendPasswordReset("tesztemail@gmail.com");
-        expect(sendPasswordResetEmail).toHaveBeenCalledWith(expect.objectContaining({teszt:"teszt"}), "tesztemail@gmail.com");
+        expect(sendPasswordResetEmail).toHaveBeenCalledWith(expect.objectContaining({ teszt: "teszt" }), "tesztemail@gmail.com");
+    });
+    test("VALID singOutUser teszt))", async () => {
+        vi.mocked(signOut).mockResolvedValue(undefined);
+        await signOutUser();
+        expect(signOut).toHaveBeenCalledWith(expect.objectContaining({ teszt: "teszt" }));
     });
 });
 describe("INVALID Auth Service Mock Teszt", () => {
