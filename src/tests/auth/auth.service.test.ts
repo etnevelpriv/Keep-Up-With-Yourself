@@ -1,6 +1,6 @@
 import { expect, test, describe, vi, beforeEach } from 'vitest';
-import { createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, signInWithPopup, type UserCredential } from "firebase/auth";
-import { createUserDocumentInDatabase, getUserDocumentFromDatabase } from '../../services/user/user.service';
+import { createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, signInWithPopup, type UserCredential, signOut, deleteUser, sendPasswordResetEmail } from "firebase/auth";
+import { createUserDocumentInDatabase, getUserDocumentFromDatabase, deleteUserDocumentFromDatabase } from '../../services/user/user.service';
 import { loginWithEmail, loginWithGoogle, registerWithEmail } from '../../services/auth/auth.service';
 import type { Firestore } from "firebase/firestore";
 
@@ -11,6 +11,9 @@ vi.mock("firebase/auth", () => ({
         teszt: "teszt",
         useDeviceLanguage: vi.fn()
     })),
+    sendPasswordResetEmail: vi.fn(),
+    signOut: vi.fn(),
+    deleteUser: vi.fn(),
     GoogleAuthProvider: vi.fn(function () {
         return { addScope: vi.fn() }
     }),
@@ -19,7 +22,8 @@ vi.mock("firebase/auth", () => ({
 }));
 vi.mock("../../services/user/user.service.ts", () => ({
     createUserDocumentInDatabase: vi.fn(),
-    getUserDocumentFromDatabase: vi.fn()
+    getUserDocumentFromDatabase: vi.fn(),
+    deleteUserDocumentFromDatabase: vi.fn()
 }));
 
 describe("VALID Auth Service Mock Teszt", () => {
