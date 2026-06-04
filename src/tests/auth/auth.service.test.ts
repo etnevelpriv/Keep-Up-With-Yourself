@@ -1,15 +1,19 @@
 import { expect, test, describe, vi, beforeEach } from 'vitest';
 import { createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, signInWithPopup, type UserCredential, signOut, deleteUser, sendPasswordResetEmail } from "firebase/auth";
 import { createUserDocumentInDatabase, getUserDocumentFromDatabase, deleteUserDocumentFromDatabase } from '../../services/user/user.service';
-import { loginWithEmail, loginWithGoogle, registerWithEmail, sendPasswordReset, signOutUser } from '../../services/auth/auth.service';
-import type { Firestore } from "firebase/firestore";
+import { loginWithEmail, loginWithGoogle, registerWithEmail, sendPasswordReset, signOutUser, getCurrentUser } from '../../services/auth/auth.service';
+import { type Firestore, doc, getDoc } from "firebase/firestore";
 
+let mockCurrentUser : any = null;
 vi.mock("firebase/auth", () => ({
     createUserWithEmailAndPassword: vi.fn(),
     sendEmailVerification: vi.fn(),
     getAuth: vi.fn(() => ({
         teszt: "teszt",
-        useDeviceLanguage: vi.fn()
+        useDeviceLanguage: vi.fn(),
+        get currentUser() {
+            return mockCurrentUser;
+        }
     })),
     sendPasswordResetEmail: vi.fn(),
     signOut: vi.fn(),
@@ -25,11 +29,15 @@ vi.mock("../../services/user/user.service.ts", () => ({
     getUserDocumentFromDatabase: vi.fn(),
     deleteUserDocumentFromDatabase: vi.fn()
 }));
-
+vi.mock("firebase/firestore", () => ({
+    doc: vi.fn(),
+    getDoc: vi.fn()
+}));
+beforeEach(() => {
+    mockCurrentUser = null;
+    vi.resetAllMocks();
+});
 describe("VALID Auth Service Mock Teszt", () => {
-    beforeEach(() => {
-        vi.resetAllMocks();
-    });
     test("VALID registerWithEmail teszt", async () => {
         const db: Firestore = {} as Firestore;
         const date: Date = new Date();
@@ -102,9 +110,6 @@ describe("VALID Auth Service Mock Teszt", () => {
     });
 });
 describe("INVALID Auth Service Mock Teszt", () => {
-    beforeEach(() => {
-        vi.resetAllMocks();
-    });
     test("INVALID registerWithEmail teszt, ahol a createUserWithEmailAndPassword elbukik", async () => {
         const db: Firestore = {} as Firestore;
         const date: Date = new Date();
@@ -211,7 +216,7 @@ describe("INVALID Auth Service Mock Teszt", () => {
         await expect(sendPasswordReset("tesztemail@gmail.com")).rejects.toThrow("Send reset hiba");
         expect(sendPasswordResetEmail).toHaveBeenCalledWith(expect.objectContaining({ teszt: "teszt" }), "tesztemail@gmail.com");
     });
-    test("INVALID sendPasswordReset teszt))", async () => {
+    test("INVALID signOutUser teszt))", async () => {
         vi.mocked(signOut).mockRejectedValue(new Error("Sign out hiba"));
         await expect(signOutUser()).rejects.toThrow("Sign out hiba");
         expect(signOut).toHaveBeenCalledWith(expect.objectContaining({ teszt: "teszt" }));
