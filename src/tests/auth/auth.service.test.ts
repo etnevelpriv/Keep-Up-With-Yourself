@@ -153,4 +153,9 @@ describe("INVALID Auth Service Mock Teszt", () => {
             }
         );
     });
+    test("INVALID loginWithEmail teszt", async () => {
+        vi.mocked(signInWithEmailAndPassword).mockRejectedValue(new Error("Login hiba"))
+        await expect(loginWithEmail("teszt@gmail.hu", "Jelszo123")).rejects.toThrow("Login hiba");
+        expect(signInWithEmailAndPassword).toHaveBeenCalledWith(expect.objectContaining({ teszt: "teszt" }), "teszt@gmail.hu", "Jelszo123");
+    });
 });
