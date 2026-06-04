@@ -1,5 +1,4 @@
 import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, sendPasswordResetEmail, sendEmailVerification, createUserWithEmailAndPassword, signOut, deleteUser } from "firebase/auth";
-import { User } from "../../models/User.ts";
 import { createUserDocumentInDatabase, deleteUserDocumentFromDatabase, getUserDocumentFromDatabase } from "../user/user.service.ts"
 import { doc, getDoc } from "firebase/firestore";
 import type { Firestore } from "firebase/firestore";
@@ -27,8 +26,9 @@ export const loginWithGoogle = async function (db: Firestore) {
     const email = user.email;
     const userDocument = await getUserDocumentFromDatabase(db, user.uid)
     if (!userDocument) {
-        const userObj = new User(name ?? "", undefined, email ?? "", new Date(), true);
-        await createUserDocumentInDatabase(db, user.uid, userObj.email, userObj.name, userObj.createdAt, userObj.verified)
+        if (typeof email == "string" && typeof name == "string") {
+            await createUserDocumentInDatabase(db, user.uid, email, name, new Date(), true)
+        };
     };
 };
 export const getCurrentUser = async function (db: Firestore) {
@@ -56,7 +56,7 @@ export const sendEmailVerificationToUser = async function (user: any) {
     };
     await sendEmailVerification(user, actionCodeSettings);
 };
-export const deleteCurrentUserAccount = async function (db:Firestore) {
+export const deleteCurrentUserAccount = async function (db: Firestore) {
     const currentUser = auth.currentUser;
     if (!currentUser) {
         return;
