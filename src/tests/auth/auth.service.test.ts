@@ -1,5 +1,5 @@
 import { expect, test, describe, vi, beforeEach } from 'vitest';
-import { createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, signInWithPopup, type UserCredential, GoogleAuthProvider, useDeviceLanguage } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, signInWithPopup, type UserCredential } from "firebase/auth";
 import { createUserDocumentInDatabase, getUserDocumentFromDatabase } from '../../services/user/user.service';
 import { loginWithEmail, loginWithGoogle, registerWithEmail } from '../../services/auth/auth.service';
 import type { Firestore } from "firebase/firestore";
@@ -11,8 +11,8 @@ vi.mock("firebase/auth", () => ({
         teszt: "teszt",
         useDeviceLanguage: vi.fn()
     })),
-    GoogleAuthProvider: vi.fn(function(){
-        return {addScope:vi.fn()}
+    GoogleAuthProvider: vi.fn(function () {
+        return { addScope: vi.fn() }
     }),
     signInWithPopup: vi.fn(),
     signInWithEmailAndPassword: vi.fn(),
@@ -58,7 +58,7 @@ describe("VALID Auth Service Mock Teszt", () => {
             uid: "TESZT_UID"
         };
         vi.mocked(signInWithPopup).mockResolvedValue({
-            user:firebaseUser
+            user: firebaseUser
         } as UserCredential);
         vi.mocked(getUserDocumentFromDatabase).mockResolvedValue({
             userID: "TESZT_UID"
@@ -69,7 +69,23 @@ describe("VALID Auth Service Mock Teszt", () => {
         expect(getUserDocumentFromDatabase).toHaveBeenCalledWith(db, firebaseUser.uid);
         expect(createUserDocumentInDatabase).not.toHaveBeenCalled();
     });
+    test("VALID loginWithGoogle teszt (ahol meg nem letezik a user))", async () => {
+        const db: Firestore = {} as Firestore;
+        const firebaseUser = {
+            uid: "TESZT_UID",
+            email: "tesztemail@gmail.com",
+            displayName: "NEV"
+        };
+        vi.mocked(signInWithPopup).mockResolvedValue({
+            user: firebaseUser
+        } as UserCredential);
+        vi.mocked(getUserDocumentFromDatabase).mockResolvedValue(false)
 
+        await loginWithGoogle(db)
+        expect(signInWithPopup).toHaveBeenCalled();
+        expect(getUserDocumentFromDatabase).toHaveBeenCalledWith(db, firebaseUser.uid);
+        expect(createUserDocumentInDatabase).toHaveBeenCalledWith(db, firebaseUser.uid, firebaseUser.email, firebaseUser.displayName, expect.any(Date), true);
+    });
 });
 describe("INVALID Auth Service Mock Teszt", () => {
     beforeEach(() => {
@@ -112,7 +128,6 @@ describe("INVALID Auth Service Mock Teszt", () => {
             user: firebaseUser
         } as UserCredential);
         vi.mocked(sendEmailVerification).mockRejectedValue(new Error("Firebase verification email hiba"))
-
         await expect(registerWithEmail(db, "TesztUser", "teszt@gmail.hu", "Jelszo123!", date, false)).rejects.toThrow("Firebase verification email hiba");
         expect(createUserWithEmailAndPassword).toHaveBeenCalledWith(expect.objectContaining({ teszt: "teszt" }), "teszt@gmail.hu", "Jelszo123!");
         expect(createUserDocumentInDatabase).toHaveBeenCalledWith(db, "TESZT_UID", "teszt@gmail.hu", "TesztUser", date, false);
