@@ -1,0 +1,25 @@
+User: Az osszes invalid google login tesztet keszitsd el az auth.service.ts alapjan a meglevo tesztfajl felepitese alapjan.
+
+GitHub Copilot: Ok — először megnézem a auth.service.ts implementációját, aztán a meglévő `auth.service.test.ts` stílusában hozzáadom az összes “INVALID loginWithGoogle” esetet (a releváns Firebase + user.service mockokkal), végül lefuttatok egy célzott vitestet ellenőrzésre.
+
+Created 3 todos
+
+Read [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/services/auth/auth.service.ts)
+
+Megvan a `loginWithGoogle` implementáció: nincs benne try/catch, így minden Firebase/user.service hiba “reject”-ként feljön. Következő lépésként hozzáadok 3 INVALID tesztet: `signInWithPopup` hiba, `getUserDocumentFromDatabase` hiba, illetve `createUserDocumentInDatabase` hiba (új user létrehozás ágban).
+
+Starting: *INVALID loginWithGoogle tesztek megírása* (2/3)
+
+Generating patch (63 lines) in [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/tests/auth/auth.service.test.ts)
+
+
+```
+
+```
+INVALID Google tesztek bekerültek a `auth.service.test.ts` fájlba. Következőnek lefuttatok egy célzott vitestet erre a fájlra, hogy lássuk átmegy-e és nincs-e mock/import ütközés.
+
+Starting: *Vitest futtatás és javítás* (3/3)
+
+Ran terminal command: npm test -- --run src/tests/auth/auth.service.test.ts
+
+Made changes.
