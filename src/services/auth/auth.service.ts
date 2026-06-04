@@ -26,9 +26,7 @@ export const loginWithGoogle = async function (db: Firestore) {
     const email = user.email;
     const userDocument = await getUserDocumentFromDatabase(db, user.uid)
     if (!userDocument) {
-        if (typeof email == "string" && typeof name == "string") {
-            await createUserDocumentInDatabase(db, user.uid, email, name, new Date(), true)
-        };
+            await createUserDocumentInDatabase(db, user.uid, email!, name!, new Date(), true)
     };
 };
 export const getCurrentUser = async function (db: Firestore) {
