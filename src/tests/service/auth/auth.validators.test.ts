@@ -1,5 +1,5 @@
 import { expect, test, describe } from 'vitest'
-import { validateRegisterInput, validateLoginInput } from '../../services/user/user.validator'
+import { validateRegisterInput, validateLoginInput } from '../../../services/user/user.validator'
 
 describe("VALID Auth Validator unit teszt", () => {
     test("VALID register input", () => {

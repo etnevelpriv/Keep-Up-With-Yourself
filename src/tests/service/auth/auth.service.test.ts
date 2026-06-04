@@ -1,7 +1,7 @@
 import { expect, test, describe, vi, beforeEach } from 'vitest';
 import { createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, signInWithPopup, type UserCredential, signOut, deleteUser, sendPasswordResetEmail } from "firebase/auth";
-import { createUserDocumentInDatabase, getUserDocumentFromDatabase, deleteUserDocumentFromDatabase } from '../../services/user/user.service';
-import { loginWithEmail, loginWithGoogle, registerWithEmail, sendPasswordReset, signOutUser, getCurrentUser, deleteCurrentUserAccount } from '../../services/auth/auth.service';
+import { createUserDocumentInDatabase, getUserDocumentFromDatabase, deleteUserDocumentFromDatabase } from '../../../services/user/user.service';
+import { loginWithEmail, loginWithGoogle, registerWithEmail, sendPasswordReset, signOutUser, getCurrentUser, deleteCurrentUserAccount } from '../../../services/auth/auth.service';
 import { type Firestore, doc, getDoc } from "firebase/firestore";
 
 let mockCurrentUser: any = null;
@@ -272,6 +272,60 @@ describe("INVALID Auth Service Mock Teszt", () => {
         expect(getUserDocumentFromDatabase).toHaveBeenCalledWith(db, firebaseUser.uid);
         expect(createUserDocumentInDatabase).toHaveBeenCalledWith(db, firebaseUser.uid, firebaseUser.email, firebaseUser.displayName, expect.any(Date), true);
     });
+    test("INVALID loginWithGoogle teszt, ahol az email null", async () => {
+        const db: Firestore = {} as Firestore;
+        const firebaseUser = {
+            uid: "TESZT_UID",
+            email: null,
+            displayName: "NEV"
+        };
+
+        vi.mocked(signInWithPopup).mockResolvedValue({
+            user: firebaseUser
+        } as any);
+        vi.mocked(getUserDocumentFromDatabase).mockResolvedValue(false);
+
+        await loginWithGoogle(db);
+        expect(signInWithPopup).toHaveBeenCalled();
+        expect(getUserDocumentFromDatabase).toHaveBeenCalledWith(db, firebaseUser.uid);
+        expect(createUserDocumentInDatabase).toHaveBeenCalledWith(db, firebaseUser.uid, firebaseUser.email, firebaseUser.displayName, expect.any(Date), true);
+    });
+    test("INVALID loginWithGoogle teszt, ahol az nev null", async () => {
+        const db: Firestore = {} as Firestore;
+        const firebaseUser = {
+            uid: "TESZT_UID",
+            email: "tesztemail@gmail.com",
+            displayName: null
+        };
+
+        vi.mocked(signInWithPopup).mockResolvedValue({
+            user: firebaseUser
+        } as any);
+        vi.mocked(getUserDocumentFromDatabase).mockResolvedValue(false);
+
+        await loginWithGoogle(db);
+        expect(signInWithPopup).toHaveBeenCalled();
+        expect(getUserDocumentFromDatabase).toHaveBeenCalledWith(db, firebaseUser.uid);
+        expect(createUserDocumentInDatabase).toHaveBeenCalledWith(db, firebaseUser.uid, firebaseUser.email, firebaseUser.displayName, expect.any(Date), true);
+    });
+    test("INVALID loginWithGoogle teszt, ahol a nev es az email null", async () => {
+        const db: Firestore = {} as Firestore;
+        const firebaseUser = {
+            uid: "TESZT_UID",
+            email: null,
+            displayName: null
+        };
+
+        vi.mocked(signInWithPopup).mockResolvedValue({
+            user: firebaseUser
+        } as any);
+        vi.mocked(getUserDocumentFromDatabase).mockResolvedValue(false);
+
+        await loginWithGoogle(db);
+        expect(signInWithPopup).toHaveBeenCalled();
+        expect(getUserDocumentFromDatabase).toHaveBeenCalledWith(db, firebaseUser.uid);
+        expect(createUserDocumentInDatabase).toHaveBeenCalledWith(db, firebaseUser.uid, firebaseUser.email, firebaseUser.displayName, expect.any(Date), true);
+    });
     test("INVALID sendPasswordReset teszt))", async () => {
         vi.mocked(sendPasswordResetEmail).mockRejectedValue(new Error("Send reset hiba"));
         await expect(sendPasswordReset("tesztemail@gmail.com")).rejects.toThrow("Send reset hiba");
@@ -303,5 +357,16 @@ describe("INVALID Auth Service Mock Teszt", () => {
         await expect(deleteCurrentUserAccount(db)).rejects.toThrow("Delete firebase error");
         expect(deleteUserDocumentFromDatabase).toHaveBeenCalledWith(db, mockCurrentUser.uid);
         expect(deleteUser).toHaveBeenCalledWith(mockCurrentUser);
+    });
+    test("INVALID getCurrentUser teszt, getDoc hiba", async () => {
+        const db: Firestore = {} as Firestore;
+        mockCurrentUser = {
+            emailVerified: true,
+            uid: "TESZT_UID"
+        };
+        vi.mocked(getDoc).mockRejectedValue(new Error("getDoc hiba"))
+        await expect(getCurrentUser(db)).rejects.toThrow("getDoc hiba");
+        expect(doc).toHaveBeenCalledWith(db, "users", mockCurrentUser.uid);
+        expect(getDoc).toHaveBeenCalled();
     });
 });
