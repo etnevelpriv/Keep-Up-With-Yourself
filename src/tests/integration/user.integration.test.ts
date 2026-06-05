@@ -8,7 +8,7 @@ beforeAllSetup()
 beforeEachSetup()
 afterAllSetup()
 
-describe("VALID User Repository (service klon) Integration teszt", () => {
+describe("VALID User Integration teszt", () => {
     test("VALID User dokumentum lerehozasa es lekerese", async () => {
         const user = createTestUser();
         const email = "userlekeresteszt@gmail.com";
@@ -44,7 +44,7 @@ describe("VALID User Repository (service klon) Integration teszt", () => {
         expect(dbFalseUser).toBe(false);
     });
 });
-describe("INVALID User Repository (service klon) Integration teszt", () => {
+describe("INVALID User Integration teszt", () => {
     test("INVALID userCreatedAt nem lehet jovoben", async () => {
         const user = createTestUser({
             createdAt: new Date(Date.now() + 1000 * 60 * 60)

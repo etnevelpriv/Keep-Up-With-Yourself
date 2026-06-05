@@ -10,7 +10,7 @@ beforeAllSetup()
 beforeEachSetup()
 afterAllSetup()
 
-describe("VALID Task Repository (service klon) Integration teszt", () => {
+describe("VALID Task Integration teszt", () => {
     test("VALID Task dokumentum lerehozasa es lekerese", async () => {
         const user = createTestUser();
         const task = createTestTask();
@@ -57,7 +57,7 @@ describe("VALID Task Repository (service klon) Integration teszt", () => {
     });
 });
 
-describe("INVALID Task Repository (service klon) Integration teszt", () => {
+describe("INVALID Task Integration teszt", () => {
     test("INVALID taskName tul rovid nem mentheto", async () => {
         const user = createTestUser();
         const task = createTestTask({
