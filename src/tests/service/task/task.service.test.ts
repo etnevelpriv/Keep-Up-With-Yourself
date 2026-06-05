@@ -1,7 +1,6 @@
 import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, updateDoc, type Firestore } from "firebase/firestore";
 import { expect, test, describe, vi, beforeEach } from 'vitest';
 import { createTask, getTask, getTasks, updateTask, deleteTask } from "../../../services/task/task.service";
-import { exists } from "firebase/firestore/pipelines";
 
 vi.mock("firebase/firestore", () => ({
     addDoc: vi.fn(),
@@ -29,7 +28,7 @@ beforeEach(() => {
     vi.resetAllMocks();
 });
 describe("VALID Task Service Mocks Teszt", () => {
-    test("VAliD createTask teszt", async () => {
+    test("VALID createTask teszt", async () => {
         const uid = "TESZT_UID"
         const db: Firestore = {} as Firestore;
         const data = {
@@ -89,12 +88,13 @@ describe("VALID Task Service Mocks Teszt", () => {
         const tid = "TESZT_TID"
         const db: Firestore = {} as Firestore;
         vi.mocked(getDoc).mockResolvedValue({
+            id: tid,
             exists: () => (true),
             data: () => ({
-                tid: tid
+                taskName: "Task1"
             })
         } as any)
-        expect(await getTask(db, uid, tid)).toEqual({ tid: tid });
+        expect(await getTask(db, uid, tid)).toEqual({ id: tid, taskName:"Task1" });
         expect(getDoc).toHaveBeenCalledWith({ path: "TESZT_REF_PATH" });
         expect(doc).toHaveBeenCalledWith(db, "users", uid, "tasks", tid);
     });
@@ -137,7 +137,7 @@ describe("VALID Task Service Mocks Teszt", () => {
     });
 });
 describe("INVALID Task Service Mocks Teszt", () => {
-    test("INVAliD createTask teszt", async () => {
+    test("INVALID createTask teszt", async () => {
         const uid = "TESZT_UID"
         const db: Firestore = {} as Firestore;
         const data = {
@@ -165,7 +165,7 @@ describe("INVALID Task Service Mocks Teszt", () => {
         expect(collection).toHaveBeenCalledWith(db, "users", uid, "tasks");
         expect(getDocs).toHaveBeenCalledWith({ path: "TESZT_COL_PATH" });
     });
-    test("INVALID getTask teszt, ahol van ilyen dokumentum", async () => {
+    test("INVALID getTask teszt", async () => {
         const uid = "TESZT_UID"
         const tid = "TESZT_TID"
         const db: Firestore = {} as Firestore;
