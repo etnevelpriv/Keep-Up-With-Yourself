@@ -120,7 +120,42 @@ describe("INVALID User Integration teszt", () => {
         const user = createTestUser();
         const email = "userverifiedteszt@gmail.com";
         const uid = `${crypto.randomUUID()}`
-        const athenticatedDb = getAuthenticatedDb(uid, email, false);
-        await assertFails(createUserDocumentInDatabase(athenticatedDb as any, uid, email, user.name, user.createdAt, true));
+        const authenticatedDb = getAuthenticatedDb(uid, email, false);
+        await assertFails(createUserDocumentInDatabase(authenticatedDb as any, uid, email, user.name, user.createdAt, true));
+    });
+    test("INVALID userEmail nem egyezik az auth token emaillel", async () => {
+        const user = createTestUser();
+        const email = "useremailnemegyezikatokennel@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, "masikemailt@gmail.com", true);
+        await assertFails(createUserDocumentInDatabase(authenticatedDb as any, uid, email, user.name, user.createdAt, true));
+    });
+    test("INVALID userID nem egyezik az auth token emaillel", async () => {
+        const user = createTestUser();
+        const email = "useridnemegyezikatokennel@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(crypto.randomUUID(), email, true);
+        await assertFails(createUserDocumentInDatabase(authenticatedDb as any, uid, email, user.name, user.createdAt, true));
+    });
+    test("INVALID userName tul hosszu", async () => {
+        const user = createTestUser({ name: `${("A").repeat(31)}` });
+        const email = "usernametulhosszu@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, true);
+        await assertFails(createUserDocumentInDatabase(authenticatedDb as any, uid, email, user.name, user.createdAt, true));
+    });
+    test("INVALID userName ures", async () => {
+        const user = createTestUser({ name: "" });
+        const email = "usernameures@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, true);
+        await assertFails(createUserDocumentInDatabase(authenticatedDb as any, uid, email, user.name, user.createdAt, true));
+    });
+    test("INVALID userName ures (spaceket tartalmaz)", async () => {
+        const user = createTestUser({ name: "   " });
+        const email = "usernameures@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, true);
+        await assertFails(createUserDocumentInDatabase(authenticatedDb as any, uid, email, user.name, user.createdAt, true));
     });
 });
