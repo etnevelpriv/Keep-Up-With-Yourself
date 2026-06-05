@@ -336,6 +336,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - User integration tesztek megirasa [Levente] (nincs kesz)
 - User validation tesztek megirasa [Levente] (nincs kesz)
 - Task validation tesztek megirasa [Levente] (nincs kesz)
+- UI utility tesztek megirasa [Levente] (nincs kesz)
 - E2E register tesztek [Levente] (nincs kesz)
 - E2E login tesztek [Levente] (nincs kesz)
 - E2E logout tesztek [Levente] (nincs kesz)

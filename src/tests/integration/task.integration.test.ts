@@ -274,7 +274,7 @@ describe("INVALID Task Integration teszt", () => {
     });
     test("INVALID taskUpdatedAt korabban van, mint a taskCreatedAt", async () => {
         const user = createTestUser();
-        const task = createTestTask({ taskUpdatedAt: new Date(), taskCreatedAt: new Date((new Date()).getTime() + 1) });
+        const task = createTestTask({ taskUpdatedAt: new Date((new Date()).getTime()-1), taskCreatedAt: new Date() });
         const email = "taskupdatedatkoranvan@gmail.com";
         const uid = `${crypto.randomUUID()}`
         const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
@@ -308,6 +308,14 @@ describe("INVALID Task Integration teszt", () => {
         const user = createTestUser();
         const task = createTestTask({ taskTypeName: `    ` });
         const email = "tasktypenameuresspacestring@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
+        await assertFails(createTask(authenticatedDb as any, uid, task));
+    });
+    test("INVALID taskCreatedAt kesobb van, mint a jelenido)", async () => {
+        const user = createTestUser();
+        const task = createTestTask({ taskCreatedAt: new Date((new Date()).getTime() + 1000), taskUpdatedAt: new Date((new Date()).getTime() + 1000)});
+        const email = "taskcreatedAtkesobbAFeltoltesDatuma@gmail.com";
         const uid = `${crypto.randomUUID()}`
         const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
         await assertFails(createTask(authenticatedDb as any, uid, task));
