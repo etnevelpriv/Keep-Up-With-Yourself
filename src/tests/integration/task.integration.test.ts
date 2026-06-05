@@ -222,7 +222,7 @@ describe("INVALID Task Integration teszt", () => {
         const task = createTestTask({
             nemLetezik: 10
         } as any);
-        const email = "taskupdatedat@gmail.com";
+        const email = "nemletezofield@gmail.com";
         const uid = `${crypto.randomUUID()}`
         const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
         await assertFails(
@@ -232,4 +232,85 @@ describe("INVALID Task Integration teszt", () => {
             )
         );
     });
+    test("INVALID taskName tul hosszu", async () => {
+        const user = createTestUser();
+        const task = createTestTask({ taskName: `${("A").repeat(51)}` });
+        const email = "tasknamehosszu@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
+        await assertFails(createTask(authenticatedDb as any, uid, task));
+    });
+    test("INVALID taskDesc tul hosszu", async () => {
+        const user = createTestUser();
+        const task = createTestTask({ taskDesc: `${("A").repeat(301)}` });
+        const email = "descnamehossz@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
+        await assertFails(createTask(authenticatedDb as any, uid, task));
+    });
+    test("INVALID taskImportance 0", async () => {
+        const user = createTestUser();
+        const task = createTestTask({ taskImportance: 0 });
+        const email = "taskmportance0@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
+        await assertFails(createTask(authenticatedDb as any, uid, task));
+    });
+    test("INVALID taskTypeName ures", async () => {
+        const user = createTestUser();
+        const task = createTestTask({ taskTypeName: "" });
+        const email = "tasktypenameures@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
+        await assertFails(createTask(authenticatedDb as any, uid, task));
+    });
+    test("INVALID taskTypeName tul hosszy", async () => {
+        const user = createTestUser();
+        const task = createTestTask({ taskTypeName: `${("A").repeat(41)}` });
+        const email = "tasktypenamehosszu@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
+        await assertFails(createTask(authenticatedDb as any, uid, task));
+    });
+    test("INVALID taskUpdatedAt korabban van, mint a taskCreatedAt", async () => {
+        const user = createTestUser();
+        const task = createTestTask({ taskUpdatedAt: new Date(), taskCreatedAt: new Date((new Date()).getTime() + 1) });
+        const email = "taskupdatedatkoranvan@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
+        await assertFails(createTask(authenticatedDb as any, uid, task));
+    });
+    test("INVALID taskDeadine nem timestamp ", async () => {
+        const user = createTestUser();
+        const task = createTestTask({ taskDeadline: "" as any });
+        const email = "taskdeadlinenemtimestamp@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
+        await assertFails(createTask(authenticatedDb as any, uid, task));
+    });
+    test("INVALID taskCompletedAt nem timestamp amikor tastStatus=Teljesitett", async () => {
+        const user = createTestUser();
+        const task = createTestTask({ taskCompletedAt: null, taskStatus: "Teljesített" });
+        const email = "taskcompletedesstatusutkozes@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
+        await assertFails(createTask(authenticatedDb as any, uid, task));
+    });
+    test("INVALID taskName string (csak spacet tartalmaz)", async () => {
+        const user = createTestUser();
+        const task = createTestTask({ taskName: `   ` });
+        const email = "tasknameuresspacestring@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
+        await assertFails(createTask(authenticatedDb as any, uid, task));
+    });
+    test("INVALID taskTypeName string (csak spacet tartalmaz)", async () => {
+        const user = createTestUser();
+        const task = createTestTask({ taskTypeName: `    ` });
+        const email = "tasktypenameuresspacestring@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
+        await assertFails(createTask(authenticatedDb as any, uid, task));
+    });
+
 });

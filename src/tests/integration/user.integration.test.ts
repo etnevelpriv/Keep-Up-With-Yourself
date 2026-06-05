@@ -4,6 +4,7 @@ import { getAuthenticatedDb } from './setup/userTestDb';
 import { afterAllSetup, beforeAllSetup, beforeEachSetup, testEnv } from './setup/firebaseTestSetup';
 import { assertFails } from '@firebase/rules-unit-testing';
 import { createUserDocumentInDatabase, updateUserDocumentInDatabase, getUserDocumentFromDatabase, deleteUserDocumentFromDatabase } from '../../services/user/user.service';
+import { doc, setDoc } from 'firebase/firestore';
 beforeAllSetup()
 beforeEachSetup()
 afterAllSetup()
@@ -174,12 +175,32 @@ describe("INVALID User Integration teszt", () => {
         await createUserDocumentInDatabase(authenticatedDb as any, uid, email, user.name, user.createdAt, true);
         await assertFails(updateUserDocumentInDatabase(authenticatedDb as any, uid, { userEmail: "ujemail@gmail.com" }))
     });
-        test("INVALID userID modositasa", async () => {
+    test("INVALID userID modositasa", async () => {
         const user = createTestUser();
         const email = "userIDModositasa@gmail.com";
         const uid = `${crypto.randomUUID()}`
         const authenticatedDb = getAuthenticatedDb(uid, email, true);
         await createUserDocumentInDatabase(authenticatedDb as any, uid, email, user.name, user.createdAt, true);
-        await assertFails(updateUserDocumentInDatabase(authenticatedDb as any, uid, {userID:"ujID"}))
+        await assertFails(updateUserDocumentInDatabase(authenticatedDb as any, uid, { userID: "ujID" }))
+    });
+    test("INVALID userEmail nem email formatumu", async () => {
+        const user = createTestUser();
+        const email = "nemvalidemail.";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, true);
+        await assertFails(createUserDocumentInDatabase(authenticatedDb as any, uid, email, user.name, user.createdAt, true))
+    });
+    test("INVALID hianyo mezo", async () => {
+        const user = createTestUser();
+        const email = "hianyzomezo@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, true);
+        await assertFails(setDoc(doc(authenticatedDb as any, "users", uid), {
+            userID: uid,
+            userEmail: email,
+            userCreatedAt: user.createdAt,
+            userVerified: true,
+            taskTypes: ["Tanulás", "Munka", "Takarítás"],
+        } as any));
     });
 });
