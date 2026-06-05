@@ -153,9 +153,33 @@ describe("INVALID User Integration teszt", () => {
     });
     test("INVALID userName ures (spaceket tartalmaz)", async () => {
         const user = createTestUser({ name: "   " });
-        const email = "usernameures@gmail.com";
+        const email = "usernameuresspace@gmail.com";
         const uid = `${crypto.randomUUID()}`
         const authenticatedDb = getAuthenticatedDb(uid, email, true);
         await assertFails(createUserDocumentInDatabase(authenticatedDb as any, uid, email, user.name, user.createdAt, true));
+    });
+    test("INVALID userCreatedAt modositasa", async () => {
+        const user = createTestUser();
+        const email = "userCreatedAtModositasa@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, true);
+        await createUserDocumentInDatabase(authenticatedDb as any, uid, email, user.name, user.createdAt, true);
+        await assertFails(updateUserDocumentInDatabase(authenticatedDb as any, uid, { userCreatedAt: new Date(2012, 9, 9) }))
+    });
+    test("INVALID email modositasa", async () => {
+        const user = createTestUser();
+        const email = "userEmailModositasa@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, true);
+        await createUserDocumentInDatabase(authenticatedDb as any, uid, email, user.name, user.createdAt, true);
+        await assertFails(updateUserDocumentInDatabase(authenticatedDb as any, uid, { userEmail: "ujemail@gmail.com" }))
+    });
+        test("INVALID userID modositasa", async () => {
+        const user = createTestUser();
+        const email = "userIDModositasa@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, true);
+        await createUserDocumentInDatabase(authenticatedDb as any, uid, email, user.name, user.createdAt, true);
+        await assertFails(updateUserDocumentInDatabase(authenticatedDb as any, uid, {userID:"ujID"}))
     });
 });
