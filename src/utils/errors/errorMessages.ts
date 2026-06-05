@@ -19,9 +19,9 @@ export const errorMessages: AppErrorMessageInterface = {
     "validation/invalid-task-status": "A feladat állapota érvénytelen.",
     "validation/invalid-task-completedAt": "A feladat befejezési dátuma érvénytelen.",
     "validation/invalid-task-updatedAt": "A feladat frissítési dátuma érvénytelen.",
-    "validation/invalid-text-type": "Valamelyik szöveges mező érvénytelen",
+    "validation/invalid-text-type": "Valamelyik szöveges mező érvénytelen.",
 
-    // Firebase auth errrorsű
+    // Firebase auth errror
     "auth/email-already-in-use":"Ezzel az e-mail címmel már létezik felhasználói fiók.",
     "auth/invalid-credential":"Helytelen e-mail cím vagy jelszó.",
     "auth/invalid-email":"A megadott e-mail cím érvénytelen.",
@@ -46,5 +46,5 @@ export const errorMessages: AppErrorMessageInterface = {
     "internal":"Belső rendszerhiba történt.",
 
     // Unkown error
-    "unknown": "Ismeretlen hiba történt"
+    "unknown": "Ismeretlen hiba történt."
 }
