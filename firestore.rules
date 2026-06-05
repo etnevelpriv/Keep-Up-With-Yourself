@@ -9,8 +9,27 @@ service cloud.firestore {
         && value.size() <= maxLength;
     }
 
+    function isNonWhitespaceStringInRange(value, minLength, maxLength) {
+      return isStringInRange(value, minLength, maxLength)
+        && value.matches('.*\\S.*');
+    }
+
+    function isValidEmail(value) {
+      return value is string
+        && value.size() > 0
+        && value.matches('.*@.*');
+    }
+
     function hasValidUserFields(data) {
       return data.keys().hasOnly([
+        "userID",
+        "userEmail",
+        "userName",
+        "userCreatedAt",
+        "userVerified",
+        "taskTypes"
+      ])
+      && data.keys().hasAll([
         "userID",
         "userEmail",
         "userName",
@@ -22,6 +41,17 @@ service cloud.firestore {
 
     function hasValidTaskFields(data) {
       return data.keys().hasOnly([
+        "taskName",
+        "taskDesc",
+        "taskDeadline",
+        "taskImportance",
+        "taskTypeName",
+        "taskStatus",
+        "taskCompletedAt",
+        "taskCreatedAt",
+        "taskUpdatedAt"
+      ])
+      && data.keys().hasAll([
         "taskName",
         "taskDesc",
         "taskDeadline",
@@ -44,15 +74,16 @@ service cloud.firestore {
 
     function isValidTaskDocument(data) {
       return hasValidTaskFields(data)
-        && isStringInRange(data.taskName, 3, 50)
+        && isNonWhitespaceStringInRange(data.taskName, 3, 50)
         && isStringInRange(data.taskDesc, 0, 300)
         && data.taskDeadline is timestamp
         && data.taskImportance is number
         && data.taskImportance >= 1
         && data.taskImportance <= 5
-        && isStringInRange(data.taskTypeName, 1, 40)
+        && isNonWhitespaceStringInRange(data.taskTypeName, 1, 40)
         && data.taskCreatedAt is timestamp
         && data.taskUpdatedAt is timestamp
+        && data.taskCreatedAt <= request.time
         && data.taskDeadline >= data.taskCreatedAt
         && data.taskUpdatedAt >= data.taskCreatedAt
         && isValidTaskState(data);
@@ -61,8 +92,8 @@ service cloud.firestore {
     function isValidUserDocument(data) {
       return hasValidUserFields(data)
         && data.userID is string
-        && data.userEmail is string
-        && isStringInRange(data.userName, 1, 30)
+        && isValidEmail(data.userEmail)
+        && isNonWhitespaceStringInRange(data.userName, 1, 30)
         && data.userCreatedAt is timestamp
         && data.userCreatedAt <= request.time
         && data.userVerified is bool
