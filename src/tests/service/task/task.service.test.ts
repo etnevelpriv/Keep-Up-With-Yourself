@@ -84,21 +84,57 @@ describe("VALID Task Service Mocks Teszt", () => {
         expect(collection).toHaveBeenCalledWith(db, "users", uid, "tasks");
         expect(getDocs).toHaveBeenCalledWith({ path: "TESZT_COL_PATH" });
     });
-    test("VAliD getTask teszt, ahol van ilyen dokumentum", async () => {
+    test("VALID getTask teszt, ahol van ilyen dokumentum", async () => {
         const uid = "TESZT_UID"
         const tid = "TESZT_TID"
         const db: Firestore = {} as Firestore;
         vi.mocked(getDoc).mockResolvedValue({
-            exists: ()=>(true),
-            data:()=>({
-                tid:tid
+            exists: () => (true),
+            data: () => ({
+                tid: tid
             })
-        }as any)
-        expect(await getTask(db, uid, tid)).toEqual({tid:tid});
+        } as any)
+        expect(await getTask(db, uid, tid)).toEqual({ tid: tid });
         expect(getDoc).toHaveBeenCalledWith({ path: "TESZT_REF_PATH" });
         expect(doc).toHaveBeenCalledWith(db, "users", uid, "tasks", tid);
     });
-    
+    test("VALID getTask teszt, ahol nincs ilyen dokumentum", async () => {
+        const uid = "TESZT_UID"
+        const tid = "TESZT_TID"
+        const db: Firestore = {} as Firestore;
+        vi.mocked(getDoc).mockResolvedValue({
+            exists: () => (false),
+            data: () => ({
+                tid: tid
+            })
+        } as any)
+        expect(await getTask(db, uid, tid)).toEqual(null);
+        expect(getDoc).toHaveBeenCalledWith({ path: "TESZT_REF_PATH" });
+        expect(doc).toHaveBeenCalledWith(db, "users", uid, "tasks", tid);
+    });
+    test("VAliD updateTask teszt", async () => {
+        const uid = "TESZT_UID"
+        const tid = "TESZT_TID"
+        const db: Firestore = {} as Firestore;
+        const data = {
+            taskName: "NewTaskName"
+        };
+        vi.mocked(updateDoc).mockResolvedValue(undefined);
+
+        await updateTask(db, uid, tid, data);
+        expect(updateDoc).toHaveBeenCalledWith({ path: "TESZT_REF_PATH" }, data);
+        expect(doc).toHaveBeenCalledWith(db, "users", uid, "tasks", tid);
+    });
+    test("VAliD deleteTask teszt", async () => {
+        const uid = "TESZT_UID"
+        const tid = "TESZT_TID"
+        const db: Firestore = {} as Firestore;
+        vi.mocked(deleteDoc).mockResolvedValue(undefined);
+
+        await deleteTask(db, uid, tid);
+        expect(deleteDoc).toHaveBeenCalledWith({ path: "TESZT_REF_PATH" });
+        expect(doc).toHaveBeenCalledWith(db, "users", uid, "tasks", tid);
+    });
 });
 describe("INVALID Task Service Mocks Teszt", () => {
     test("INVAliD createTask teszt", async () => {
