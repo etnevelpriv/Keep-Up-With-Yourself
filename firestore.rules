@@ -83,7 +83,7 @@ service cloud.firestore {
         && isNonWhitespaceStringInRange(data.taskTypeName, 1, 40)
         && data.taskCreatedAt is timestamp
         && data.taskUpdatedAt is timestamp
-        && data.taskCreatedAt <= request.time
+        && data.taskCreatedAt <= request.time + duration.value(5, 's')
         && data.taskDeadline >= data.taskCreatedAt
         && data.taskUpdatedAt >= data.taskCreatedAt
         && isValidTaskState(data);
@@ -95,7 +95,7 @@ service cloud.firestore {
         && isValidEmail(data.userEmail)
         && isNonWhitespaceStringInRange(data.userName, 1, 30)
         && data.userCreatedAt is timestamp
-        && data.userCreatedAt <= request.time
+        && data.userCreatedAt <= request.time + duration.value(5, 's')
         && data.userVerified is bool
         && data.userVerified == request.auth.token.email_verified
         && data.taskTypes is list;
@@ -112,8 +112,8 @@ service cloud.firestore {
         && request.auth.uid == userID
         && isValidUserDocument(request.resource.data)
         && request.resource.data.userID == request.auth.uid
-        && request.resource.data.userEmail == request.auth.token.email;
-
+        && request.resource.data.userEmail == request.auth.token.email
+        && request.resource.data.userVerified == request.auth.token.email_verified;
       allow read: if isVerifiedUser(userID);
 
       allow update: if isVerifiedUser(userID)
