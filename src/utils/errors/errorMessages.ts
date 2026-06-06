@@ -36,6 +36,7 @@ export const errorMessages: AppErrorMessageInterface = {
     "auth/user-not-found":"Nem található felhasználó ezzel az e-mail címmel.",
     "auth/operation-not-allowed":"Ez a bejelentkezési mód nincs engedélyezve.",
     "auth/network-request-failed":"Hálózati hiba történt. Ellenőrizd az internetkapcsolatot.",
+    "auth/requires-recent-login":"Ehhez a művelethez biztonsági okokoból újra bekell jelentkezned.",
 
     // Firestore errors
     "permission-denied":"Nincs jogosultságod ehhez a művelethez.",
