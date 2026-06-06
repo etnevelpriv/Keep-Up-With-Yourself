@@ -1,4 +1,9 @@
-import "../utils/popup.ts";
-import {initializeAuthListener} from "../services/auth/auth.listener.ts"
+import { initializeAuthListener } from "../services/auth/auth.listener.ts"
+import { handleUiError } from "../utils/errors/handleUiError.ts"
+import { db } from "./firebase.ts";
 
-initializeAuthListener()
+try {
+    initializeAuthListener(db, handleUiError)
+} catch (err) {
+    handleUiError(err);
+};
