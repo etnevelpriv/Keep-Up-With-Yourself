@@ -99,7 +99,7 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 
 - Egy felhasznalonak csak 1 fiokja lehet.  
 - Ketto fele provider elfogadott. Google, Email/Password.  
-- Ha a felhasznalo mar regisztralt Google providerrel akkor mar nem tud se bejelentkezni, se regisztralni ugyan azon email cimmel.  
+- Ha a felhasznalo mar regisztralt Google providerrel akkor mar nem tud regisztralni ugyan azon email cimmel.  
 - Ha a felhasznalo mar regisztralt Email/Password providerrel, akkor mar nem engedi regisztralni ugyan azzal a providerrel, de Google-el igen (igy 2 provider lesz csatolva 1 fiokhoz).  
 - Ha a felhasznalo meg nem regisztralt, akkor barmivel regisztralhat.  
 - Ha a felhasznalo meg nem regisztralt, akkor a bejelentkezesnel a Google providerre kattintva egybol regisztral egy fiokot.  
@@ -107,14 +107,12 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - Ha a felhasznalo Email/Password providerrel regisztral, akkor kotelezo megadnia nevet a regisztracio soran.  
 - Ha a felhasznalo Google providerrel regisztral, akkor a nev automatikusan a Google fiokjanak a neve lesz.  
 
-- Ha a felhasznalo Email/Password providerrel regisztral, akkor kap egy visszaigazolo emailt, ha igazolja email cimet, akkor lesz verified az adatbazisban.  
+- Ha a felhasznalo Email/Password providerrel regisztral, akkor kap egy visszaigazolo emailt, ha igazolja email cimet, akkor lesz verified az adatbazisban (vagy ha jelszot valtoztat).  
 - Ha a felhasznalo Google providerrel regisztral, akkor a verified automatikusan true lesz.  
 
 - Ha a felhasznalo az adatbazisban verified, akkor lephet csak be.  
 
-- Ha a felhasznalo letezik, de nem verified es megprobal regisztralni, akkor a regisztracios folyamat ujrakezdodik (elozo felhasznalo torlodik, ujat hoz letre) (mindket providerrel)  
-
-- Ha a felhasznalo letelzik, de nem verified es megprobal bejelentkezni, akkor hibauzenetet kap, hogy nincs visszaigazolva a fiokja es nezze meg az emailjet (uj emailt kuldd)  
+- Ha a felhasznalo letelzik, de nem verified es megprobal bejelentkezni, akkor hibauzenetet kap, hogy nincs visszaigazolva a fiokja es nezze meg az emailjet (vagy kerjen jelszo valtoztato emailt)  
 
 - A visszaigazolo emailt korlatozzuk felhasznalonkent (percenkent 1)  
 
@@ -282,8 +280,8 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 
 - Ownership validation ellenorzese [Levente] (kesz)
 - Email verification enforce a `users/{uid}/tasks/*` rules-ban (`request.auth.token.email_verified == true`) [Levente] (kesz)
-- Verified gate egységesítése frontenden (auth.guard + auth.listener) + egyértelmű UX (hibaüzenet, redirect, resend link) [Levente] (nincs kesz)
-- Provider-ütközés/linking flow implementálása (`fetchSignInMethodsForEmail`) a README auth szabályok szerint [Levente] (nincs kesz)
+- Verified gate egységesítése frontenden (auth.guard + auth.listener) + egyértelmű UX (hibaüzenet, redirect) [Levente] (kesz)
+- Provider-ütközés kezelése a README auth szabályok szerint [Levente] (kesz)
 - Fióktörlés backend hardening: Cloud Function alapú “teljes törlés” (user doc + tasks subcollection), reauth hibák kezelése [Levente] (nincs kesz)
 - Firebase Hosting security headers + CSP beállítása (`firebase.json`) [Levente] (nincs kesz)
 - App Check bevezetése (és mérlegelés, hol kell enforce-olni) [Levente] (nincs kesz)

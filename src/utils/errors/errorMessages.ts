@@ -24,32 +24,42 @@ export const errorMessages: AppErrorMessageInterface = {
     "validation/invalid-text-type": "Valamelyik szöveges mező érvénytelen.",
 
     // Authentication process error
-    "login/not-verified" : "Az email címed nincs megerősítve. Nézd meg a postafiókod, vagy állítsd be egy új jelszót.",
+    "login/not-verified": "Az email címed nincs megerősítve. Nézd meg a postafiókod, vagy állítsd be egy új jelszót.",
 
-    // Firebase auth errror
-    "auth/email-already-in-use":"Ezzel az e-mail címmel már létezik felhasználói fiók.",
-    "auth/invalid-credential":"Helytelen e-mail cím vagy jelszó.",
-    "auth/invalid-email":"A megadott e-mail cím érvénytelen.",
-    "auth/invalid-password":"A megadott jelszó érvénytelen.",
-    "auth/too-many-requests":"Túl sok sikertelen próbálkozás történt. Próbáld újra később.",
-    "auth/user-disabled":"A felhasználói fiók le van tiltva.",
-    "auth/user-not-found":"Nem található felhasználó ezzel az e-mail címmel.",
-    "auth/operation-not-allowed":"Ez a bejelentkezési mód nincs engedélyezve.",
-    "auth/network-request-failed":"Hálózati hiba történt. Ellenőrizd az internetkapcsolatot.",
-    "auth/requires-recent-login":"Ehhez a művelethez biztonsági okokoból újra bekell jelentkezned.",
+    // Firebase auth error
+    "auth/email-already-in-use": "Ezzel az e-mail címmel már létezik felhasználói fiók.",
+    "auth/invalid-credential": "Helytelen e-mail cím vagy jelszó.",
+    "auth/invalid-email": "A megadott e-mail cím érvénytelen.",
+    "auth/invalid-password": "A megadott jelszó érvénytelen.",
+    "auth/too-many-requests": "Túl sok sikertelen próbálkozás történt. Próbáld újra később.",
+    "auth/user-disabled": "A felhasználói fiók le van tiltva.",
+    "auth/user-not-found": "Nem található felhasználó ezzel az e-mail címmel.",
+    "auth/operation-not-allowed": "Ez a bejelentkezési mód nincs engedélyezve.",
+    "auth/network-request-failed": "Hálózati hiba történt. Ellenőrizd az internetkapcsolatot.",
+    "auth/requires-recent-login": "Ehhez a művelethez biztonsági okokoból újra bekell jelentkezned.",
+    "auth/password-required": "A fiók törléséhez add meg a jelszavad.",
+    "auth/unsupported-provider": "Ez a bejelentkezési mód nem támogatott a fióktörléshez.",
+    "auth/popup-closed-by-user": "Az újrahitelesítés megszakadt.",
+    "account/delete-failed": "A fiók törlése nem sikerült. Próbáld meg újra később.",
+    "auth/email-not-verified": "A fiók törléséhez meg kell erősítened az email címed.",
+
+    // Firebase functions errors ?
+    "functions/internal": "A fiók törlése nem sikerült. Próbáld meg újra később.",
+    "functions/permission-denied": "Nincs jogosultságod ehhez a művelethez.",
+    "functions/unauthenticated": "A művelethez be kell jelentkezned.",
 
     // Firestore errors
-    "permission-denied":"Nincs jogosultságod ehhez a művelethez.",
-    "unauthenticated":"A művelethez be kell jelentkezned.",
-    "not-found":"A keresett adat nem található.",
-    "already-exists":"Az adat már létezik.",
-    "invalid-argument":"Érvénytelen adat lett elküldve.",
-    "failed-precondition":"A művelet előfeltétele nem teljesül.",
-    "resource-exhausted":"A rendszer erőforrás-korlátba ütközött.",
-    "cancelled":"A művelet megszakadt.",
-    "deadline-exceeded":"A művelet időtúllépés miatt megszakadt.",
-    "unavailable":"A szolgáltatás jelenleg nem érhető el.",
-    "internal":"Belső rendszerhiba történt.",
+    "permission-denied": "Nincs jogosultságod ehhez a művelethez.",
+    "unauthenticated": "A művelethez be kell jelentkezned.",
+    "not-found": "A keresett adat nem található.",
+    "already-exists": "Az adat már létezik.",
+    "invalid-argument": "Érvénytelen adat lett elküldve.",
+    "failed-precondition": "A művelet előfeltétele nem teljesül.",
+    "resource-exhausted": "A rendszer erőforrás-korlátba ütközött.",
+    "cancelled": "A művelet megszakadt.",
+    "deadline-exceeded": "A művelet időtúllépés miatt megszakadt.",
+    "unavailable": "A szolgáltatás jelenleg nem érhető el.",
+    "internal": "Belső rendszerhiba történt.",
 
     // Unkown error
     "unknown": "Ismeretlen hiba történt."

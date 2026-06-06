@@ -123,7 +123,7 @@ service cloud.firestore {
         && request.resource.data.userCreatedAt == resource.data.userCreatedAt
         && request.resource.data.userVerified == request.auth.token.email_verified;
 
-      allow delete: if isVerifiedUser(userID);
+      allow delete: if false;
       }
 
     match /users/{userID}/tasks/{taskID} {

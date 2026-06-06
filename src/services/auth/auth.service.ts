@@ -1,8 +1,9 @@
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, sendPasswordResetEmail, sendEmailVerification, createUserWithEmailAndPassword, signOut, deleteUser, onAuthStateChanged } from "firebase/auth";
-import { createUserDocumentInDatabase, deleteUserDocumentFromDatabase, getUserDocumentFromDatabase } from "../user/user.service.ts"
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, sendPasswordResetEmail, sendEmailVerification, createUserWithEmailAndPassword, signOut, onAuthStateChanged, reauthenticateWithCredential, reauthenticateWithPopup, EmailAuthProvider } from "firebase/auth";
+import { createUserDocumentInDatabase, getUserDocumentFromDatabase } from "../user/user.service.ts"
 import { doc, getDoc } from "firebase/firestore";
 import type { Firestore } from "firebase/firestore";
-
+import { getFunctions, httpsCallable } from "firebase/functions";
+import { AppError } from "../../models/AppError.ts";
 const auth = getAuth();
 
 export const registerWithEmail = async function (db: Firestore, name: string, email: string, password: string, createdAt: Date, verified: boolean) {
@@ -69,14 +70,44 @@ export const sendEmailVerificationToUser = async function (user: any) {
     };
     await sendEmailVerification(user, actionCodeSettings);
 };
-export const deleteCurrentUserAccount = async function (db: Firestore) {
-    const currentUser = auth.currentUser;
-    if (!currentUser) {
-        return;
-    };
-    await deleteUserDocumentFromDatabase(db, currentUser.uid);
-    await deleteUser(currentUser)
+export const deleteCurrentUserAccount = async function (password: string) {
+    await reauthenticateCurrentUser(password);
+    const functions = getFunctions();
+    const deleteCurrentUserCompletely = httpsCallable(
+        functions,
+        "deleteCurrentUserCompletely"
+    );
+    await deleteCurrentUserCompletely();
 };
 export const getAuthUser = function () {
     return auth.currentUser;
 };
+// Muszaj vagyok hibatkezelni a serviceben, nem tudok mashogy rendesen hibakat dobni jelenleg sajnos
+export const reauthenticateCurrentUser = async function (password?: string) {
+    const user = auth.currentUser;
+    if (!user || !user.email) {
+        throw new AppError("auth/not-authenticated");
+    }
+    const providerId = user.providerData[0]?.providerId;
+    if (providerId === "password") {
+        if (!password) {
+            throw new AppError("auth/password-required");
+        }
+        const credential = EmailAuthProvider.credential(user.email, password);
+        await reauthenticateWithCredential(user, credential);
+        return;
+    }
+    if (providerId === "google.com") {
+        const provider = new GoogleAuthProvider();
+        await reauthenticateWithPopup(user, provider);
+        return;
+    };
+    throw new AppError("auth/unsupported-provider");
+};
+export const getProvider = async function () {
+    const user = auth.currentUser;
+    if (user) {
+        const idTokenResult = await user.getIdTokenResult(true);
+        return idTokenResult.signInProvider
+    };
+}

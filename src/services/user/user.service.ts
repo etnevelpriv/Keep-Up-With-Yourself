@@ -1,4 +1,5 @@
 import { doc, getDoc, updateDoc, setDoc, deleteDoc, type Firestore } from "firebase/firestore";
+import { getFunctions, httpsCallable } from "firebase/functions";
 
 export const syncUserVerificationStatus = async function (db: Firestore, uid: string) {
     await updateDoc(doc(db, "users", uid), {
