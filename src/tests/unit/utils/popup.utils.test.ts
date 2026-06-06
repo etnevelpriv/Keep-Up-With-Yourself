@@ -26,6 +26,14 @@ describe("Popup Unit Teszt", () => {
         showInfoPopUp("  ");
         expect(document.getElementById("app-popup")).toBe(null)
     });
+    test("Close gomb elrejti a popupot", () => {
+        expect(document.getElementById("app-popup")).toBe(null)
+        showErrorPopUp("XY hiba tortent");
+        expect(document.getElementById("app-popup")?.classList.contains("is-visible")).toBe(true);
+        const closeButton = document.querySelector(".app-popup__close") as HTMLButtonElement
+        closeButton?.click();
+        expect(document.getElementById("app-popup")?.classList.contains("is-visible")).toBe(false);
+    });
     test("5 masodperc mulva eltunik a popup", () => {
         vi.useFakeTimers();
         expect(document.getElementById("app-popup")).toBe(null)
