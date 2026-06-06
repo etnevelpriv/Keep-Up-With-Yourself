@@ -1,10 +1,5 @@
 import { doc, getDoc, updateDoc, setDoc, deleteDoc, type Firestore } from "firebase/firestore";
 
-export const syncUserVerificationStatus = async function (db: Firestore, uid: string) {
-    await updateDoc(doc(db, "users", uid), {
-        userVerified: true
-    });
-};
 export const createUserDocumentInDatabase = async function (db: Firestore, uid: string, email: string, name: string, createdAt: Date, verified: boolean) {
     const defaultTaskTypes = ["Tanulás", "Munka", "Takarítás"];
     await setDoc(doc(db, "users", uid), {

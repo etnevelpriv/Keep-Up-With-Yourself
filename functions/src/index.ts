@@ -60,3 +60,14 @@ export const deleteCurrentUserCompletely = onCall(async (request) => {
     throw new HttpsError("internal", "account/delete-failed");
   }
 });
+export const syncOwnVerificationStatus = onCall(async (request) => {
+  const uid = request.auth?.uid;
+  const emailVerified = request.auth?.token.email_verified;
+  if (!uid) {
+    throw new HttpsError("unauthenticated", "auth/not-authenticated");
+  }
+  await db.collection("users").doc(uid).update({
+    userVerified: emailVerified === true,
+  });
+  return {success: true};
+});

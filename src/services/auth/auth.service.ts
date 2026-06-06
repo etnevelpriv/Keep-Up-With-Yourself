@@ -9,6 +9,8 @@ const auth = getAuth();
 export const registerWithEmail = async function (db: Firestore, name: string, email: string, password: string, createdAt: Date, verified: boolean) {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
+    await user.reload();
+    await user.getIdToken(true);
     await createUserDocumentInDatabase(db, user.uid, email, name, createdAt, verified);
     await sendEmailVerificationToUser(user);
 };
@@ -111,3 +113,11 @@ export const getProvider = async function () {
         return idTokenResult.signInProvider
     };
 }
+export const syncOwnVerificationStatus = async function () {
+    const functions = getFunctions();
+    const syncOwnVerificationStatus = httpsCallable(
+        functions,
+        "syncOwnVerificationStatus"
+    );
+    await syncOwnVerificationStatus();
+};

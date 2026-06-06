@@ -1,8 +1,9 @@
 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import type { Firestore } from "firebase/firestore";
-import { getUserDocumentFromDatabase, syncUserVerificationStatus } from "../user/user.service.ts"
+import { getUserDocumentFromDatabase } from "../user/user.service.ts"
 import { redirecAuthenticatedtUser, redirecUnauthenticatedtUser } from "./auth.guard.ts";
+import { syncOwnVerificationStatus } from "./auth.service.ts";
 const auth = getAuth();
 
 export const initializeAuthListener = function (db: Firestore, onError: (error: unknown) => void) {
@@ -12,8 +13,9 @@ export const initializeAuthListener = function (db: Firestore, onError: (error: 
                 redirecUnauthenticatedtUser();
                 return;
             };
-            console.log(user)
             await user.reload();
+            await user.getIdToken(true);
+            console.log(user)
             if (!user.emailVerified) {
                 redirecUnauthenticatedtUser();
                 return;
@@ -24,7 +26,7 @@ export const initializeAuthListener = function (db: Firestore, onError: (error: 
                 return;
             };
             if (!userDocument.userVerified) {
-                await syncUserVerificationStatus(db, user.uid);
+                await syncOwnVerificationStatus();
             };
             redirecAuthenticatedtUser();
         } catch (error) {

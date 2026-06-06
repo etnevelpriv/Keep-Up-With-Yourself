@@ -44,7 +44,7 @@ export const errorMessages: AppErrorMessageInterface = {
     "auth/email-not-verified": "A fiók törléséhez meg kell erősítened az email címed.",
 
     // Firebase functions errors ?
-    "functions/internal": "A fiók törlése nem sikerült. Próbáld meg újra később.",
+    "functions/internal": "A művelet nem sikerült. Próbáld meg újra később.",
     "functions/permission-denied": "Nincs jogosultságod ehhez a művelethez.",
     "functions/unauthenticated": "A művelethez be kell jelentkezned.",
 
