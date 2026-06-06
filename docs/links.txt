@@ -10,3 +10,4 @@ https://firebase.google.com/docs/reference/emulator-suite/rules-unit-testing/rul
 https://vitest.dev/guide/mocking
 https://github.com/jsdom/jsdom
 https://vitest.dev/config/environment
+https://firebase.google.com/docs/rules/rules-and-auth

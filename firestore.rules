@@ -100,45 +100,42 @@ service cloud.firestore {
         && data.userVerified == request.auth.token.email_verified
         && data.taskTypes is list;
     }
+    function isVerifiedUser(userID) {
+        return request.auth != null
+        && request.auth.uid == userID
+        && request.auth.token.email_verified == true;
+    }
 
     match /users/{userID} {
 
-      allow create: if request.auth != null
-        && request.auth.uid == userID
+      allow create: if isVerifiedUser(userID)
         && isValidUserDocument(request.resource.data)
         && request.resource.data.userID == request.auth.uid
         && request.resource.data.userEmail == request.auth.token.email;
 
-      allow read: if request.auth != null
-        && request.auth.uid == userID;
+      allow read: if isVerifiedUser(userID);
 
-      allow update: if request.auth != null
-        && request.auth.uid == userID
+      allow update: if isVerifiedUser(userID)
         && isValidUserDocument(request.resource.data)
         && request.resource.data.userID == resource.data.userID
         && request.resource.data.userEmail == resource.data.userEmail
         && request.resource.data.userCreatedAt == resource.data.userCreatedAt;
 
-      allow delete: if request.auth != null
-        && request.auth.uid == userID;
+      allow delete: if isVerifiedUser(userID);
       }
 
     match /users/{userID}/tasks/{taskID} {
 
-      allow create: if request.auth != null
-        && request.auth.uid == userID
+      allow create: if isVerifiedUser(userID)
         && isValidTaskDocument(request.resource.data);
 
-      allow update: if request.auth != null
-        && request.auth.uid == userID
+      allow update: if isVerifiedUser(userID)
         && isValidTaskDocument(request.resource.data)
         && request.resource.data.taskCreatedAt == resource.data.taskCreatedAt;
 
-      allow read: if request.auth != null
-        && request.auth.uid == userID;
+      allow read: if isVerifiedUser(userID);
 
-      allow delete: if request.auth != null
-        && request.auth.uid == userID;
+      allow delete: if isVerifiedUser(userID);
     }
   }
 }
