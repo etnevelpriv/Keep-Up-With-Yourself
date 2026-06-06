@@ -3,18 +3,16 @@ import "../styles/profile.css";
 import "./header.ts";
 import "../styles/loggedInUserNav.css";
 
-import { getAuth } from "firebase/auth";
 import { User } from "../models/User.ts";
-import { deleteCurrentUserAccount, getCurrentUser, sendPasswordReset, signOutUser } from "../services/auth/auth.service.ts";
+import { deleteCurrentUserAccount, getCurrentUserWhenReady, sendPasswordReset, signOutUser } from "../services/auth/auth.service.ts";
 import { db } from "./firebase.ts";
 import { handleUiError } from "../utils/errors/handleUiError.ts";
 import { showInfoPopUp } from "../utils/popup.ts";
 
 const init = async function () {
-    getAuth();
     let user: User;
     try {
-        const currentUser = await getCurrentUser(db);
+        const currentUser = await getCurrentUserWhenReady(db);
         if (!currentUser) {
             return;
         };

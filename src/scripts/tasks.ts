@@ -4,7 +4,7 @@ import "./header.ts";
 import "../styles/loggedInUserNav.css";
 import { Task } from "../models/Task.ts";
 import { showErrorPopUp, showInfoPopUp } from "../utils/popup.ts";
-import { getCurrentUser } from "../services/auth/auth.service.ts";
+import { getCurrentUserWhenReady } from "../services/auth/auth.service.ts";
 import { deleteTask, getTasks, updateTask } from "../services/task/task.service.ts";
 import { getTaskTypes, uploadTaskType } from "../services/taskType/taskType.service.ts";
 import { db } from "./firebase.ts";
@@ -20,7 +20,7 @@ let currentUser: any = null;
 let selectedTaskItem: TaskViewItem | null = null;
 
 const init = async function () {
-    const user = await getCurrentUser(db) as any;
+    const user = await getCurrentUserWhenReady(db) as any;
     if (!user) {
         return;
     }

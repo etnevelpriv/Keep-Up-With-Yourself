@@ -4,14 +4,14 @@ import "./header.ts";
 import "../styles/loggedInUserNav.css";
 import { Task } from "../models/Task.ts";
 import { showInfoPopUp } from "../utils/popup.ts";
-import { getCurrentUser } from "../services/auth/auth.service.ts";
+import { getCurrentUserWhenReady } from "../services/auth/auth.service.ts";
 import { createTask } from "../services/task/task.service.ts";
 import { getTaskTypes, uploadTaskType } from "../services/taskType/taskType.service.ts";
 import { db } from "./firebase.ts";
 import { handleUiError } from "../utils/errors/handleUiError.ts";
 
 const init = async function () {
-    const user = await getCurrentUser(db);
+    const user = await getCurrentUserWhenReady(db);
     if (!user) {
         return;
     }
@@ -22,7 +22,7 @@ const init = async function () {
     document.getElementById("createForm")?.addEventListener("submit", async (e) => {
         e.preventDefault();
         try {
-            const formElements = getFormElements(user);
+            const formElements = await getFormElements(user);
             console.log(formElements);
             const newTask = new Task(formElements[0], formElements[1], new Date(formElements[2]), Number(formElements[3]), formElements[4], "Folyamatban", null, new Date(), new Date())
             console.log(newTask);
@@ -78,7 +78,7 @@ const syncTaskTypeFields = function () {
     };
 };
 
-const getFormElements = function (user: any) {
+const getFormElements = async function (user: any) {
     const taskName = (document.getElementById('taskNameInput') as HTMLFormElement).value;
     const taskDesc = (document.getElementById('taskDescTextarea') as HTMLFormElement).value;
     const taskDeadline = (document.getElementById('taskDeadlineInput') as HTMLFormElement).value;
@@ -87,7 +87,7 @@ const getFormElements = function (user: any) {
     let taskTypeName = null
     if (taskNewType) {
         taskTypeName = (document.getElementById('taskTypeNameInput') as HTMLFormElement).value;
-        uploadTaskType(user, taskTypeName);
+        await uploadTaskType(user, taskTypeName);
     } else {
         taskTypeName = (document.getElementById('taskTypeNameSelect') as HTMLFormElement).value;
     }

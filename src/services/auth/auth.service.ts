@@ -1,4 +1,4 @@
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, sendPasswordResetEmail, sendEmailVerification, createUserWithEmailAndPassword, signOut, deleteUser } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, sendPasswordResetEmail, sendEmailVerification, createUserWithEmailAndPassword, signOut, deleteUser, onAuthStateChanged } from "firebase/auth";
 import { createUserDocumentInDatabase, deleteUserDocumentFromDatabase, getUserDocumentFromDatabase } from "../user/user.service.ts"
 import { doc, getDoc } from "firebase/firestore";
 import type { Firestore } from "firebase/firestore";
@@ -40,6 +40,21 @@ export const getCurrentUser = async function (db: Firestore) {
         return null;
     }
     return docSnap.data();
+};
+export const waitForAuthUser = async function () {
+    return await new Promise((resolve) => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            unsubscribe();
+            resolve(user);
+        });
+    });
+};
+export const getCurrentUserWhenReady = async function (db: Firestore) {
+    const authUser = await waitForAuthUser();
+    if (!authUser) {
+        return null;
+    }
+    return await getCurrentUser(db);
 };
 export const signOutUser = async function () {
     await signOut(auth);
