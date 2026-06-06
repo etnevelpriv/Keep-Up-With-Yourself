@@ -5,11 +5,9 @@ import "../styles/loggedInUserNav.css";
 import { showErrorPopUp } from "../utils/popup.ts";
 
 import { getAuth } from "firebase/auth";
-// import type { Auth } from "firebase/auth";
-// import { doc, getDoc, deleteDoc } from "firebase/firestore";
-// import { db } from "./firebase.ts"
 import { User } from "../models/User.ts";
 import { deleteCurrentUserAccount, getCurrentUser, sendPasswordReset, signOutUser } from "../services/auth/auth.service.ts";
+import { db } from "./firebase.ts";
 
 type UserPayload = {
     userID: string;
@@ -23,7 +21,7 @@ type UserPayload = {
 
 const init = async function () {
     getAuth();
-    const currentUser = await getCurrentUser();
+    const currentUser = await getCurrentUser(db);
     if (!currentUser) {
         return;
     }
@@ -58,7 +56,7 @@ const init = async function () {
             return;
         });
         document.getElementById("sureDeleteProfileButton")?.addEventListener("click", () => {
-            deleteCurrentUserAccount();
+            deleteCurrentUserAccount(db);
         });
     });
 };

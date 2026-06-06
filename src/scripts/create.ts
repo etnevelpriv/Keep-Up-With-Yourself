@@ -7,9 +7,10 @@ import { showErrorPopUp, showInfoPopUp } from "../utils/popup.ts";
 import { getCurrentUser } from "../services/auth/auth.service.ts";
 import { createTask } from "../services/task/task.service.ts";
 import { getTaskTypes, uploadTaskType } from "../services/taskType/taskType.service.ts";
+import { db } from "./firebase.ts";
 
 const init = async function () {
-    const user = await getCurrentUser();
+    const user = await getCurrentUser(db);
     if (!user) {
         return;
     }
@@ -104,7 +105,7 @@ const createSelectOptions = function (arr: string[]) {
 };
 
 const createTaskInDB = async function (task: Task, user: any) {
-    await createTask(user.userID, task);
+    await createTask(db, user.userID, task);
 };
 
 document.addEventListener("DOMContentLoaded", init);
