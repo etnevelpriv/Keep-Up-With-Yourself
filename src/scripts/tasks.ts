@@ -7,6 +7,7 @@ import { showErrorPopUp, showInfoPopUp } from "../utils/popup.ts";
 import { getCurrentUser } from "../services/auth/auth.service.ts";
 import { deleteTask, getTasks, updateTask } from "../services/task/task.service.ts";
 import { getTaskTypes, uploadTaskType } from "../services/taskType/taskType.service.ts";
+import { db } from "./firebase.ts";
 
 type TaskViewItem = {
     task: Task;
@@ -18,13 +19,13 @@ let currentUser: any = null;
 let selectedTaskItem: TaskViewItem | null = null;
 
 const init = async function () {
-    const user = await getCurrentUser() as any;
+    const user = await getCurrentUser(db) as any;
     if (!user) {
         return;
     }
     currentUser = user;
     console.log(user)
-    const arr = await getTasks(user.userID)
+    const arr = await getTasks(db, user.userID)
     taskViewItems = arr.map((element: any) => ({
         task: createTaskFromDocument(element),
         taskId: element.id
@@ -379,7 +380,7 @@ const setupModifyModal = function () {
         }
 
         try {
-            await deleteTask(currentUser.userID, selectedTaskItem.taskId);
+            await deleteTask(db, currentUser.userID, selectedTaskItem.taskId);
             taskViewItems = taskViewItems.filter((taskItem) => taskItem.taskId !== selectedTaskItem?.taskId);
             closeModal();
             form.reset();
@@ -467,7 +468,7 @@ const updateTaskInDB = async function (task: Task, uid: string, taskId: string) 
         taskUpdatedAt: task.taskUpdatedAt
     };
 
-    await updateTask(uid, taskId, taskPayload)
+    await updateTask(db, uid, taskId, taskPayload)
 
 };
 const syncTaskTypeFields = function () {
