@@ -278,10 +278,10 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 
 ---
 
-## 10. Teljes security rules audit, testing, automation, security engineering (11 / 79)
+## 10. Teljes security rules audit, testing, automation, security engineering (13 / 79)
 
 - Ownership validation ellenorzese [Levente] (kesz)
-- Email verification enforce a `users/{uid}/tasks/*` rules-ban (`request.auth.token.email_verified == true`) [Levente] (nincs kesz)
+- Email verification enforce a `users/{uid}/tasks/*` rules-ban (`request.auth.token.email_verified == true`) [Levente] (kesz)
 - Verified gate egységesítése frontenden (auth.guard + auth.listener) + egyértelmű UX (hibaüzenet, redirect, resend link) [Levente] (nincs kesz)
 - Provider-ütközés/linking flow implementálása (`fetchSignInMethodsForEmail`) a README auth szabályok szerint [Levente] (nincs kesz)
 - Fióktörlés backend hardening: Cloud Function alapú “teljes törlés” (user doc + tasks subcollection), reauth hibák kezelése [Levente] (nincs kesz)

@@ -312,7 +312,7 @@ describe("INVALID Task Integration teszt", () => {
         const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
         await assertFails(createTask(authenticatedDb as any, uid, task));
     });
-    test("INVALID taskCreatedAt kesobb van, mint a jelenido)", async () => {
+    test("INVALID taskCreatedAt kesobb van, mint a jelenido", async () => {
         const user = createTestUser();
         const task = createTestTask({ taskCreatedAt: new Date((new Date()).getTime() + 1000), taskUpdatedAt: new Date((new Date()).getTime() + 1000) });
         const email = "taskcreatedAtkesobbAFeltoltesDatuma@gmail.com";
@@ -320,7 +320,7 @@ describe("INVALID Task Integration teszt", () => {
         const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
         await assertFails(createTask(authenticatedDb as any, uid, task));
     });
-    test("INVALID nem verified user nem hozhat letre taskot)", async () => {
+    test("INVALID nem verified user nem hozhat letre taskot", async () => {
         const user = createTestUser({ verified: false });
         const task = createTestTask();
         const email = "nemverifiedusercreate@gmail.com";
@@ -328,7 +328,7 @@ describe("INVALID Task Integration teszt", () => {
         const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
         await assertFails(createTask(authenticatedDb as any, uid, task));
     });
-    test("INVALID nem verified user nem olvashat taskot)", async () => {
+    test("INVALID nem verified user nem olvashat taskot", async () => {
         const task = createTestTask();
         const email = "nemverifieduserread@gmail.com";
         const uid = `${crypto.randomUUID()}`
@@ -346,7 +346,7 @@ describe("INVALID Task Integration teszt", () => {
         const dbTask = await createTask(verifiedDb as any, uid, task)
         await assertFails(updateTask(unverifiedDb as any, uid, dbTask, { taskName: "ujnev" }));
     });
-    test("INVALID nem verified user nem torolhet taskot))", async () => {
+    test("INVALID nem verified user nem torolhet taskot", async () => {
         const task = createTestTask();
         const email = "nemverifieduserdelete@gmail.com";
         const uid = `${crypto.randomUUID()}`

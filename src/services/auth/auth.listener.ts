@@ -6,26 +6,40 @@ import { db } from "../../scripts/firebase.ts";
 const auth = getAuth();
 
 export const initializeAuthListener = function () {
-    onAuthStateChanged(auth, async (user) => {
-        if (user) {
-            console.log(`A felhasznalo bevan jelentkezve: Email: ${user.email}, Nev: ${user.displayName}, UID: ${user.uid} Verfied: ${user.emailVerified}`);
-            const userDocument = await getUserDocumentFromDatabase(db, user.uid);
-            if (userDocument) {
-                if (!user.emailVerified) {
-                    console.log("A felhasznalo meg nem hitelesitette az email cimet", userDocument.userVerified);
-                    return;
-                };
 
-                if (!(userDocument.userVerified)) {
-                    await syncUserVerificationStatus(db, user.uid);
-                };
-                redirecAuthenticatedtUser();
-            } else {
-                console.error("A felhasznalo letezik, de az adatbazisban nincs hozza dokumentum")
-            };
-        } else {
-            console.log("Nincs bejelentkezett felhasznalo.");
+    onAuthStateChanged(auth, async (user) => {
+        if (!user) {
             redirecUnauthenticatedtUser();
+            return;
         };
+        await user.reload();
+        if (!user.emailVerified) {
+            redirecUnauthenticatedtUser();
+            return;
+        }
+        const userDocument = await getUserDocumentFromDatabase(db, user.uid);
+        if (!userDocument) {
+            return;
+        };
+        if (!userDocument.userVerified) {
+            await syncUserVerificationStatus(db, user.uid);
+        };
+        redirecAuthenticatedtUser();
+        // if (user) {
+        //     const userDocument = await getUserDocumentFromDatabase(db, user.uid);
+        //     if (userDocument) {
+        //         if (!user.emailVerified) {
+        //             return;
+        //         };
+
+        //         if (!(userDocument.userVerified)) {
+        //             await syncUserVerificationStatus(db, user.uid);
+        //         };
+        //         redirecAuthenticatedtUser();
+        //     } else {
+        //     };
+        // } else {
+        //     redirecUnauthenticatedtUser();
+        // };
     });
 };

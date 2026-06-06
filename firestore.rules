@@ -108,7 +108,8 @@ service cloud.firestore {
 
     match /users/{userID} {
 
-      allow create: if isVerifiedUser(userID)
+      allow create: if request.auth != null
+        && request.auth.uid == userID
         && isValidUserDocument(request.resource.data)
         && request.resource.data.userID == request.auth.uid
         && request.resource.data.userEmail == request.auth.token.email;
