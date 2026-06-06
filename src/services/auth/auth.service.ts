@@ -26,7 +26,7 @@ export const loginWithGoogle = async function (db: Firestore) {
     const email = user.email;
     const userDocument = await getUserDocumentFromDatabase(db, user.uid)
     if (!userDocument) {
-            await createUserDocumentInDatabase(db, user.uid, email!, name!, new Date(), true)
+        await createUserDocumentInDatabase(db, user.uid, email!, name!, new Date(), true)
     };
 };
 export const getCurrentUser = async function (db: Firestore) {
@@ -61,4 +61,7 @@ export const deleteCurrentUserAccount = async function (db: Firestore) {
     };
     await deleteUserDocumentFromDatabase(db, currentUser.uid);
     await deleteUser(currentUser)
+};
+export const getAuthUser = function () {
+    return auth.currentUser;
 };

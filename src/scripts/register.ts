@@ -5,6 +5,7 @@ import { setupPasswordVisibilityToggle } from "../utils/passwordVisibilityToggle
 import { db } from "./firebase.ts";
 import { handleUiError } from "../utils/errors/handleUiError.ts";
 import { showInfoPopUp } from "../utils/popup.ts";
+import { redirecAuthenticatedtUser } from "../services/auth/auth.guard.ts";
 
 const init = function () {
     const form: HTMLElement = document.getElementById("registerForm") as HTMLElement;
@@ -13,7 +14,7 @@ const init = function () {
     document.getElementById("googleButton")?.addEventListener("click", async () => {
         try {
             await loginWithGoogle(db);
-            showInfoPopUp("Sikeres Google bejelentkezés. Töltsd újra az oldalt a fiókod megtekintéséhez");
+            redirecAuthenticatedtUser();
         } catch (error) {
             handleUiError(error);
         };

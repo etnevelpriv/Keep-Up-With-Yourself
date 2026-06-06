@@ -1,9 +1,11 @@
 import "../styles/auth.css";
-import { loginWithEmail, loginWithGoogle, sendPasswordReset } from "../services/auth/auth.service";
+import { getAuthUser, getCurrentUser, loginWithEmail, loginWithGoogle, sendPasswordReset, signOutUser } from "../services/auth/auth.service";
 import { setupPasswordVisibilityToggle } from "../utils/passwordVisibilityToggle";
 import { db } from "./firebase.ts";
 import { showInfoPopUp } from "../utils/popup.ts";
 import { handleUiError } from "../utils/errors/handleUiError.ts";
+import { redirecAuthenticatedtUser } from "../services/auth/auth.guard.ts";
+import { AppError } from "../models/AppError.ts";
 
 const init = function () {
     const form: HTMLElement = document.getElementById("loginForm") as HTMLElement;
@@ -13,7 +15,7 @@ const init = function () {
     document.getElementById("googleButton")?.addEventListener("click", async () => {
         try {
             await loginWithGoogle(db);
-            showInfoPopUp("Sikeres Google bejelentkezés. Töltsd újra az oldalt a fiókod megtekintéséhez.");
+            redirecAuthenticatedtUser();
         } catch (error) {
             handleUiError(error);
         };
@@ -35,14 +37,26 @@ const init = function () {
         };
     });
 };
-
 const sendLoginForm = async function (e: Event) {
     e.preventDefault();
     try {
         const email = document.getElementById("emailInput") as HTMLInputElement;
         const password = document.getElementById("passwordInput") as HTMLInputElement;
         await loginWithEmail(email.value, password.value);
-        showInfoPopUp("A bejelentkezés sikeres, töltsd újra az oldalt.");
+
+        const authUser = getAuthUser();
+        await authUser?.reload();
+        if (!authUser?.emailVerified) {
+            await signOutUser()
+            throw new AppError("login/not-verified");
+        };
+        const currentUser = await getCurrentUser(db)
+        if (!currentUser?.userVerified) {
+            await signOutUser()
+            throw new AppError("login/not-verified");
+        };
+
+        redirecAuthenticatedtUser();
     } catch (error) {
         handleUiError(error);
     };
@@ -50,7 +64,6 @@ const sendLoginForm = async function (e: Event) {
 const setupForgotPasswordModal = function () {
     const modal = document.getElementById("forgotPassModal");
     if (!modal) return;
-
     if (!modal.querySelector(".modal-close-button")) {
         const closeButton = document.createElement("button");
         closeButton.type = "button";
@@ -62,7 +75,6 @@ const setupForgotPasswordModal = function () {
         });
         modal.prepend(closeButton);
     };
-
     document.addEventListener("keydown", (event) => {
         if (event.key === "Escape") {
             modal.classList.add("hide");
