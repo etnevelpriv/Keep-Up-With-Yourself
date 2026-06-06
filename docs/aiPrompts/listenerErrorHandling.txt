@@ -1,0 +1,73 @@
+User: How to catch all errors form the listener while the errorhandling still works from the auth.ts
+
+GitHub Copilot: I’m checking the listener and error-handling flow so I can explain where errors are currently caught and how to keep `auth.ts` as the fallback.
+
+Read [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/services/auth/auth.listener.ts)
+
+Read memory [](file:///c%3A/Users/Admin/AppData/Roaming/Code/User/workspaceStorage/fbd3571cd63e88200221fd9760617e59/GitHub.copilot-chat/memory-tool/memories/repo/auth-listener.md)
+
+Read [](file:///c%3A/Users/Admin/Documents/Suli/Webfejlesztes/Keep-Up-With-Yourself/src/utils/errors/handleUiError.ts)
+
+Read memory [](file:///c%3A/Users/Admin/AppData/Roaming/Code/User/workspaceStorage/fbd3571cd63e88200221fd9760617e59/GitHub.copilot-chat/memory-tool/memories/repo/task-subcollection.md)
+
+I’ve confirmed the current shape: `auth.ts` only wraps the listener setup, while the async work happens later inside `onAuthStateChanged`, so that outer `try/catch` never sees those failures.
+
+The issue is that the `try/catch` in src/scripts/auth.ts only covers the synchronous call to `initializeAuthListener(db)`. The real work happens later inside the `onAuthStateChanged` callback in src/services/auth/auth.listener.ts, so errors thrown there will not be caught by the outer `try/catch`.
+
+To keep error handling centralized in `auth.ts`, pass the handler into the listener and catch inside the callback too. The pattern is:
+
+```ts
+// auth.ts
+try {
+  initializeAuthListener(db, handleUiError)
+} catch (err) {
+  handleUiError(err)
+}
+```
+
+```ts
+// auth.listener.ts
+export const initializeAuthListener = function (
+  db: Firestore,
+  onError: (error: unknown) => void
+) {
+  onAuthStateChanged(
+    auth,
+    async (user) => {
+      try {
+        if (!user) {
+          redirecUnauthenticatedtUser()
+          return
+        }
+
+        await user.reload()
+
+        if (!user.emailVerified) {
+          redirecUnauthenticatedtUser()
+          return
+        }
+
+        const userDocument = await getUserDocumentFromDatabase(db, user.uid)
+        if (!userDocument) return
+
+        if (!userDocument.userVerified) {
+          await syncUserVerificationStatus(db, user.uid)
+        }
+
+        redirecAuthenticatedtUser()
+      } catch (error) {
+        onError(error)
+      }
+    },
+    onError
+  )
+}
+```
+
+That gives you two layers of coverage:
+1. The third argument to `onAuthStateChanged` catches Firebase auth stream errors.
+2. The inner `try/catch` catches errors from `user.reload()`, Firestore reads, syncing, and redirects.
+
+One important detail: if you want all listener errors to flow through `handleUiError`, don’t rely on the outer `try/catch` alone. It cannot see async errors after the listener has been registered.
+
+If you want, I can show the exact minimal change for your current files.

@@ -8,6 +8,7 @@ import { getCurrentUser } from "../services/auth/auth.service.ts";
 import { deleteTask, getTasks, updateTask } from "../services/task/task.service.ts";
 import { getTaskTypes, uploadTaskType } from "../services/taskType/taskType.service.ts";
 import { db } from "./firebase.ts";
+import { handleUiError } from "../utils/errors/handleUiError.ts";
 
 type TaskViewItem = {
     task: Task;
@@ -210,9 +211,8 @@ const createTaskCardsInDOM = async function (tasks: TaskViewItem[], user: any) {
                         syncTaskTypeFields();
                         renderTasks(user);
                         showInfoPopUp("A feladat sikeresen módosult.");
-                    } catch (err: any) {
-                        showErrorPopUp(err.message);
-                        throw new Error(err)
+                    } catch (error) {
+                        handleUiError(error)
                     };
                 };
             };
@@ -234,9 +234,8 @@ const createTaskCardsInDOM = async function (tasks: TaskViewItem[], user: any) {
                     await updateTaskInDB(task, user.userID, taskItem.taskId);
                     renderTasks(user);
                     showInfoPopUp("A feladat állapota frissült.");
-                } catch (err: any) {
-                    showErrorPopUp("Nem sikerült frissíteni a feladatot.");
-                    throw new Error(err)
+                } catch (error) {
+                    handleUiError(error)
                 };
             });
 
@@ -250,9 +249,8 @@ const createTaskCardsInDOM = async function (tasks: TaskViewItem[], user: any) {
                     await updateTaskInDB(task, user.userID, taskItem.taskId);
                     renderTasks(user);
                     showInfoPopUp("A feladat teljesítettként lett jelölve.");
-                } catch (err: any) {
-                    showErrorPopUp("Nem sikerült frissíteni a feladatot.");
-                    throw new Error(err)
+                } catch (error) {
+                    handleUiError(error)
                 };
             });
         };
@@ -388,9 +386,8 @@ const setupModifyModal = function () {
             syncTaskTypeFields();
             await renderTasks(currentUser);
             showInfoPopUp("A feladat sikeresen törölve lett.");
-        } catch (err: any) {
-            showErrorPopUp("Nem sikerült törölni a feladatot.");
-            throw new Error(err);
+        } catch (error) {
+            handleUiError(error)
         }
     });
 

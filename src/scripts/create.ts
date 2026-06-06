@@ -3,11 +3,12 @@ import "../styles/create.css";
 import "./header.ts";
 import "../styles/loggedInUserNav.css";
 import { Task } from "../models/Task.ts";
-import { showErrorPopUp, showInfoPopUp } from "../utils/popup.ts";
+import { showInfoPopUp } from "../utils/popup.ts";
 import { getCurrentUser } from "../services/auth/auth.service.ts";
 import { createTask } from "../services/task/task.service.ts";
 import { getTaskTypes, uploadTaskType } from "../services/taskType/taskType.service.ts";
 import { db } from "./firebase.ts";
+import { handleUiError } from "../utils/errors/handleUiError.ts";
 
 const init = async function () {
     const user = await getCurrentUser(db);
@@ -30,9 +31,8 @@ const init = async function () {
             updateImportanceText();
             syncTaskTypeFields();
             showInfoPopUp("A feladat sikeresen létrejött.");
-        } catch (err: any) {
-            showErrorPopUp(err.message);
-            throw new Error(err)
+        } catch (error) {
+            handleUiError(error)
         };
     });
     document.getElementById("taskImportanceInput")?.addEventListener("input", updateImportanceText);

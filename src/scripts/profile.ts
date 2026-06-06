@@ -2,51 +2,43 @@ import "../styles/base.css";
 import "../styles/profile.css";
 import "./header.ts";
 import "../styles/loggedInUserNav.css";
-import { showErrorPopUp } from "../utils/popup.ts";
 
 import { getAuth } from "firebase/auth";
 import { User } from "../models/User.ts";
 import { deleteCurrentUserAccount, getCurrentUser, sendPasswordReset, signOutUser } from "../services/auth/auth.service.ts";
 import { db } from "./firebase.ts";
-
-type UserPayload = {
-    userID: string;
-    userName: string;
-    userEmail: string;
-    userCreatedAt: {
-        seconds: number;
-    };
-    userVerified: boolean;
-};
+import { handleUiError } from "../utils/errors/handleUiError.ts";
+import { showInfoPopUp } from "../utils/popup.ts";
 
 const init = async function () {
     getAuth();
-    const currentUser = await getCurrentUser(db);
-    if (!currentUser) {
-        return;
-    }
-
-    const userPayload = currentUser as UserPayload | null;
-    if (!userPayload) {
-        console.error("A felhasznalo letezik, de az adatbazisban nincs hozza dokumentum.");
-        return;
-    }
-
     let user: User;
     try {
-        user = new User(userPayload.userName, undefined, userPayload.userEmail, new Date(userPayload.userCreatedAt.seconds * 1000), userPayload.userVerified);
-    } catch (error: any) {
-        showErrorPopUp(error.message);
-        throw error;
+        const currentUser = await getCurrentUser(db);
+        if (!currentUser) {
+            return;
+        };
+        user = new User(currentUser.userName, undefined, currentUser.userEmail, new Date(currentUser.userCreatedAt.seconds * 1000), currentUser.userVerified);
+        showUserDataInDOM(user);
+    } catch (error) {
+        handleUiError(error)
     }
-    console.log(user.toString());
-    showUserDataInDOM(user);
 
-    document.getElementById("changePasswordButton")?.addEventListener("click", () => {
-        sendPasswordReset(user.email)
+    document.getElementById("changePasswordButton")?.addEventListener("click", async () => {
+        try {
+            await sendPasswordReset(user.email)
+            showInfoPopUp("Sikeresen kiküldtük a jelszó helyreállító emailt. Nézd meg a postaládádat.")
+        } catch (error) {
+            handleUiError(error)
+        }
     });
-    document.getElementById("signOutButton")?.addEventListener("click", () => {
-        signOutUser();
+    document.getElementById("signOutButton")?.addEventListener("click", async () => {
+        try {
+            await signOutUser();
+            showInfoPopUp("Sikeres kijelentkezés");
+        } catch (error) {
+            handleUiError(error)
+        }
     });
     document.getElementById("deleteProfileButton")?.addEventListener("click", async () => {
         const modal = document.getElementById("warningModal");
@@ -55,26 +47,15 @@ const init = async function () {
             modal?.classList.remove("show");
             return;
         });
-        document.getElementById("sureDeleteProfileButton")?.addEventListener("click", () => {
-            deleteCurrentUserAccount(db);
+        document.getElementById("sureDeleteProfileButton")?.addEventListener("click", async () => {
+            try {
+                await deleteCurrentUserAccount(db);
+                showInfoPopUp("A fiókot sikeresen töröltük.");
+            } catch (error) {
+                handleUiError(error)
+            }
         });
     });
-};
-
-const getProfileErrorMessage = function (error: unknown): string {
-    const errorCode = typeof error === "object" && error !== null && "code" in error
-        ? String((error as { code: unknown }).code)
-        : "";
-
-    const errorCodes: Record<string, string> = {
-        "auth/missing-email": "Nem található e-mail cím a művelethez.",
-        "auth/invalid-email": "Hibás e-mail cím.",
-        "auth/requires-recent-login": "Biztonsági okokból jelentkezz be újra, majd próbáld meg ismét.",
-        "auth/network-request-failed": "Hálózati hiba történt. Ellenőrizd az internetkapcsolatot.",
-        "permission-denied": "Nincs jogosultságod ehhez a művelethez.",
-    };
-
-    return errorCodes[errorCode] ?? "Ismeretlen hiba történt. Próbáld meg újra később.";
 };
 
 const showUserDataInDOM = function (user: User) {
@@ -92,9 +73,4 @@ const showUserDataInDOM = function (user: User) {
     }
 };
 
-document.addEventListener("DOMContentLoaded", () => {
-    init().catch((error) => {
-        showErrorPopUp(getProfileErrorMessage(error));
-        console.error(error);
-    });
-});
+document.addEventListener("DOMContentLoaded", init);
