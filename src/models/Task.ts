@@ -1,5 +1,6 @@
 import type { TaskInterface } from "../interfaces/TaskInterface.ts";
-import { sanitizeText, taskDataValidationProcess } from "../services/task/task.validator.ts";
+import { taskDataValidationProcess } from "../services/task/task.validator.ts";
+import { sanitizeText } from "../services/sanitization/sanitizeText.ts";
 export class Task implements TaskInterface {
     taskName: string;
     taskDesc: string;

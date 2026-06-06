@@ -19,6 +19,8 @@ export const errorMessages: AppErrorMessageInterface = {
     "validation/invalid-task-status": "A feladat állapota érvénytelen.",
     "validation/invalid-task-completedAt": "A feladat befejezési dátuma érvénytelen.",
     "validation/invalid-task-updatedAt": "A feladat frissítési dátuma érvénytelen.",
+
+    // Sanitization validation error
     "validation/invalid-text-type": "Valamelyik szöveges mező érvénytelen.",
 
     // Firebase auth errror

@@ -151,7 +151,7 @@ describe("INVALID User class tesztelese", () => {
     test("Invalid adattal/adatokkal letrehozni a usert, ahol name nem string", () => {
         expect(() => createTestUser({
             name: 10 as any
-        })).toThrow("validation/invalid-name");
+        })).toThrow("validation/invalid-text-type");
     });
     test("Invalid adattal/adatokkal letrehozni a usert, ahol email ures string", () => {
         expect(() => createTestUser({

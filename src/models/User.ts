@@ -1,5 +1,6 @@
 import type { UserInterface } from "../interfaces/UserInterface.ts";
 import { validateRegisterInput } from "../services/user/user.validator.ts";
+import { sanitizeText } from "../services/sanitization/sanitizeText.ts";
 export class User implements UserInterface {
     name: string;
     password: string | undefined;
@@ -8,6 +9,7 @@ export class User implements UserInterface {
     verified: boolean;
 
     constructor(name: string, password: string | undefined, email: string, createdAt: Date, verified: boolean) {
+        name = sanitizeText(name);
         validateRegisterInput(name, email, password, createdAt, verified);
         this.name = name;
         this.password = password;

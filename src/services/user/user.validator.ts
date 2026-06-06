@@ -1,5 +1,4 @@
 import { AppError } from "../../models/AppError.ts";
-
 export const validateUserEmail = function (email: string) {
     if (typeof email !== "string" || email.trim() === "" || !email.includes("@")) {
         throw new AppError("validation/invalid-email");
