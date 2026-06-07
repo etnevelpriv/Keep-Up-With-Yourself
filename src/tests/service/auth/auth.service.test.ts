@@ -178,6 +178,25 @@ describe("VALID Auth Service Mock Teszt", () => {
             handleCodeInApp: true,
         })
     });
+    test("VALID waitForAuthUser", async () => {
+        const user = { uid: "TESZT_UID" };
+
+        vi.mocked(onAuthStateChanged).mockImplementation((auth, callback: any) => {
+            const unsubscribe = vi.fn();
+            setTimeout(() => callback(user), 0)
+            return unsubscribe;
+        });
+        expect(await waitForAuthUser()).toEqual(user);
+    });
+    test("VALID getCurrentUserWhenReady teszt, ahol nincs bejelentkezett felhasznalo", async () => {
+        const db: Firestore = {} as Firestore
+        vi.mocked(onAuthStateChanged).mockImplementation((auth, callback: any) => {
+            const unsubscribe = vi.fn();
+            setTimeout(() => callback(null), 0)
+            return unsubscribe;
+        });
+        expect(await getCurrentUserWhenReady(db)).toBe(null)
+    });
 });
 describe("INVALID Auth Service Mock Teszt", () => {
     test("INVALID registerWithEmail teszt, ahol a createUserWithEmailAndPassword elbukik", async () => {
