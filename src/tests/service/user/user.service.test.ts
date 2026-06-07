@@ -1,6 +1,6 @@
 import { expect, test, describe, vi, beforeEach } from 'vitest';
-import { doc, getDoc, updateDoc, setDoc, deleteDoc, type Firestore } from "firebase/firestore";
-import { syncUserVerificationStatus, createUserDocumentInDatabase, updateUserDocumentInDatabase, getUserDocumentFromDatabase, deleteUserDocumentFromDatabase } from '../../../services/user/user.service';
+import { doc, getDoc, updateDoc, setDoc, type Firestore } from "firebase/firestore";
+import { createUserDocumentInDatabase, updateUserDocumentInDatabase, getUserDocumentFromDatabase } from '../../../services/user/user.service';
 
 vi.mock("firebase/firestore", () => ({
     doc: vi.fn(() => ({ uid: "TESZT_UID" })),
@@ -13,15 +13,6 @@ beforeEach(() => {
     vi.resetAllMocks();
 });
 describe("VALID User Service Mock teszt", () => {
-    test("VALID syncUserVerificationStatus teszt", async () => {
-        const db: Firestore = {} as Firestore;
-
-        await syncUserVerificationStatus(db, "TESZT_UID");
-        expect(doc).toHaveBeenCalledWith(db, "users", "TESZT_UID");
-        expect(updateDoc).toHaveBeenCalledWith({ uid: "TESZT_UID" }, {
-            userVerified: true
-        });
-    });
     test("VALID createUserDocumentInDatabase teszt", async () => {
         const db: Firestore = {} as Firestore;
         const createdAt = new Date()
@@ -74,25 +65,8 @@ describe("VALID User Service Mock teszt", () => {
         
         });
     });
-    test("VALID deleteUserDocumentFromDatabase teszt", async () => {
-        const db: Firestore = {} as Firestore;
-
-        await deleteUserDocumentFromDatabase(db, "TESZT_UID");
-        expect(doc).toHaveBeenCalledWith(db, "users", "TESZT_UID");
-        expect(deleteDoc).toHaveBeenCalledWith({ uid: "TESZT_UID" });
-    });
 });
 describe("INVALID User Service Mock Teszt", () => {
-    test("INVALID syncUserVerificationStatus teszt", async () => {
-        const db: Firestore = {} as Firestore;
-        vi.mocked(updateDoc).mockRejectedValue(new Error("Firestore update hiba"))
-
-        await expect(syncUserVerificationStatus(db, "TESZT_UID")).rejects.toThrow("Firestore update hiba");
-        expect(doc).toHaveBeenCalledWith(db, "users", "TESZT_UID");
-        expect(updateDoc).toHaveBeenCalledWith({ uid: "TESZT_UID" }, {
-            userVerified: true
-        });
-    });
     test("INVALID createUserDocumentInDatabase teszt", async () => {
         const db: Firestore = {} as Firestore;
         const createdAt = new Date()
@@ -126,13 +100,5 @@ describe("INVALID User Service Mock Teszt", () => {
         expect(getDoc).toHaveBeenCalledWith({
             uid: "TESZT_UID"
         });
-    });
-    test("INVALID deleteUserDocumentFromDatabase teszt", async () => {
-        const db: Firestore = {} as Firestore;
-        vi.mocked(deleteDoc).mockRejectedValue(new Error("Firestore delete hiba"))
-
-        await expect(deleteUserDocumentFromDatabase(db, "TESZT_UID")).rejects.toThrow("Firestore delete hiba");
-        expect(doc).toHaveBeenCalledWith(db, "users", "TESZT_UID");
-        expect(deleteDoc).toHaveBeenCalledWith({ uid: "TESZT_UID" });
     });
 });

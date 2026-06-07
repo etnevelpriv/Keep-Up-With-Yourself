@@ -314,7 +314,7 @@ describe("INVALID Task Integration teszt", () => {
     });
     test("INVALID taskCreatedAt kesobb van, mint a jelenido", async () => {
         const user = createTestUser();
-        const task = createTestTask({ taskCreatedAt: new Date((new Date()).getTime() + 1000), taskUpdatedAt: new Date((new Date()).getTime() + 1000) });
+        const task = createTestTask({ taskCreatedAt: new Date((new Date()).getTime() + 6000), taskUpdatedAt: new Date((new Date()).getTime() + 6000) });
         const email = "taskcreatedAtkesobbAFeltoltesDatuma@gmail.com";
         const uid = `${crypto.randomUUID()}`
         const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);

@@ -1,4 +1,4 @@
-import { doc, getDoc, updateDoc, setDoc, deleteDoc, type Firestore } from "firebase/firestore";
+import { doc, getDoc, updateDoc, setDoc, type Firestore } from "firebase/firestore";
 
 export const createUserDocumentInDatabase = async function (db: Firestore, uid: string, email: string, name: string, createdAt: Date, verified: boolean) {
     const defaultTaskTypes = ["Tanulás", "Munka", "Takarítás"];
@@ -20,7 +20,4 @@ export const getUserDocumentFromDatabase = async function (db: Firestore, uid: s
         return false;
     }
     return (docSnap.data());
-};
-export const deleteUserDocumentFromDatabase = async function (db:Firestore, uid: string) {
-    await deleteDoc(doc(db, "users", uid));
 };
