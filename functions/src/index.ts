@@ -74,7 +74,6 @@
 
 import { onCall, HttpsError } from "firebase-functions/v2/https";
 import { onSchedule } from "firebase-functions/v2/scheduler";
-import { logger } from "firebase-functions";
 import * as admin from "firebase-admin";
 
 admin.initializeApp();
@@ -90,12 +89,9 @@ export const deleteCurrentUserCompletely = onCall(async (request) => {
     throw new HttpsError("permission-denied", "auth/email-not-verified");
   };
   try {
-    try {
-      await admin.auth().deleteUser(uid)
-    } catch (error) {
-      throw error;
-    }
-    await db.collection("users").doc(uid).delete();
+    await admin.auth().deleteUser(uid)
+    const userRef = db.collection("users").doc(uid);
+    await db.recursiveDelete(userRef)
     return;
   } catch (error) {
     throw new HttpsError("internal", "account/delete-failed");
@@ -108,12 +104,11 @@ export const syncOwnVerificationStatus = onCall(async (request) => {
   if (!uid) {
     throw new HttpsError("unauthenticated", "auth/not-authenticated");
   };
-  if (!emailVerified) {
-    throw new HttpsError("permission-denied", "auth/email-not-verified");
+  if (emailVerified === true) {
+    await db.collection("users").doc(uid).update({
+      userVerified: emailVerified
+    });
   };
-  await db.collection("users").doc(uid).update({
-    userVerified: emailVerified
-  });
   return;
 });
 
@@ -121,11 +116,11 @@ export const updateExpiredTasks = onSchedule(("every day 00:00"), async (event) 
   const now = admin.firestore.Timestamp.now();
   const usersSnapshot = await db.collection("users").get();
   usersSnapshot.docs.forEach(async (userDoc) => {
-    const tasksSnapshot = await db.collection("tasks").where("taskStatus", "==", "Folyamatban").where("taskDeadline", "<", now).get();
+    const tasksSnapshot = await userDoc.ref.collection("tasks").where("taskStatus", "==", "Folyamatban").where("taskDeadline", "<", now).get();
     tasksSnapshot.docs.forEach(async (taskDoc) => {
       await taskDoc.ref.update({
-        taskStatus:"Lejárt",
-        taskUpdatedAt:now
+        taskStatus: "Lejárt",
+        taskUpdatedAt: now
       });
     });
   });
