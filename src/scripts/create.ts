@@ -4,41 +4,45 @@ import "./header.ts";
 import "../styles/loggedInUserNav.css";
 import { Task } from "../models/Task.ts";
 import { showInfoPopUp } from "../utils/popup.ts";
-import { getCurrentUserWhenReady } from "../services/auth/auth.service.ts";
+import { getAuthUserWhenReady } from "../services/auth/auth.service.ts";
 import { createTask } from "../services/task/task.service.ts";
 import { getTaskTypes, uploadTaskType } from "../services/taskType/taskType.service.ts";
 import { db } from "./firebase.ts";
 import { handleUiError } from "../utils/errors/handleUiError.ts";
+import { getUserDocumentFromDatabase } from "../services/user/user.service.ts";
 
 const init = async function () {
-    const user = await getCurrentUserWhenReady(db);
-    if (!user) {
-        return;
-    }
-    const taskTypesNames = getTaskTypes(user)
-    createSelectOptions(taskTypesNames);
-    updateImportanceText();
-    syncTaskTypeFields();
-    document.getElementById("createForm")?.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        try {
-            const formElements = await getFormElements(user);
-            console.log(formElements);
-            const newTask = new Task(formElements[0], formElements[1], new Date(formElements[2]), Number(formElements[3]), formElements[4], "Folyamatban", null, new Date(), new Date())
-            console.log(newTask);
-            await createTaskInDB(newTask, user);
-            (document.getElementById("createForm") as HTMLFormElement).reset();
-            updateImportanceText();
+    try {
+        const currentUser = await getAuthUserWhenReady();
+        const userDoc = await getUserDocumentFromDatabase(db, currentUser.uid)
+        console.log(userDoc)
+        const taskTypesNames = getTaskTypes(userDoc)
+        console.log(taskTypesNames)
+        createSelectOptions(taskTypesNames);
+
+        document.getElementById("createForm")?.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            try {
+                const formElements = await getFormElements(userDoc);
+                console.log(formElements);
+                const newTask = new Task(formElements[0], formElements[1], new Date(formElements[2]), Number(formElements[3]), formElements[4], "Folyamatban", null, new Date(), new Date())
+                console.log(newTask);
+                await createTaskInDB(newTask, userDoc);
+                (document.getElementById("createForm") as HTMLFormElement).reset();
+                updateImportanceText();
+                syncTaskTypeFields();
+                showInfoPopUp("A feladat sikeresen létrejött.");
+            } catch (error) {
+                handleUiError(error)
+            };
+        });
+        document.getElementById("taskImportanceInput")?.addEventListener("input", updateImportanceText);
+        document.getElementById('taskNewTypeInput')?.addEventListener("change", () => {
             syncTaskTypeFields();
-            showInfoPopUp("A feladat sikeresen létrejött.");
-        } catch (error) {
-            handleUiError(error)
-        };
-    });
-    document.getElementById("taskImportanceInput")?.addEventListener("input", updateImportanceText);
-    document.getElementById('taskNewTypeInput')?.addEventListener("change", () => {
-        syncTaskTypeFields();
-    });
+        });
+    } catch (error) {
+        handleUiError(error);
+    };
 };
 
 const updateImportanceText = function () {

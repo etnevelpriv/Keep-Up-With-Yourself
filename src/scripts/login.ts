@@ -1,11 +1,12 @@
 import "../styles/auth.css";
-import { getAuthUser, getCurrentUser, loginWithEmail, loginWithGoogle, sendPasswordReset, signOutUser } from "../services/auth/auth.service";
+import { getAuthUser, loginWithEmail, loginWithGoogle, sendPasswordReset, signOutUser } from "../services/auth/auth.service";
 import { setupPasswordVisibilityToggle } from "../utils/passwordVisibilityToggle";
 import { db } from "./firebase.ts";
 import { showInfoPopUp } from "../utils/popup.ts";
 import { handleUiError } from "../utils/errors/handleUiError.ts";
 import { redirecAuthenticatedtUser } from "../services/auth/auth.guard.ts";
 import { AppError } from "../models/AppError.ts";
+import { getUserDocumentFromDatabase } from "../services/user/user.service.ts";
 
 const init = function () {
     const form: HTMLElement = document.getElementById("loginForm") as HTMLElement;
@@ -44,14 +45,10 @@ const sendLoginForm = async function (e: Event) {
         const password = document.getElementById("passwordInput") as HTMLInputElement;
         await loginWithEmail(email.value, password.value);
 
-        const authUser = getAuthUser();
-        await authUser?.reload();
-        if (!authUser?.emailVerified) {
-            await signOutUser()
-            throw new AppError("login/not-verified");
-        };
-        const currentUser = await getCurrentUser(db)
-        if (!currentUser?.userVerified) {
+        const currentUser = getAuthUser();
+        await currentUser?.reload();
+        const userDoc = await getUserDocumentFromDatabase(db, currentUser.uid)
+        if (!currentUser?.emailVerified || !userDoc?.userVerified) {
             await signOutUser()
             throw new AppError("login/not-verified");
         };

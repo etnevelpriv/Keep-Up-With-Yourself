@@ -4,11 +4,12 @@ import "./header.ts";
 import "../styles/loggedInUserNav.css";
 import { Task } from "../models/Task.ts";
 import { showErrorPopUp, showInfoPopUp } from "../utils/popup.ts";
-import { getCurrentUserWhenReady } from "../services/auth/auth.service.ts";
+import { getAuthUserWhenReady } from "../services/auth/auth.service.ts";
 import { deleteTask, getTasks, updateTask } from "../services/task/task.service.ts";
 import { getTaskTypes, uploadTaskType } from "../services/taskType/taskType.service.ts";
 import { db } from "./firebase.ts";
 import { handleUiError } from "../utils/errors/handleUiError.ts";
+import { getUserDocumentFromDatabase } from "../services/user/user.service.ts";
 
 type TaskViewItem = {
     task: Task;
@@ -20,30 +21,31 @@ let currentUser: any = null;
 let selectedTaskItem: TaskViewItem | null = null;
 
 const init = async function () {
-    const user = await getCurrentUserWhenReady(db) as any;
-    if (!user) {
-        return;
-    }
-    currentUser = user;
-    console.log(user)
-    const arr = await getTasks(db, user.userID)
-    taskViewItems = arr.map((element: any) => ({
-        task: createTaskFromDocument(element),
-        taskId: element.id
-    }));
-    const tasks: Task[] = taskViewItems.map((taskViewItem) => taskViewItem.task);
-    const taskTypesNames = getTaskTypes(user)
-    createSelectOptions(taskTypesNames);
-    console.log(tasks)
-    setupTaskControls(user);
-    await renderTasks(user);
-    setupModifyModal();
-    updateImportanceText();
-    syncTaskTypeFields();
-    document.getElementById("taskImportanceInput")?.addEventListener("input", updateImportanceText);
-    document.getElementById('taskNewTypeInput')?.addEventListener("change", () => {
+    try {
+        currentUser = await getAuthUserWhenReady();
+        const userDoc = await getUserDocumentFromDatabase(db, currentUser.uid)
+        console.log(userDoc)
+        const arr = await getTasks(db, userDoc!.userID)
+        taskViewItems = arr.map((element: any) => ({
+            task: createTaskFromDocument(element),
+            taskId: element.id
+        }));
+        const tasks: Task[] = taskViewItems.map((taskViewItem) => taskViewItem.task);
+        const taskTypesNames = getTaskTypes(userDoc)
+        createSelectOptions(taskTypesNames);
+        console.log(tasks)
+        setupTaskControls(userDoc);
+        await renderTasks(userDoc);
+        setupModifyModal();
+        updateImportanceText();
         syncTaskTypeFields();
-    });
+        document.getElementById("taskImportanceInput")?.addEventListener("input", updateImportanceText);
+        document.getElementById('taskNewTypeInput')?.addEventListener("change", () => {
+            syncTaskTypeFields();
+        });
+    } catch (error) {
+        handleUiError(error);
+    };
 
 };
 
@@ -197,9 +199,9 @@ const createTaskCardsInDOM = async function (tasks: TaskViewItem[], user: any) {
                 form.onsubmit = async (e) => {
                     e.preventDefault();
                     try {
-                        const formElements = getFormElements(user);
+                        const formElements = await getFormElements(user);
                         console.log(formElements);
-                        const newTask = new Task(formElements[0], formElements[1], new Date(formElements[2]), Number(formElements[3]), formElements[4], task.taskStatus, task.taskCompletedAt, task.taskCreatedAt, new Date())
+                        const newTask:Task = new Task(formElements[0], formElements[1], new Date(formElements[2]), Number(formElements[3]), formElements[4], task.taskStatus, task.taskCompletedAt, task.taskCreatedAt, new Date())
                         console.log(newTask);
                         await updateTaskInDB(newTask, user.userID, taskItem.taskId);
                         taskItem.task = newTask;
@@ -378,7 +380,7 @@ const setupModifyModal = function () {
         }
 
         try {
-            await deleteTask(db, currentUser.userID, selectedTaskItem.taskId);
+            await deleteTask(db, currentUser.uid, selectedTaskItem.taskId);
             taskViewItems = taskViewItems.filter((taskItem) => taskItem.taskId !== selectedTaskItem?.taskId);
             closeModal();
             form.reset();
@@ -435,7 +437,7 @@ const toDateTimeInputValue = function (date: Date) {
     return offsetDate.toISOString().slice(0, 16);
 };
 
-const getFormElements = function (user: any): [string, string, string, string, string] {
+const getFormElements = async function (user: any): Promise<[string, string, string, string, string]> {
     const taskName = (document.getElementById('taskNameInput') as HTMLInputElement).value;
     const taskDesc = (document.getElementById('taskDescTextarea') as HTMLTextAreaElement).value;
     const taskDeadline = (document.getElementById('taskDeadlineInput') as HTMLInputElement).value;
@@ -444,7 +446,7 @@ const getFormElements = function (user: any): [string, string, string, string, s
     let taskTypeName = ""
     if (taskNewType) {
         taskTypeName = (document.getElementById('taskTypeNameInput') as HTMLInputElement).value;
-        uploadTaskType(user, taskTypeName);
+        await uploadTaskType(user, taskTypeName);
     } else {
         taskTypeName = (document.getElementById('taskTypeNameSelect') as HTMLSelectElement).value;
     }

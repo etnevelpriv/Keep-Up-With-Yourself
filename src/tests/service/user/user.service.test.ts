@@ -58,7 +58,7 @@ describe("VALID User Service Mock teszt", () => {
             exists: () => { return false },
             data: () => { return { uid: "TESZT_UID", name: "NEV" } }
         } as any)
-        expect(await getUserDocumentFromDatabase(db, "TESZT_UID")).toEqual(false);
+        expect(await getUserDocumentFromDatabase(db, "TESZT_UID")).toEqual(null);
         expect(doc).toHaveBeenCalledWith(db, "users", "TESZT_UID");
         expect(getDoc).toHaveBeenCalledWith({
             uid: "TESZT_UID"

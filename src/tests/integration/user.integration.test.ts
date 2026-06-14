@@ -17,7 +17,7 @@ describe("VALID User Integration teszt", () => {
         const authenticatedDb = getAuthenticatedDb(uid, email, user.verified)
         await createUserDocumentInDatabase(authenticatedDb as any, uid, email, user.name, user.createdAt, user.verified);
         const dbUser = await getUserDocumentFromDatabase(authenticatedDb as any, uid);
-        expect(dbUser).not.toBe(false);
+        expect(dbUser).not.toBe(null);
     });
     test("VALID User dokumentum letrehozasa, modositasa es lekerese", async () => {
         const user = createTestUser();
@@ -29,7 +29,7 @@ describe("VALID User Integration teszt", () => {
             userName: "updatedUserName"
         })
         const dbUser = await getUserDocumentFromDatabase(authenticatedDb as any, uid);
-        expect(dbUser).not.toBe(false);
+        expect(dbUser).not.toBe(null);
         expect((dbUser as any).userName).toBe("updatedUserName");
     });
 });

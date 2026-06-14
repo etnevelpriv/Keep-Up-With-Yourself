@@ -17,7 +17,7 @@ export const updateUserDocumentInDatabase = async function (db: Firestore, uid: 
 export const getUserDocumentFromDatabase = async function (db: Firestore, uid: string) {
     const docSnap = await getDoc(doc(db, "users", uid));
     if (!docSnap.exists()) {
-        return false;
+        return null;
     }
     return (docSnap.data());
 };

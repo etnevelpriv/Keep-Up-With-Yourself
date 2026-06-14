@@ -23,9 +23,14 @@ export const errorMessages: AppErrorMessageInterface = {
     // Sanitization validation error
     "validation/invalid-text-type": "Valamelyik szöveges mező érvénytelen.",
 
-    // Authentication process error
+    // Kliens Authentication process error
     "login/not-verified": "Az email címed nincs megerősítve. Nézd meg a postafiókod, vagy állítsd be egy új jelszót.",
-
+    "appAuth/no-current-auth-user": "Nincs bejelentkeztetett felhaszáló a művelethez.",
+    "appAuth/unsupported-provider": "Nem megfelelő hitelesítési szolgáltató.",
+    
+    // Kliens User process error
+    "appUser/document-not-found": "Nem található felhasználó az adatbázisban",
+    
     // Firebase auth error
     "auth/email-already-in-use": "Ezzel az e-mail címmel már létezik felhasználói fiók.",
     "auth/invalid-credential": "Helytelen e-mail cím vagy jelszó.",

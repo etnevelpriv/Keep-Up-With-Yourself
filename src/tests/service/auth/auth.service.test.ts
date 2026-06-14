@@ -101,7 +101,7 @@ describe("VALID Auth Service Mock Teszt", () => {
         vi.mocked(signInWithPopup).mockResolvedValue({
             user: firebaseUser
         } as UserCredential);
-        vi.mocked(getUserDocumentFromDatabase).mockResolvedValue(false)
+        vi.mocked(getUserDocumentFromDatabase).mockResolvedValue(null)
 
         await loginWithGoogle(db)
         expect(signInWithPopup).toHaveBeenCalled();
@@ -296,7 +296,7 @@ describe("INVALID Auth Service Mock Teszt", () => {
         vi.mocked(signInWithPopup).mockResolvedValue({
             user: firebaseUser
         } as UserCredential);
-        vi.mocked(getUserDocumentFromDatabase).mockResolvedValue(false);
+        vi.mocked(getUserDocumentFromDatabase).mockResolvedValue(null);
         vi.mocked(createUserDocumentInDatabase).mockRejectedValue(new Error("Firestore create user hiba"));
 
         await expect(loginWithGoogle(db)).rejects.toThrow("Firestore create user hiba");
@@ -315,7 +315,7 @@ describe("INVALID Auth Service Mock Teszt", () => {
         vi.mocked(signInWithPopup).mockResolvedValue({
             user: firebaseUser
         } as any);
-        vi.mocked(getUserDocumentFromDatabase).mockResolvedValue(false);
+        vi.mocked(getUserDocumentFromDatabase).mockResolvedValue(null);
 
         await loginWithGoogle(db);
         expect(signInWithPopup).toHaveBeenCalled();
@@ -333,7 +333,7 @@ describe("INVALID Auth Service Mock Teszt", () => {
         vi.mocked(signInWithPopup).mockResolvedValue({
             user: firebaseUser
         } as any);
-        vi.mocked(getUserDocumentFromDatabase).mockResolvedValue(false);
+        vi.mocked(getUserDocumentFromDatabase).mockResolvedValue(null);
 
         await loginWithGoogle(db);
         expect(signInWithPopup).toHaveBeenCalled();
@@ -351,7 +351,7 @@ describe("INVALID Auth Service Mock Teszt", () => {
         vi.mocked(signInWithPopup).mockResolvedValue({
             user: firebaseUser
         } as any);
-        vi.mocked(getUserDocumentFromDatabase).mockResolvedValue(false);
+        vi.mocked(getUserDocumentFromDatabase).mockResolvedValue(null);
 
         await loginWithGoogle(db);
         expect(signInWithPopup).toHaveBeenCalled();
