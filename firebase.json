@@ -32,9 +32,30 @@
     ],
     "rewrites": [
       {
+        "source": "/bejelentkezes",
+        "destination": "/pages/login.html"
+      },
+      {
+        "source": "/regisztralas",
+        "destination": "/pages/register.html"
+      },
+      {
+        "source": "/feladataim",
+        "destination": "/pages/tasks.html"
+      },
+      {
+        "source": "/profilom",
+        "destination": "/pages/profile.html"
+      },
+      {
+        "source": "/letrehozas",
+        "destination": "/pages/create.html"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
-    ]
+    ],
+    "cleanUrls": true
   }
 }

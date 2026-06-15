@@ -190,7 +190,7 @@ describe("VALID Auth Service Mock Teszt", () => {
             uid: "TESZT_UID"
         };
         const unsubscribe = vi.fn();
-        vi.mocked(onAuthStateChanged).mockImplementation((auth, callback: any) => {
+        vi.mocked(onAuthStateChanged).mockImplementation((_auth, callback: any) => {
             queueMicrotask(() => callback(user));
             return unsubscribe;
         });
@@ -415,7 +415,7 @@ describe("INVALID Auth Service Mock Teszt", () => {
     });
     test("INVALID getAuthUserWhenReady teszt", async () => {
         const unsubscribe = vi.fn();
-        vi.mocked(onAuthStateChanged).mockImplementation((auth, callback: any) => {
+        vi.mocked(onAuthStateChanged).mockImplementation((_auth, callback: any) => {
             queueMicrotask(() => callback());
             return unsubscribe;
         });

@@ -14,3 +14,4 @@ https://firebase.google.com/docs/rules/rules-and-auth
 https://saveyourtime.medium.com/firebase-cloud-firestore-add-set-update-delete-get-data-6da566513b1b
 https://firebase.google.com/docs/functions/callable
 https://stackoverflow.com/questions/60133282/how-to-delete-a-user-and-their-firestore-document-in-a-callable-cloud-function
+https://firebase.google.com/docs/hosting/full-config
