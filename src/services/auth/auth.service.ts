@@ -32,8 +32,8 @@ export const loginWithGoogle = async function (db: Firestore) {
         await createUserDocumentInDatabase(db, user.uid, email!, name!, new Date(), true)
     };
 };
-export const getAuthUserWhenReady = async function ():Promise<User> {
-    return new Promise((resolve, reject) => {
+export const getAuthUserWhenReady = function ():Promise<User> {
+    return new Promise<User>((resolve, reject) => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             unsubscribe();
             if (!user) {
@@ -50,14 +50,14 @@ export const signOutUser = async function () {
 export const sendPasswordReset = async function (email: string) {
     await sendPasswordResetEmail(auth, email);
 };
-export const sendEmailVerificationToUser = async function (user: any) {
+export const sendEmailVerificationToUser = async function (user: User) {
     const actionCodeSettings = {
         url: 'https://keepupwithyourself.hu/pages/create.html',
         handleCodeInApp: true,
     };
     await sendEmailVerification(user, actionCodeSettings);
 };
-export const deleteCurrentUserAccount = async function (password: string) {
+export const deleteCurrentUserAccount = async function (password?: string) {
     await reauthenticateCurrentUser(password);
     const functions = getFunctions();
     const deleteCurrentUserCompletely = httpsCallable(
@@ -71,28 +71,31 @@ export const getAuthUser = function ():User {
     if (currentUser) {
         return currentUser;
     };
-    throw new AppError("auth/no-current-auth-user")
+    throw new AppError("appAuth/no-current-auth-user")
 };
 // Muszaj vagyok hibatkezelni a serviceben, nem tudok mashogy rendesen hibakat dobni jelenleg sajnos
 export const reauthenticateCurrentUser = async function (password?: string) {
     const providerId = await getProvider();
-    const user = getAuthUser();
+    const currentUser = getAuthUser();
     if (providerId === "password") {
         if (!password) {
-            throw new AppError("auth/password-required");
+            throw new AppError("appAuth/password-required");
         }
-        const credential = EmailAuthProvider.credential(user.email!, password);
-        await reauthenticateWithCredential(user, credential);
+        if (!currentUser.email) {
+            throw new AppError("appAuth/no-email")
+        };
+        const credential = EmailAuthProvider.credential(currentUser.email, password);
+        await reauthenticateWithCredential(currentUser, credential);
         return;
     }
     if (providerId === "google.com") {
         const provider = new GoogleAuthProvider();
-        await reauthenticateWithPopup(user, provider);
+        await reauthenticateWithPopup(currentUser, provider);
         return;
     };
-    throw new AppError("auth/unsupported-provider");
+    throw new AppError("appAuth/unsupported-provider");
 };
-export const getProvider = async function () {
+export const getProvider = async function ():Promise<string | null> {
     const currentUser = getAuthUser();
     return (await currentUser.getIdTokenResult(true)).signInProvider;
 };

@@ -24,10 +24,12 @@ export const errorMessages: AppErrorMessageInterface = {
     "validation/invalid-text-type": "Valamelyik szöveges mező érvénytelen.",
 
     // Kliens Authentication process error
-    "login/not-verified": "Az email címed nincs megerősítve. Nézd meg a postafiókod, vagy állítsd be egy új jelszót.",
+    "appAuth/not-verified": "Az email címed nincs megerősítve. Nézd meg a postafiókod, vagy állítsd be egy új jelszót.",
     "appAuth/no-current-auth-user": "Nincs bejelentkeztetett felhaszáló a művelethez.",
     "appAuth/unsupported-provider": "Nem megfelelő hitelesítési szolgáltató.",
-    
+    "appAuth/no-email": "Az email nincs megfelelően megadva.",
+    "appAuth/password-required": "A jelszó megadása kötelező.",
+
     // Kliens User process error
     "appUser/document-not-found": "Nem található felhasználó az adatbázisban",
     

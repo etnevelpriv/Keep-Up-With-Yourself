@@ -64,7 +64,7 @@ const init = async function () {
                         const password = passwordInput.value;
                         await deleteCurrentUserAccount(password);
                     } else if (provider == "google.com") {
-                        await deleteCurrentUserAccount("");
+                        await deleteCurrentUserAccount();
                     } else {
                         throw new AppError("appAuth/unsupported-provider")
                     }

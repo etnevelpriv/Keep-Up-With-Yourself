@@ -50,7 +50,7 @@ const sendLoginForm = async function (e: Event) {
         const userDoc = await getUserDocumentFromDatabase(db, currentUser.uid)
         if (!currentUser?.emailVerified || !userDoc?.userVerified) {
             await signOutUser()
-            throw new AppError("login/not-verified");
+            throw new AppError("appAuth/not-verified");
         };
 
         redirecAuthenticatedtUser();
