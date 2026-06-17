@@ -1,0 +1,57 @@
+taskTypes tesztek megirasa (kulon service test, kulon validation teszt, user integration tesztben hozzaadni, task integration tesztben hozzaadni)
+
+
+
+8:54 PM
+
+
+
+
+
+
+Ránézek a repo szerkezetére és a meglévő tesztmintákra, aztán ugyanabba a ritmusba illesztem be a taskTypes lefedést. Először csak olvasok, hogy ne találgassak a stackről.
+
+
+
+
+Ran 3 commands
+
+
+Megvan a lényeg: van már taskType service/validator, de nincs hozzá külön tesztfájl, és a worktree-ben jelenleg csak README.md meg firestore.rules módosított. Most megnézem a meglévő user/task tesztek stílusát és a taskType implementációt, hogy pontosan oda passzoljon.
+
+
+
+
+Ran 12 commands
+
+
+A taskType service egy kicsit „frontend service” jellegű: auth-ból veszi az aktuális uid-t, majd a user doksi taskTypes mezőjét frissíti. Emiatt a service tesztnél mockolni fogom az auth/user/firebase modulokat, az integration teszteknél pedig a meglévő Firestore rules setupot használom.
+
+
+
+
+Most már szerkesztek: két új service tesztfájlt adok hozzá (taskType.service, taskType.validator), plusz célzott taskTypes eseteket teszek a user és task integration suite-okba. A meglévő elnevezések magyar stílusát megtartom, hogy ne lógjon ki.
+
+
+
+
+Created 2 files, edited 2 files
+
+
+A tesztek bekerültek. Most futtatok egy célzott Vitest kört először a service fájlokra; ha az zöld, jöhet az integration/emulator irány, mert ott már a Firestore rules is beleszól.
+
+
+
+
+Ran a command
+
+
+
+
+
+Edited 4 files+242-39Review changesUndoReview
+
+src/tests/integration/task.integration.test.ts+51-21
+src/tests/integration/user.integration.test.ts+47-18
+src/tests/service/taskType/taskType.service.test.ts+77-0
+Show 1 more file

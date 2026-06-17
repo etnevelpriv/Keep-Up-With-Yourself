@@ -55,6 +55,20 @@ describe("VALID Task Integration teszt", () => {
         const falsedbTask = await getTask(authenticatedDb as any, uid, tid);
         expect(falsedbTask).toBe(null);
     });
+    test("VALID Task dokumentum egyedi taskTypeName mezovel", async () => {
+        const user = createTestUser();
+        const task = createTestTask({
+            taskTypeName: "Edzes"
+        });
+        const email = "tasktypenevvalidteszt@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
+        const tid = await createTask(authenticatedDb as any, uid, task);
+        const dbTask = await getTask(authenticatedDb as any, uid, tid);
+
+        expect(dbTask).not.toBe(null);
+        expect((dbTask as any).taskTypeName).toBe("Edzes");
+    });
 });
 
 describe("INVALID Task Integration teszt", () => {
@@ -308,6 +322,22 @@ describe("INVALID Task Integration teszt", () => {
         const user = createTestUser();
         const task = createTestTask({ taskTypeName: `    ` });
         const email = "tasktypenameuresspacestring@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
+        await assertFails(createTask(authenticatedDb as any, uid, task));
+    });
+    test("INVALID taskTypeName nem string", async () => {
+        const user = createTestUser();
+        const task = createTestTask({ taskTypeName: 10 as any });
+        const email = "tasktypenamenemstring@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
+        await assertFails(createTask(authenticatedDb as any, uid, task));
+    });
+    test("INVALID taskTypeName dupla szokozt tartalmaz", async () => {
+        const user = createTestUser();
+        const task = createTestTask({ taskTypeName: "Valami  Masik" });
+        const email = "tasktypenameduplaszokoz@gmail.com";
         const uid = `${crypto.randomUUID()}`
         const authenticatedDb = getAuthenticatedDb(uid, email, user.verified);
         await assertFails(createTask(authenticatedDb as any, uid, task));

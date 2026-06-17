@@ -32,6 +32,19 @@ describe("VALID User Integration teszt", () => {
         expect(dbUser).not.toBe(null);
         expect((dbUser as any).userName).toBe("updatedUserName");
     });
+    test("VALID user taskTypes modositasa es lekerese", async () => {
+        const user = createTestUser();
+        const email = "usertasktypesvalidteszt@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, user.verified)
+        await createUserDocumentInDatabase(authenticatedDb as any, uid, email, user.name, user.createdAt, user.verified);
+        await updateUserDocumentInDatabase(authenticatedDb as any, uid, {
+            taskTypes: ["Tanulas", "Munka", "Takaritas", "Edzes"]
+        })
+        const dbUser = await getUserDocumentFromDatabase(authenticatedDb as any, uid);
+        expect(dbUser).not.toBe(null);
+        expect((dbUser as any).taskTypes).toEqual(["Tanulas", "Munka", "Takaritas", "Edzes"]);
+    });
 });
 
 describe("INVALID User Integration teszt", () => {
@@ -250,5 +263,13 @@ describe("INVALID User Integration teszt", () => {
         const authenticatedDb = getAuthenticatedDb(uid, email, true);
         await createUserDocumentInDatabase(authenticatedDb as any, uid, email, user.name, user.createdAt, true)
         await assertFails(updateUserDocumentInDatabase(authenticatedDb as any, uid, { taskTypes: [`Valami  masikvalami`] }))
+    });
+    test("INVALID taskType nem string", async () => {
+        const user = createTestUser();
+        const email = "tasktypenemstringteszt@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, true);
+        await createUserDocumentInDatabase(authenticatedDb as any, uid, email, user.name, user.createdAt, true)
+        await assertFails(updateUserDocumentInDatabase(authenticatedDb as any, uid, { taskTypes: ["Tanulas", 10] as any }))
     });
 });

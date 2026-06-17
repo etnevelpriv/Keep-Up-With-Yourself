@@ -276,17 +276,18 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 
 ---
 
-## 10. Teljes security rules audit, testing, automation, security engineering (14 / 79)
+## 10. Teljes security rules audit, testing, automation, security engineering (19 / 79)
 
 - Ownership validation ellenorzese [Levente] (kesz)
 - Email verification enforce a `users/{uid}/tasks/*` rules-ban (`request.auth.token.email_verified == true`) [Levente] (kesz)
 - Verified gate egységesítése frontenden (auth.guard + auth.listener) + egyértelmű UX (hibaüzenet, redirect) [Levente] (kesz)
 - Provider-ütközés kezelése a README auth szabályok szerint [Levente] (kesz)
 - Fióktörlés backend hardening: Cloud Function alapú “teljes törlés” (user doc + tasks subcollection), reauth hibák kezelése [Levente] (kesz)
-- Firebase Hosting security headers + CSP beállítása (`firebase.json`) [Levente] (nincs kesz)
+- Firebase Hosting security headers + CSP beállítása (`firebase.json`) [Levente] (kesz)
 - App Check bevezetése (és mérlegelés, hol kell enforce-olni) [Levente] (kesz)
 - PII-safe logging irányelvek: UID/email ne kerüljön logba prod módban (debug flag + redaction) [Levente] (kesz)
-- `taskTypes` lista bloat elleni védelem rules-ban (elemszám limit + elem típus/hossz + duplikációk) [Levente] (nincs kesz)
+- `taskTypes` lista bloat elleni védelem rules-ban (elemszám limit + elem típus/hossz + duplikációk) [Levente] (kesz)
+- taskTypes tesztek megirasa (kulon service test, kulon validation teszt, user integration tesztben hozzaadni, task integration tesztben hozzaadni) [Levente] (kesz)
 - Task timestamp policy rules-ban (`<= request.time`, completedAt konzisztencia) + ehhez tesztek [Levente] (nincs kesz)
 - Emulator-alapú teszt futtatás standardizálása (parancsok, CI integráció, dokumentáció) [Levente] (nincs kesz)
 - Input/schema validation tesztek (malformed payload, oversized payload, schema enforcement, field restriction, malicious payload) [Levente] (nincs kesz)
@@ -358,9 +359,9 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 - critical states logolasa [Levente] (nincs kesz)
 - Firebase analytics felallitasa [Levente] (nincs kesz)
 
-## 11. Polish (0 / 20)
+## 11. Polish (1 / 20)
 
-- Slugok [Levente] (nincs kesz)
+- Slugok [Levente] (kesz)
 - Responsive audit minden egyes oldalrol, docx dokumentacioval es kepernyokepekkel [Levente] (nincs kesz)   
 - Keyboard navigation [Levente] (nincs kesz)   
 - Aria labels [Levente] (nincs kesz)   
