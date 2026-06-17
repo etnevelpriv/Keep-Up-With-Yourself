@@ -49,6 +49,7 @@ export const errorMessages: AppErrorMessageInterface = {
     "auth/popup-closed-by-user": "Az újrahitelesítés megszakadt.",
     "account/delete-failed": "A fiók törlése nem sikerült. Próbáld meg újra később.",
     "auth/email-not-verified": "A fiók törléséhez meg kell erősítened az email címed.",
+    "auth/cancelled-popup-request": "Biztonsági okokból a felugró ablak nem jeleníthető meg.",
 
     // Firebase functions errors ?
     "functions/internal": "A művelet nem sikerült. Próbáld meg újra később.",
@@ -68,6 +69,8 @@ export const errorMessages: AppErrorMessageInterface = {
     "unavailable": "A szolgáltatás jelenleg nem érhető el.",
     "internal": "Belső rendszerhiba történt.",
 
+    // AppCheck errors
+    "appCheck/recaptcha-error": "Biztonsági okokból korlátoztuk a hozzáférést.",
     // Unkown error
     "unknown": "Ismeretlen hiba történt."
 }
