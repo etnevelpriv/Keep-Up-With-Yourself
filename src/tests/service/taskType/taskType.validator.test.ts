@@ -1,9 +1,8 @@
 import { expect, test, describe } from 'vitest'
 import {
     normalizeTaskType,
+    validateTaskTypeValue,
     validateTaskTypesExceedsLimit,
-    validateisAllTaskTypeString,
-    validateisTaskTypeString,
     validateEachTaskTypeLength,
     validateTaskTypeLength,
     validateNewTask,
@@ -16,11 +15,8 @@ describe("VALID TaskType Validator unit teszt", () => {
     test("VALID taskTypes lista hossza", () => {
         expect(() => validateTaskTypesExceedsLimit(["Tanulas", "Munka"])).not.toThrow();
     });
-    test("VALID minden taskType string", () => {
-        expect(() => validateisAllTaskTypeString(["Tanulas", "Munka"])).not.toThrow();
-    });
-    test("VALID taskType string", () => {
-        expect(() => validateisTaskTypeString("Tanulas")).not.toThrow();
+    test("VALID taskType erteke megfelelo", () => {
+        expect(() => validateTaskTypeValue("Tanulas")).not.toThrow();
     });
     test("VALID minden taskType hossza megfelelo", () => {
         expect(() => validateEachTaskTypeLength(["Tanulas", "Munka"])).not.toThrow();
@@ -34,14 +30,20 @@ describe("VALID TaskType Validator unit teszt", () => {
 });
 
 describe("INVALID TaskType Validator unit teszt", () => {
-    test("INVALID taskTypes lista tobb mint 20 elemu", () => {
-        expect(() => validateTaskTypesExceedsLimit(Array(21).fill("Tanulas"))).toThrow("validation/task-types-exceeds-limit");
-    });
-    test("INVALID nem minden taskType string", () => {
-        expect(() => validateisAllTaskTypeString(["Tanulas", 10] as any)).toThrow("validation/not-all-task-types-string");
+    test("INVALID taskTypes lista eleri a limitet", () => {
+        expect(() => validateTaskTypesExceedsLimit(Array(20).fill("Tanulas"))).toThrow("validation/task-types-exceeds-limit");
     });
     test("INVALID taskType nem string", () => {
-        expect(() => validateisTaskTypeString(10 as any)).toThrow("validation/task-type-not-string");
+        expect(() => validateTaskTypeValue(10 as any)).toThrow("validation/task-type-value-not-accepted");
+    });
+    test("INVALID taskType elejen szokoz van", () => {
+        expect(() => validateTaskTypeValue(" Tanulas")).toThrow("validation/task-type-value-not-accepted");
+    });
+    test("INVALID taskType vegen szokoz van", () => {
+        expect(() => validateTaskTypeValue("Tanulas ")).toThrow("validation/task-type-value-not-accepted");
+    });
+    test("INVALID taskType dupla szokozt tartalmaz", () => {
+        expect(() => validateTaskTypeValue("Valami  Masik")).toThrow("validation/task-type-value-not-accepted");
     });
     test("INVALID egyik taskType tul rovid", () => {
         expect(() => validateEachTaskTypeLength(["Tanulas", "A"])).toThrow("validation/some-task-type-too-short");
@@ -55,13 +57,16 @@ describe("INVALID TaskType Validator unit teszt", () => {
     test("INVALID taskType tul hosszu", () => {
         expect(() => validateTaskTypeLength("A".repeat(41))).toThrow("validation/task-type-too-long");
     });
-    test("INVALID validateNewTask tul hosszu listanal", () => {
-        expect(() => validateNewTask(Array(21).fill("Tanulas"), "Takaritas")).toThrow("validation/task-types-exceeds-limit");
+    test("INVALID validateNewTask limites listanal", () => {
+        expect(() => validateNewTask(Array(20).fill("Tanulas"), "Takaritas")).toThrow("validation/task-types-exceeds-limit");
     });
     test("INVALID validateNewTask nem string taskType eseten", () => {
-        expect(() => validateNewTask(["Tanulas"], 10 as any)).toThrow("validation/task-type-not-string");
+        expect(() => validateNewTask(["Tanulas"], 10 as any)).toThrow("validation/task-type-value-not-accepted");
     });
     test("INVALID validateNewTask tul rovid taskType eseten", () => {
-        expect(() => validateNewTask(["Tanulas"], "A")).toThrow("validation/task-type-too-short");
+        expect(() => validateNewTask(["Tanulas"], "A")).toThrow("validation/task-type-value-not-accepted");
+    });
+    test("INVALID validateNewTask dupla szokozos taskType eseten", () => {
+        expect(() => validateNewTask(["Tanulas"], "Valami  Masik")).toThrow("validation/task-type-value-not-accepted");
     });
 });

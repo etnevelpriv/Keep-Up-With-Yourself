@@ -51,7 +51,7 @@ describe("INVALID TaskType Service Mock teszt", () => {
             taskTypes: ["Tanulas", "Munka"]
         };
 
-        await expect(uploadTaskType(user, "  tanulas  ")).rejects.toThrow("appTaskType/task-type-already-exists");
+        await expect(uploadTaskType(user, "tanulas")).rejects.toThrow("appTaskType/task-type-already-exists");
         expect(updateUserDocumentInDatabase).not.toHaveBeenCalled();
     });
     test("INVALID uploadTaskType tul rovid taskType eseten hibat dob", async () => {
@@ -59,7 +59,15 @@ describe("INVALID TaskType Service Mock teszt", () => {
             taskTypes: ["Tanulas", "Munka"]
         };
 
-        await expect(uploadTaskType(user, "A")).rejects.toThrow("validation/task-type-too-short");
+        await expect(uploadTaskType(user, "A")).rejects.toThrow("validation/task-type-value-not-accepted");
+        expect(updateUserDocumentInDatabase).not.toHaveBeenCalled();
+    });
+    test("INVALID uploadTaskType elejen szokozt tartalmazo taskType eseten hibat dob", async () => {
+        const user = {
+            taskTypes: ["Tanulas", "Munka"]
+        };
+
+        await expect(uploadTaskType(user, " Takaritas")).rejects.toThrow("validation/task-type-value-not-accepted");
         expect(updateUserDocumentInDatabase).not.toHaveBeenCalled();
     });
     test("INVALID uploadTaskType adatbazis hiba eseten tovabbdobja a hibat", async () => {

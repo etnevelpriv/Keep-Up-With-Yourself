@@ -1,0 +1,123 @@
+Igazitsd a teszteket az uj validatorhoz
+
+
+
+10:53 PM
+
+
+
+
+
+
+Working for 56s
+
+
+
+
+Oké, akkor az új validator lesz a forrásigazság. Megnézem a jelenlegi taskType.validator.ts és a kapcsolódó error message / teszt elvárásokat, aztán a teszteket ehhez igazítom.
+
+
+
+
+Ran 6 commandsRan Get-Content src\tests\service\taskType\taskType.service.test.ts
+
+
+
+
+
+
+
+Ran Get-Content src\services\taskType\taskType.validator.ts
+
+
+
+
+
+
+
+Ran Get-Content src\utils\errors\errorMessages.ts
+
+
+
+
+
+
+
+Ran Get-Content src\tests\service\taskType\taskType.validator.test.ts
+
+
+
+
+
+
+
+Ran Get-Content src\services\task\task.validator.ts
+
+
+
+
+
+
+
+Ran git diff -- src\services\taskType\taskType.validator.ts src\tests\service\taskType\taskType.validator.test.ts src\tests\service\taskType\taskType.service.test.ts
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Az új validatorból kikerült a külön validateisTaskTypeString / validateisAllTaskTypeString, és bekerült az egyben ellenőrző validateTaskTypeValue. Emiatt a validator teszt importjai és a hibakód elvárások csúsztak el; most ezt tisztán átvezetem.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set up Agent sandbox to continueProtect your files and control network access
+
+Set up
+
+
+
+
+Do you want to make these changes?
+
+
+taskType.service.test.ts+10-2
+
+
+
+taskType.service.test.ts+10-2
+
+
+
+
+
+
+
+
+taskType.validator.test.ts+22-17
+
+
+
+taskType.validator.test.ts+22-17
