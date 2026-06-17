@@ -2,7 +2,7 @@ import { getAuthUser } from "../auth/auth.service";
 import { updateUserDocumentInDatabase } from "../user/user.service";
 import { db } from "../../scripts/firebase";
 import { AppError } from "../../models/AppError";
-import { normalizeTaskType } from "./taskType.validator";
+import { normalizeTaskType, validateNewTask } from "./taskType.validator";
 
 export const getTaskTypes = function (user: any) {
     const tasksTypes = user.taskTypes
@@ -13,6 +13,7 @@ export const getTaskTypes = function (user: any) {
     return (arr);
 };
 export const uploadTaskType = async function (user: any, taskType: string) {
+    validateNewTask(getTaskTypes(user), taskType)
     if (!isTaskTypeExist(user, taskType)) {
         user.taskTypes.push(taskType);
         const currentUser = getAuthUser();
