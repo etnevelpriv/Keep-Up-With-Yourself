@@ -80,7 +80,7 @@ service cloud.firestore {
         && data.taskImportance is number
         && data.taskImportance >= 1
         && data.taskImportance <= 5
-        && isNonWhitespaceStringInRange(data.taskTypeName, 1, 40)
+        && isValidTaskType(data.taskTypeName)
         && data.taskCreatedAt is timestamp
         && data.taskUpdatedAt is timestamp
         && data.taskCreatedAt <= request.time + duration.value(5, 's')
@@ -98,14 +98,49 @@ service cloud.firestore {
         && data.userCreatedAt <= request.time + duration.value(5, 's')
         && data.userVerified is bool
         && data.userVerified == request.auth.token.email_verified
-        && data.taskTypes is list;
+        && isValidTaskTypesList(data.taskTypes);
     }
     function isVerifiedUser(userID) {
         return request.auth != null
         && request.auth.uid == userID
         && request.auth.token.email_verified == true;
     }
+    function isValidTaskType(value) {
+      return value is string
+        && value.size() > 1
+        && value.size() <= 40
+        && value.matches('^\\S(.*\\S)?$')
+        && !value.matches('.*\\s{2,}.*');
+    }
 
+    function isValidTaskTypeAt(taskTypes, index) {
+      return taskTypes.size() <= index || isValidTaskType(taskTypes[index]);
+    }
+
+    function isValidTaskTypesList(taskTypes) {
+      return taskTypes is list
+        && taskTypes.size() <= 20
+        && isValidTaskTypeAt(taskTypes, 0)
+        && isValidTaskTypeAt(taskTypes, 1)
+        && isValidTaskTypeAt(taskTypes, 2)
+        && isValidTaskTypeAt(taskTypes, 3)
+        && isValidTaskTypeAt(taskTypes, 4)
+        && isValidTaskTypeAt(taskTypes, 5)
+        && isValidTaskTypeAt(taskTypes, 6)
+        && isValidTaskTypeAt(taskTypes, 7)
+        && isValidTaskTypeAt(taskTypes, 8)
+        && isValidTaskTypeAt(taskTypes, 9)
+        && isValidTaskTypeAt(taskTypes, 10)
+        && isValidTaskTypeAt(taskTypes, 11)
+        && isValidTaskTypeAt(taskTypes, 12)
+        && isValidTaskTypeAt(taskTypes, 13)
+        && isValidTaskTypeAt(taskTypes, 14)
+        && isValidTaskTypeAt(taskTypes, 15)
+        && isValidTaskTypeAt(taskTypes, 16)
+        && isValidTaskTypeAt(taskTypes, 17)
+        && isValidTaskTypeAt(taskTypes, 18)
+        && isValidTaskTypeAt(taskTypes, 19);
+    }
     match /users/{userID} {
 
       allow create: if request.auth != null

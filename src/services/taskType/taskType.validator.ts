@@ -4,7 +4,7 @@ export const normalizeTaskType = function (taskType: string) {
     return taskType.trim().replace(/\s+/g, " ").toLowerCase();
 };
 export const validateTaskTypesExceedsLimit = function (taskTypes: string[]) {
-    if (taskTypes.length >= 20) {
+    if (taskTypes.length > 20) {
         throw new AppError("validation/task-types-exceeds-limit");
     };
 };
