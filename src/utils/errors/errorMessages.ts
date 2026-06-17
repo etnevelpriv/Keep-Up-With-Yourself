@@ -23,17 +23,20 @@ export const errorMessages: AppErrorMessageInterface = {
     // Sanitization validation error
     "validation/invalid-text-type": "Valamelyik szöveges mező érvénytelen.",
 
-    // Kliens Authentication process error
+    // Kliens Authentication process errors
     "appAuth/not-verified": "Az email címed nincs megerősítve. Nézd meg a postafiókod, vagy állítsd be egy új jelszót.",
     "appAuth/no-current-auth-user": "Nincs bejelentkeztetett felhaszáló a művelethez.",
     "appAuth/unsupported-provider": "Nem megfelelő hitelesítési szolgáltató.",
     "appAuth/no-email": "Az email nincs megfelelően megadva.",
     "appAuth/password-required": "A jelszó megadása kötelező.",
 
+    // Kliens task type errors
+    "appTaskType/task-type-already-exists": "A megadott feladattípus, vagy egy ahhoz hasonló már létezik. Válassz a megadott listából, vagy hozz létre egy teljesen újat.",
+
     // Kliens User process error
     "appUser/document-not-found": "Nem található felhasználó az adatbázisban",
     
-    // Firebase auth error
+    // Firebase auth errors
     "auth/email-already-in-use": "Ezzel az e-mail címmel már létezik felhasználói fiók.",
     "auth/invalid-credential": "Helytelen e-mail cím vagy jelszó.",
     "auth/invalid-email": "A megadott e-mail cím érvénytelen.",
@@ -71,6 +74,7 @@ export const errorMessages: AppErrorMessageInterface = {
 
     // AppCheck errors
     "appCheck/recaptcha-error": "Biztonsági okokból korlátoztuk a hozzáférést.",
+
     // Unkown error
     "unknown": "Ismeretlen hiba történt."
 }
