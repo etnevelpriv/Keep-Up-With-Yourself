@@ -73,25 +73,27 @@ A korabbi feladatok oldalon a felhasznalo lathat statisztikakat a feladatairol:
 
 
 
-### users:
-- userID: (string)  
-- userEmail: (string)  
-- userName: (string)  
-- userCreatedAt: (timestamp)  
-- userVerified: (bool)  
-- tasks (collection):
-  - taskName (string)  
-  - taskDesc (string)  
-  - taskDeadline (timestamp)  
-  - taskImportance (string)  
-  - taskTypeName (string)  
-  - taskStatus (string)  
-  - taskCompletedAt (timestamp)  
-  - taskCreatedAt (timestamp)  
-  - taskUpdatedAt (timestamp)
-- task_types (collection):
-  - taskTypeName: (string)  
-  - taskType_isSystem: (bool)  
+### users (collection):
+- user (document):
+  - userID: (string)  
+  - userEmail: (string)  
+  - userName: (string)  
+  - userCreatedAt: (timestamp)  
+  - userVerified: (bool)
+  - taskTypes (array):
+    - taskType: (string)
+  - tasks (subcollection):
+    - task (document):
+      - taskName (string)  
+      - taskDesc (string)  
+      - taskDeadline (timestamp)  
+      - taskImportance (string)  
+      - taskTypeName (string)  
+      - taskStatus (string)  
+      - taskCompletedAt (timestamp)  
+      - taskCreatedAt (timestamp)  
+      - taskUpdatedAt (timestamp)
+
 
 ---
 

@@ -18,7 +18,6 @@ export const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
-export const testAPI = import.meta.env.VITE_TEST_FIREBASE_API_KEY
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);

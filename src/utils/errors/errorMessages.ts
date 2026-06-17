@@ -22,12 +22,11 @@ export const errorMessages: AppErrorMessageInterface = {
 
     // TaskType validation errors
     "validation/task-types-exceeds-limit": "Maximum 20 feladattípus adható meg.",
-    "validation/not-all-task-types-string": "A megadott feladattípusok közül egy, vagy több nem szöveg.",
-    "validation/task-type-not-string": "A megadott megadott feladattípus nem szöveg.",
     "validation/task-type-too-short": "A feladat típusának hosszának elkell érnie a 2 karaktert.",
     "validation/some-task-type-too-short": "Az összes feladat típusának hosszának elkell érnie a 2 karaktert.",
     "validation/task-type-too-long": "A feladat típusának hossza nem haladhatja meg a 40 karakert.",
     "validation/some-task-type-too-long": "Egyik feladat típusának hossza sem haladhatja meg a 40 karakert.",
+    "validation/task-type-value-not-accepted": "A feladat típusának az értéke nincs megfelelően megadva.",
 
 
     // Sanitization validation error

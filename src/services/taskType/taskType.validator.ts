@@ -3,23 +3,16 @@ import { AppError } from "../../models/AppError";
 export const normalizeTaskType = function (taskType: string) {
     return taskType.trim().replace(/\s+/g, " ").toLowerCase();
 };
+export const validateTaskTypeValue = function (taskType: string) {
+    if (!(typeof taskType === "string" && taskType.length > 1 && taskType.length <= 40 && /^\S(.*\S)?$/.test(taskType) && !/\s{2,}/.test(taskType))) {
+        throw new AppError("validation/task-type-value-not-accepted");
+    };
+};
 export const validateTaskTypesExceedsLimit = function (taskTypes: string[]) {
-    if (taskTypes.length > 20) {
+    if (taskTypes.length > 19) {
         throw new AppError("validation/task-types-exceeds-limit");
     };
 };
-export const validateisAllTaskTypeString = function (taskTypes: string[]) {
-    for (const taskType of taskTypes) {
-        if (typeof taskType != "string") {
-            throw new AppError("validation/not-all-task-types-string");
-        }
-    }
-}
-export const validateisTaskTypeString = function (taskType:string) {
-    if (typeof taskType != "string") {
-        throw new AppError("validation/task-type-not-string");
-    }
-}
 export const validateEachTaskTypeLength = function (taskTypes: string[]) {
     for (const taskType of taskTypes) {
         if (taskType.length <= 1) {
@@ -37,7 +30,7 @@ export const validateTaskTypeLength = function (taskType:string) {
     };
 };
 export const validateNewTask = function (taskTypes: string[], taskType:string) {
+    validateTaskTypeValue(taskType);
     validateTaskTypesExceedsLimit(taskTypes);
-    validateisTaskTypeString(taskType);
     validateTaskTypeLength(taskType);
 };
