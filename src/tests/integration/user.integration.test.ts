@@ -33,6 +33,7 @@ describe("VALID User Integration teszt", () => {
         expect((dbUser as any).userName).toBe("updatedUserName");
     });
 });
+
 describe("INVALID User Integration teszt", () => {
     test("INVALID userCreatedAt nem lehet jovoben", async () => {
         const user = createTestUser({
@@ -187,5 +188,12 @@ describe("INVALID User Integration teszt", () => {
             userVerified: true,
             taskTypes: ["Tanulás", "Munka", "Takarítás"],
         } as any));
+    });
+    test("INVALID nem verifikalt user nem olvashatja a sajat dokumentumat", async ()=> {
+        const user = createTestUser({verified:false});
+        const email = "nemverifikaltolvassajat@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, false);
+        await assertFails(getUserDocumentFromDatabase(authenticatedDb as any, uid))
     });
 });

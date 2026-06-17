@@ -6,7 +6,7 @@ export let testEnv: RulesTestEnvironment;
 export const beforeAllSetup = function () {
     beforeAll(async () => {
         testEnv = await initializeTestEnvironment({
-            projectId: "keepupwithyourself-test",
+            projectId: `keepupwithyourself-test-${crypto.randomUUID()}`,
             firestore: {
                 host: "127.0.0.1",
                 port: 8080
