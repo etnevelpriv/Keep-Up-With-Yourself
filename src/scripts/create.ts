@@ -15,18 +15,14 @@ const init = async function () {
     try {
         const currentUser = await getAuthUserWhenReady();
         const userDoc = await getUserDocumentFromDatabase(db, currentUser.uid)
-        console.log(userDoc)
         const taskTypesNames = getTaskTypes(userDoc)
-        console.log(taskTypesNames)
         createSelectOptions(taskTypesNames);
 
         document.getElementById("createForm")?.addEventListener("submit", async (e) => {
             e.preventDefault();
             try {
                 const formElements = await getFormElements(userDoc);
-                console.log(formElements);
                 const newTask = new Task(formElements[0], formElements[1], new Date(formElements[2]), Number(formElements[3]), formElements[4], "Folyamatban", null, new Date(), new Date())
-                console.log(newTask);
                 await createTaskInDB(newTask, userDoc);
                 (document.getElementById("createForm") as HTMLFormElement).reset();
                 updateImportanceText();

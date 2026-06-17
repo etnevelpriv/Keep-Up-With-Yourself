@@ -24,7 +24,6 @@ const init = async function () {
     try {
         currentUser = await getAuthUserWhenReady();
         const userDoc = await getUserDocumentFromDatabase(db, currentUser.uid)
-        console.log(userDoc)
         const arr = await getTasks(db, userDoc!.userID)
         taskViewItems = arr.map((element: any) => ({
             task: createTaskFromDocument(element),
@@ -33,7 +32,6 @@ const init = async function () {
         const tasks: Task[] = taskViewItems.map((taskViewItem) => taskViewItem.task);
         const taskTypesNames = getTaskTypes(userDoc)
         createSelectOptions(taskTypesNames);
-        console.log(tasks)
         setupTaskControls(userDoc);
         await renderTasks(userDoc);
         setupModifyModal();
@@ -60,8 +58,6 @@ const createSelectOptions = function (arr: string[]) {
 };
 
 const createTaskFromDocument = function (element: any) {
-    console.log(element.taskCreatedAt)
-
     const normalizeDate = function (value: any) {
         if (value == null) {
             return null;
@@ -200,9 +196,7 @@ const createTaskCardsInDOM = async function (tasks: TaskViewItem[], user: any) {
                     e.preventDefault();
                     try {
                         const formElements = await getFormElements(user);
-                        console.log(formElements);
                         const newTask:Task = new Task(formElements[0], formElements[1], new Date(formElements[2]), Number(formElements[3]), formElements[4], task.taskStatus, task.taskCompletedAt, task.taskCreatedAt, new Date())
-                        console.log(newTask);
                         await updateTaskInDB(newTask, user.userID, taskItem.taskId);
                         taskItem.task = newTask;
                         const form = document.getElementById("modifyForm") as HTMLFormElement

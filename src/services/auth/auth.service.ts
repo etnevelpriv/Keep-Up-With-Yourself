@@ -18,7 +18,6 @@ export const loginWithEmail = async function (email: string, password: string) {
     await signInWithEmailAndPassword(auth, email, password);
 };
 export const loginWithGoogle = async function (db: Firestore) {
-    console.log("Google gombra kattintva")
     const provider = new GoogleAuthProvider();
     provider.addScope('https://www.googleapis.com/auth/userinfo.email');
     provider.addScope('https://www.googleapis.com/auth/userinfo.profile');

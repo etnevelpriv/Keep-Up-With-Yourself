@@ -15,7 +15,6 @@ export const initializeAuthListener = function (db: Firestore, onError: (error: 
             };
             await user.reload();
             await user.getIdToken(true);
-            console.log(user)
             if (!user.emailVerified) {
                 redirecUnauthenticatedtUser();
                 return;
