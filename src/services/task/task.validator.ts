@@ -25,7 +25,7 @@ export const validateTaskImportance = function (taskImportance: number) {
     }
 };
 export const validateTaskTaskType = function (taskTypeName: string) {
-    if (taskTypeName.trim() === "" || taskTypeName.trim().length > 40) {
+    if (typeof taskTypeName != "string" || taskTypeName.length <= 1 || taskTypeName.length > 40 || !/^\S(.*\S)?$/.test(taskTypeName) || /\s{2,}/.test(taskTypeName)) {
         throw new AppError("validation/invalid-task-taskType");
     }
 };

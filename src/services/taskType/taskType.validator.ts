@@ -22,15 +22,15 @@ export const validateEachTaskTypeLength = function (taskTypes: string[]) {
         }
     };
 };
-export const validateTaskTypeLength = function (taskType:string) {
+export const validateTaskTypeLength = function (taskType: string) {
     if (taskType.length <= 1) {
         throw new AppError("validation/task-type-too-short");
     } else if (taskType.length > 40) {
         throw new AppError("validation/task-type-too-long");
     };
 };
-export const validateNewTask = function (taskTypes: string[], taskType:string) {
-    validateTaskTypeValue(taskType);
+export const validateNewTask = function (taskTypes: string[], taskType: string) {
     validateTaskTypesExceedsLimit(taskTypes);
     validateTaskTypeLength(taskType);
+    validateTaskTypeValue(taskType);
 };

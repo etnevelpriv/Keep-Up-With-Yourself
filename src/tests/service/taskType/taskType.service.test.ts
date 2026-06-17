@@ -59,7 +59,7 @@ describe("INVALID TaskType Service Mock teszt", () => {
             taskTypes: ["Tanulas", "Munka"]
         };
 
-        await expect(uploadTaskType(user, "A")).rejects.toThrow("validation/task-type-value-not-accepted");
+        await expect(uploadTaskType(user, "A")).rejects.toThrow("validation/task-type-too-short");
         expect(updateUserDocumentInDatabase).not.toHaveBeenCalled();
     });
     test("INVALID uploadTaskType elejen szokozt tartalmazo taskType eseten hibat dob", async () => {

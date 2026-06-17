@@ -64,7 +64,7 @@ describe("INVALID TaskType Validator unit teszt", () => {
         expect(() => validateNewTask(["Tanulas"], 10 as any)).toThrow("validation/task-type-value-not-accepted");
     });
     test("INVALID validateNewTask tul rovid taskType eseten", () => {
-        expect(() => validateNewTask(["Tanulas"], "A")).toThrow("validation/task-type-value-not-accepted");
+        expect(() => validateNewTask(["Tanulas"], "A")).toThrow("validation/task-type-too-short");
     });
     test("INVALID validateNewTask dupla szokozos taskType eseten", () => {
         expect(() => validateNewTask(["Tanulas"], "Valami  Masik")).toThrow("validation/task-type-value-not-accepted");
