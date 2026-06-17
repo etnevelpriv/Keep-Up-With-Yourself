@@ -189,11 +189,66 @@ describe("INVALID User Integration teszt", () => {
             taskTypes: ["Tanulás", "Munka", "Takarítás"],
         } as any));
     });
-    test("INVALID nem verifikalt user nem olvashatja a sajat dokumentumat", async ()=> {
-        const user = createTestUser({verified:false});
+    test("INVALID nem verifikalt user nem olvashatja a sajat dokumentumat", async () => {
+        const user = createTestUser({ verified: false });
         const email = "nemverifikaltolvassajat@gmail.com";
         const uid = `${crypto.randomUUID()}`
         const authenticatedDb = getAuthenticatedDb(uid, email, false);
+        await createUserDocumentInDatabase(authenticatedDb as any, uid, email, user.name, user.createdAt, false)
         await assertFails(getUserDocumentFromDatabase(authenticatedDb as any, uid))
+    });
+    test("INVALID nem verifikalt user nem modosithatha a sajat dokumentumat", async () => {
+        const user = createTestUser({ verified: false });
+        const email = "nemverifikaltupdatesajat@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, false);
+        await createUserDocumentInDatabase(authenticatedDb as any, uid, email, user.name, user.createdAt, false)
+        await assertFails(updateUserDocumentInDatabase(authenticatedDb as any, uid, { userName: "ujnev" }))
+    });
+    test("INVALID nem userVerified nem egyezik az auth tokennel modositasnal", async () => {
+        const user = createTestUser({ verified: false });
+        const email = "userverifiednemauthtokenupdate@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, true);
+        await createUserDocumentInDatabase(authenticatedDb as any, uid, email, user.name, user.createdAt, true)
+        await assertFails(updateUserDocumentInDatabase(authenticatedDb as any, uid, { userVerified: false }))
+    });
+    test("INVALID user dokumentum olvasasa nem letezo dokumentum eseteben", async () => {
+        const email = "userdokumentumnemletezikolvasas@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, true);
+        expect(await getUserDocumentFromDatabase(authenticatedDb as any, uid)).toBe(null)
+    });
+    test("INVALID taskTypes iras, ha mar 20 elemet tartalmaz", async () => {
+        const user = createTestUser();
+        const email = "tobbminthusztasktype@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, true);
+        await createUserDocumentInDatabase(authenticatedDb as any, uid, email, user.name, user.createdAt, true)
+        await assertFails(updateUserDocumentInDatabase(authenticatedDb as any, uid, { taskTypes: ["Tanulás", "Munka", "Takarítás", "Tanulás", "Munka", "Takarítás", "Tanulás", "Munka", "Takarítás", "Tanulás", "Munka", "Takarítás", "Tanulás", "Munka", "Takarítás", "Tanulás", "Munka", "Takarítás", "Tanulás", "Munka", "Tanulás", "Munka"] }))
+    });
+    test("INVALID taskType tul hosszu", async () => {
+        const user = createTestUser();
+        const email = "tasktypenevhosszu@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, true);
+        await createUserDocumentInDatabase(authenticatedDb as any, uid, email, user.name, user.createdAt, true)
+        await assertFails(updateUserDocumentInDatabase(authenticatedDb as any, uid, { taskTypes: [`${"a".repeat(41)}`] }))
+    });
+    test("INVALID taskType tul rovid", async () => {
+        const user = createTestUser();
+        const email = "tasktypenevrovid@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, true);
+        await createUserDocumentInDatabase(authenticatedDb as any, uid, email, user.name, user.createdAt, true)
+        await assertFails(updateUserDocumentInDatabase(authenticatedDb as any, uid, { taskTypes: [`a`] }))
+    });
+    test("INVALID taskType dupla szokoz", async () => {
+        const user = createTestUser();
+        const email = "tasktypeduplaszokoz@gmail.com";
+        const uid = `${crypto.randomUUID()}`
+        const authenticatedDb = getAuthenticatedDb(uid, email, true);
+        await createUserDocumentInDatabase(authenticatedDb as any, uid, email, user.name, user.createdAt, true)
+        await assertFails(updateUserDocumentInDatabase(authenticatedDb as any, uid, { taskTypes: [`Valami  masikvalami`] }))
     });
 });
