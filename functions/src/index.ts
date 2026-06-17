@@ -5,7 +5,9 @@ import * as admin from "firebase-admin";
 admin.initializeApp();
 const db = admin.firestore();
 
-export const deleteCurrentUserCompletely = onCall(async (request) => {
+export const deleteCurrentUserCompletely = onCall({
+  enforceAppCheck: true,
+}, async (request) => {
   const uid = request.auth?.uid;
   const emailVerified = request.auth?.token.email_verified;
   if (!uid) {
@@ -24,7 +26,9 @@ export const deleteCurrentUserCompletely = onCall(async (request) => {
   }
 });
 
-export const syncOwnVerificationStatus = onCall(async (request) => {
+export const syncOwnVerificationStatus = onCall({
+  enforceAppCheck: true,
+}, async (request) => {
   const uid = request.auth?.uid;
   const emailVerified = request.auth?.token.email_verified;
   if (!uid) {
@@ -38,12 +42,12 @@ export const syncOwnVerificationStatus = onCall(async (request) => {
   return;
 });
 
-export const updateExpiredTasks=onSchedule(("every day 00:00"), async ()=>{
+export const updateExpiredTasks = onSchedule(("every day 00:00"), async () => {
   const now = admin.firestore.Timestamp.now();
   const usersSnapshot = await db.collection("users").get();
 
   const updates = usersSnapshot.docs.map(async (userDoc) => {
-    const tasksSnapshot=await userDoc.ref.collection("tasks")
+    const tasksSnapshot = await userDoc.ref.collection("tasks")
       .where("taskStatus", "==", "Folyamatban")
       .where("taskDeadline", "<", now).get();
     await Promise.all(tasksSnapshot.docs.map(async (taskDoc) => {
